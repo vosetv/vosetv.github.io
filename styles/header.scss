@@ -1,0 +1,108 @@
+$header-bg: #20262b;
+$header-fg: #c5c5c5;
+
+.header {
+  height: 50px;
+  background: $header-bg;
+  position: fixed;
+  width: 100%;
+  padding: 0 20px;
+  top: 0;
+}
+
+.logo {
+  display: inline-block;
+  background: #47b174;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  vertical-align: middle;
+  position: relative;
+  transform: scale(0.75);
+  &:before {
+    content: '';
+    // background-color: white;
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 15px;
+    border-color: transparent transparent transparent white;
+  }
+}
+
+.menu {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.menu__dropdown {
+  display: none;
+  z-index: 1;
+}
+
+.menu--opened .menu__dropdown {
+  position: absolute;
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  top: 40px;
+  left: 0;
+  background: white;
+  border-radius: 4px;
+  padding: 10px 0;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  &:after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent white transparent;
+  }
+  li {
+    padding: 5px 20px;
+    cursor: pointer;
+    color: #5c5f63;
+    &:hover {
+      color: black;
+      background: #eee;
+    }
+  }
+}
+.menu__button {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  vertical-align: middle;
+  &:after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: calc(50% - 2px);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 5px 0 5px;
+    border-color: $header-fg transparent transparent transparent;
+    // Make the arrow clickable.
+    z-index: -1;
+  }
+}
+.menu__subreddit {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0 40px 0 20px;
+  display: inline-block;
+  line-height: 50px;
+  color: $header-fg;
+  user-select: none;
+}

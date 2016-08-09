@@ -1,0 +1,113 @@
+.video-list {
+  list-style: none;
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  height: calc(100vh - #{$header-height});
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+  @media (max-width: 1024px) {
+    white-space: nowrap;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    height: 74px;
+    overflow-y: visible;
+    overflow-x: scroll;
+  }
+}
+
+.video-item {
+  background: #30373e;
+  overflow: hidden;
+  padding: 8px;
+  border-bottom: 1px solid #252c31;
+  position: relative;
+  &:hover {
+    cursor: pointer;
+    background: #293038;
+  }
+  @media (max-width: 1024px) {
+    width: $thumb-width;
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    border-right: 1px solid #252c31;
+  }
+}
+.video-item--watched:after {
+  content: 'Watched';
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 10px;
+  font-weight: 300;
+  color: white;
+  padding: 2px 3px;
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.video-item--selected {
+  background: #3a424a;
+  .video-item__title {
+    color: #dedede;
+  }
+  .video-item__percent {
+    display: none;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #47b174;
+    padding: 0;
+    width: 3px;
+  }
+}
+
+.video-item__thumb {
+  vertical-align: middle;
+  width: $thumb-width;
+  // TODO Make this a function of our width.
+  height: 56px;
+  float: left;
+}
+.video-item__title {
+  width: $videos-width - $thumb-width;
+  display: inline-block;
+  float: left;
+  padding: 10px;
+  // // Overwrite inherited value.
+  // white-space: normal;
+
+  font-size: 12px;
+  color: #adadad;
+  letter-spacing: 0.02em;
+
+  // Limit text to two lines
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 16px;     /* fallback */
+  max-height: 22px;      /* fallback */
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+.video-item__percent {
+  height: 3px;
+  background: red;
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 1;
+}

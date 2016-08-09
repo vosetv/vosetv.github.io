@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "classes": true
+  },
+  "rules": {
+    "max-len": [2, 500, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false
+    }],
+    "no-confusing-arrow": 0
+  }
+}

@@ -1,0 +1,68 @@
+@mixin smart-underline($color: black, $bg: white, $height: 88%) {
+  text-decoration: none;
+  text-shadow: .03em 0 $bg,
+    -.03em 0 $bg,
+    0 .03em $bg,
+    0 -.03em $bg,
+    .06em 0 $bg,
+    -.06em 0 $bg,
+    .09em 0 $bg,
+    -.09em 0 $bg,
+    .12em 0 $bg,
+    -.12em 0 $bg,
+    .15em 0 $bg,
+    -.15em 0 $bg;
+  background: linear-gradient(#{$bg}, #{$bg}) no-repeat scroll 0 #{$height} / .05em 1px,
+    linear-gradient(#{$bg}, #{$bg}) no-repeat scroll 100% #{$height} / .05em 1px,
+    transparent linear-gradient(#{$color}, #{$color}) repeat-x scroll 0 #{$height} / 1px 1px;
+}
+
+.player {
+  box-sizing: border-box;
+  width: calc(100% - 380px);
+  padding: 20px;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  max-height: calc(100vh - 50px);
+  overflow-y: scroll;
+  @media (max-width: 480px) {
+    padding: 0;
+  }
+  @media (max-width: 1024px) {
+    width: 100%;
+    max-height: calc(100vh - 50px - 73px);
+  }
+}
+
+// TODO: Set dynamic aspect ratio.
+.player-embed {
+  position: relative;
+  padding-top: 56.25%;
+  background: black; // To match video loading
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.player-title {
+  line-height: 1.2;
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
+}
+
+.player-title a {
+  letter-spacing: -0.02em;
+  color: #818990;
+  font-weight: 300;
+  text-decoration: none;
+  &:hover {
+    color: #818990;
+    @include smart-underline(#818990, #262c31, 88%);
+  }
+}

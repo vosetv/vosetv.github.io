@@ -1,0 +1,9 @@
+$header-height: 50px;
+$thumb-width: 100px;
+$videos-width: 344px;
+@import 'normalize';
+@import 'base';
+@import 'header';
+@import 'player';
+@import 'videos';
+@import 'overlays';

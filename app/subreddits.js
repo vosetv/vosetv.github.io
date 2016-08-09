@@ -1,0 +1,17 @@
+export default [
+  'all',
+  'videos',
+  'artisanvideos',
+  'gaming',
+  'reactjs',
+  'TED',
+  'Interview',
+  'Documentaries',
+  'nonononoYES',
+  'montageparodies',
+  'cookingvideos',
+  'FastWorkers',
+  'listentothis',
+  'mealtimevideos',
+  'trailers',
+];
