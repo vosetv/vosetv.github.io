@@ -29,8 +29,8 @@ var w = watchify(browserify(opts));
 var b = browserify(opts);
 
 // Add events
-b.on('update', bundle);
-b.on('log', util.log);
+w.on('update', watch);
+w.on('log', util.log);
 
 function watch() {
   util.log('Compiling JS...');
