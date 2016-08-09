@@ -1,9 +1,22 @@
 {
-  "presets": ["es2015-node5", "react"],
-  "plugins": [
-    "transform-object-rest-spread",
-    "transform-class-properties",
-    "transform-export-extensions",
-    "syntax-trailing-function-commas"
-  ]
+  "env": {
+    "production": {
+      "presets": ["es2015", "react"],
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-class-properties",
+        "transform-export-extensions",
+        "syntax-trailing-function-commas"
+      ]
+    },
+    "development": {
+      "presets": ["es2015-node5", "react"],
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-class-properties",
+        "transform-export-extensions",
+        "syntax-trailing-function-commas"
+      ]
+    }
+  }
 }

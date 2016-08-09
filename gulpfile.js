@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var util = require('gulp-util');
+var gulpif = require('gulp-if');
 
 // Gulp Plugins
 var sourcemaps = require('gulp-sourcemaps');
@@ -7,6 +8,7 @@ var eslint = require('gulp-eslint');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
+var cssnano = require('gulp-cssnano');
 
 // Browserify stuff
 var watchify = require('watchify');
@@ -23,11 +25,24 @@ var opts = {
   debug: true,
   transform: ['envify', 'babelify', 'rollupify'],
 };
-var b = watchify(browserify(opts));
+var w = watchify(browserify(opts));
+var b = browserify(opts);
 
 // Add events
 b.on('update', bundle);
 b.on('log', util.log);
+
+function watch() {
+  util.log('Compiling JS...');
+  return w.bundle()
+    .on('error', util.log.bind(util, 'Browserify Error'))
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('public'))
+    .pipe(browserSync.stream({once: true}));
+}
 
 function bundle() {
   util.log('Compiling JS...');
@@ -36,7 +51,7 @@ function bundle() {
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
-    // .pipe(uglify())
+    .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify()))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public'))
     .pipe(browserSync.stream({once: true}));
@@ -87,20 +102,27 @@ gulp.task('css', function() {
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sass())
     .pipe(autoprefixer())
+    .pipe(gulpif((process.env.NODE_ENV === 'production'), cssnano()))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public'))
     .pipe(browserSync.stream());
 });
 
-// TODO: Make production task that minifies files, and compiles server files.
-
 gulp.task('default', gulp.series(
   gulp.parallel(
     gulp.series(
       'lint:js',
-      bundle
+      watch
     ),
     'css'
   ),
   'nodemon'
 ));
+
+// TODO: Compile server files too to node6
+gulp.task('production',
+  gulp.parallel(
+    bundle,
+    'css'
+  )
+);
