@@ -1,3 +1,11 @@
+@keyframes loaderRotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .overlay {
   position: absolute;
   height: 100vh;
@@ -25,4 +33,11 @@
     font-weight: 300;
     font-size: 3vw;
   }
+}
+#overlay__loader {
+  animation-name: loaderRotate;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 20px 20px;
 }
