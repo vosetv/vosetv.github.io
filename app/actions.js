@@ -25,7 +25,7 @@ export function selectVideo(video) {
 
 export function selectSubreddit(subreddit, pushState) {
   if (pushState === true) {
-    document.title = `Veddit - /r/${subreddit}`;
+    document.title = `Vose - /r/${subreddit}`;
     history.pushState({}, null, `/r/${subreddit}`);
   }
   return {

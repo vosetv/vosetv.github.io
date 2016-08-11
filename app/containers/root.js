@@ -4,7 +4,7 @@ import configureStore from '../configureStore';
 import App from './app';
 
 const subreddit = location.pathname.split('/')[2] || 'videos';
-document.title = `Veddit - /r/${subreddit}`;
+document.title = `Vose - /r/${subreddit}`;
 history.replaceState({}, null, `/r/${subreddit}`);
 const store = configureStore({
   selectedSubreddit: subreddit,
