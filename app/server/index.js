@@ -17,7 +17,9 @@ app.use(express.static(path.join(__dirname, '../../public')));
 
 getVideos(app);
 
-app.use((req, res) => res.status(200).render('index.ejs'));
+app.use((req, res) => res.status(200).render('index.ejs', {
+  gacode: process.env.GA_CODE,
+}));
 
 /**
  * Start server

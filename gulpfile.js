@@ -1,3 +1,4 @@
+require('dotenv').config();
 var gulp = require('gulp');
 var util = require('gulp-util');
 var gulpif = require('gulp-if');
