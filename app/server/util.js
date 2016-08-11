@@ -26,7 +26,7 @@ export function normalizeVideos(videos) {
     return {
       url: video.permalink,
       id,
-      thumbnail: `http://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+      thumbnail: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
       title: video.title,
       timestamp: getTimestamp(video.url),
       subreddit: video.subreddit.display_name,
