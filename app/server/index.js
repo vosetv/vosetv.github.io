@@ -1,6 +1,9 @@
 import path from 'path';
 import express from 'express';
 import getVideos from './getVideos';
+const gzipStatic = require('connect-gzip-static');
+const oneDay = 86400000;
+
 require('dotenv').config();
 
 const app = express();
@@ -13,7 +16,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // TODO: Temp for dev
-app.use(express.static(path.join(__dirname, '../../public')));
+// app.use(express.static(path.join(__dirname, '../../public')));
+app.use(gzipStatic(path.join(__dirname, '../../public')))
 
 getVideos(app);
 
