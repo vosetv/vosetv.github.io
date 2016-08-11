@@ -26,6 +26,10 @@ Messages:
 - No videos found
 - Subreddit private - Handle private subreddits (returns 403)
 
-Add analytics
+# Production
+Add better css minification
+Add html/view minification
+Specify a cache validator
+Remove source maps?
 
 automatically set top 10 visited subreddits from analytics + all and videos
