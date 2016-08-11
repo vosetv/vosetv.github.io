@@ -9,6 +9,7 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
+var babel = require('gulp-babel');
 
 // Browserify stuff
 var watchify = require('watchify');
@@ -21,7 +22,7 @@ var nodemon = require('nodemon');
 var browserSync = require('browser-sync').create();
 
 var opts = {
-  entries: ['app/client/index.js'],
+  entries: ['./app/client/index.js'],
   debug: true,
   transform: ['envify', 'babelify', 'rollupify'],
 };
@@ -40,7 +41,7 @@ function watch() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public'))
+    .pipe(gulp.dest('./public'))
     .pipe(browserSync.stream({once: true}));
 }
 
@@ -53,8 +54,7 @@ function bundle() {
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify()))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public'))
-    .pipe(browserSync.stream({once: true}));
+    .pipe(gulp.dest('./public'));
 }
 
 /**
@@ -77,13 +77,13 @@ gulp.task('nodemon', function() {
     port: 4000,
   });
 
-  gulp.watch('styles/**/*.scss',  gulp.series('css'));
+  gulp.watch('./styles/**/*.scss',  gulp.series('css'));
   gulp.watch('./app/**/*.js',  gulp.series('lint:js'));
 
   return nodemon({
     exec: './node_modules/babel-cli/bin/babel-node.js',
-    script: 'app/server/index.js',
-    watch: ['app/server/**/*.js'],
+    script: './app/server/index.js',
+    watch: ['./app/server/**/*.js'],
   })
 
     .on('start', function onStart() {
@@ -104,8 +104,19 @@ gulp.task('css', function() {
     .pipe(autoprefixer())
     .pipe(gulpif((process.env.NODE_ENV === 'production'), cssnano()))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public'))
+    .pipe(gulp.dest('./public'))
     .pipe(browserSync.stream());
+});
+
+// Server scripts
+gulp.task('js', function() {
+  return gulp.src('./app/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('./production'))
+});
+gulp.task('copy', function() {
+  return gulp.src('./app/server/views/index.ejs')
+    .pipe(gulp.dest('./production/server/views/'));
 });
 
 gulp.task('default', gulp.series(
@@ -123,6 +134,8 @@ gulp.task('default', gulp.series(
 gulp.task('production',
   gulp.parallel(
     bundle,
-    'css'
+    'css',
+    'copy',
+    'js'
   )
 );
