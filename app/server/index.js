@@ -1,8 +1,7 @@
 import path from 'path';
 import express from 'express';
+import compression from 'compression';
 import getVideos from './getVideos';
-const gzipStatic = require('connect-gzip-static');
-const oneDay = 86400000;
 
 require('dotenv').config();
 
@@ -16,8 +15,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // TODO: Temp for dev
-// app.use(express.static(path.join(__dirname, '../../public')));
-app.use(gzipStatic(path.join(__dirname, '../../public')))
+app.use(compression());
+app.use(express.static(path.join(__dirname, '../../public')));
 
 getVideos(app);
 
@@ -28,6 +27,4 @@ app.use((req, res) => res.status(200).render('index.ejs', {
 /**
  * Start server
  */
-app.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}/`);
-});
+app.listen(port);
