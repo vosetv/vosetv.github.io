@@ -52,9 +52,9 @@ function bundle() {
     .on('error', util.log.bind(util, 'Browserify Error'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({loadMaps: true})))
     .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify()))
-    .pipe(sourcemaps.write('.'))
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.write('.')))
     .pipe(gulp.dest('./public'));
 }
 
@@ -100,11 +100,11 @@ gulp.task('nodemon', function() {
 
 gulp.task('css', function() {
   return gulp.src('./styles/main.scss')
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({loadMaps: true})))
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(gulpif((process.env.NODE_ENV === 'production'), cssnano()))
-    .pipe(sourcemaps.write('.'))
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.write('.')))
     .pipe(gulp.dest('./public'))
     .pipe(browserSync.stream());
 });
