@@ -11,6 +11,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var babel = require('gulp-babel');
+var minifyejs = require('gulp-minify-ejs');
 
 // Browserify stuff
 var watchify = require('watchify');
@@ -115,8 +116,9 @@ gulp.task('js', function() {
     .pipe(babel())
     .pipe(gulp.dest('./production'))
 });
-gulp.task('copy', function() {
-  return gulp.src('./app/server/views/index.ejs')
+gulp.task('views', function() {
+  return gulp.src('./app/server/views/*.ejs')
+    .pipe(minifyejs())
     .pipe(gulp.dest('./production/server/views/'));
 });
 
@@ -136,7 +138,7 @@ gulp.task('production',
   gulp.parallel(
     bundle,
     'css',
-    'copy',
+    'views',
     'js'
   )
 );
