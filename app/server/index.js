@@ -14,6 +14,10 @@ const port = process.env.PORT;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy');
+}
+
 // TODO: Temp for dev
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../../public')));
