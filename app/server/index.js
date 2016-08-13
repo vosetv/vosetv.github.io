@@ -16,11 +16,10 @@ app.set('view engine', 'ejs');
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
+  // TODO: Temp for dev
+  app.use(compression());
+  app.use(express.static(path.join(__dirname, '../../public')));
 }
-
-// TODO: Temp for dev
-app.use(compression());
-app.use(express.static(path.join(__dirname, '../../public')));
 
 getVideos(app);
 
