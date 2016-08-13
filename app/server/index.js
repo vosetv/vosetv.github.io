@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import compression from 'compression';
 import getVideos from './getVideos';
 
 require('dotenv').config();
@@ -15,6 +16,7 @@ app.set('view engine', 'ejs');
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
+  app.use(compression());
 } else {
   app.use(express.static(path.join(__dirname, '../../public')));
 }

@@ -25,7 +25,6 @@ export default function getVideos(app) {
   refreshVids();
 
   app.get('/api/videos/:subreddit', (req, res) => {
-    // TODO Make fallback for non cached videos
     if (req.params.subreddit in hotVideos) {
       res.json(hotVideos[req.params.subreddit]);
     } else {
