@@ -16,7 +16,9 @@ app.set('view engine', 'ejs');
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
-  app.use(compression());
+  app.use(compression({
+    threshold: false,
+  }));
 } else {
   app.use(express.static(path.join(__dirname, '../../public')));
 }
