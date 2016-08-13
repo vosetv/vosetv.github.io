@@ -11,7 +11,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var babel = require('gulp-babel');
-var minifyejs = require('gulp-minify-ejs');
+var htmlmin = require('gulp-htmlmin');
 
 // Browserify stuff
 var watchify = require('watchify');
@@ -118,7 +118,14 @@ gulp.task('js', function() {
 });
 gulp.task('views', function() {
   return gulp.src('./app/server/views/*.ejs')
-    .pipe(minifyejs())
+    .pipe(htmlmin({
+      minifyJS: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true,
+      removeComments: true,
+      removeStyleLinkTypeAttributes: true,
+      sortAttributes: true,
+    }))
     .pipe(gulp.dest('./production/server/views/'));
 });
 
