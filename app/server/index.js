@@ -13,7 +13,8 @@ const port = process.env.PORT;
  */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('view cache', true);
+// app.set('view cache', true);
+app.disable('view cache');
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
