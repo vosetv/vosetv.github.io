@@ -54,21 +54,7 @@ function bundle() {
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({loadMaps: true})))
-    .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify({
-      output: {
-        ie_proof: false,
-      },
-      compress: {
-        sequences: true,
-        dead_code: true,
-        conditionals: true,
-        booleans: true,
-        unused: true,
-        if_return: true,
-        join_vars: true,
-        drop_console: true,
-      }
-    })))
+    .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify()))
     .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.write('.')))
     .pipe(gulp.dest('./public'));
 }
