@@ -1,4 +1,6 @@
 node_modules/
-public/
+public/*
+!public/img/
 production/
 .env
+.DS_Store
