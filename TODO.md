@@ -10,6 +10,7 @@ video time length to thumbnails (like on youtube.com)
 Improve route "split" eg: //r/videos is a valid url, but will split and make 'r' the subreddit
 
 responsive design
+make dropdown work better on mobile
 
 next and prev buttons
 
