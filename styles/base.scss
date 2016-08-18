@@ -1,5 +1,8 @@
 $body-bg: #262c31;
 $body-fg: #9e9e9e;
+html {
+  -webkit-font-smoothing: antialiased;
+}
 body {
   font-family: 'Roboto';
   color: $body-fg;
