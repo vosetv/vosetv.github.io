@@ -85,7 +85,7 @@ gulp.task('nodemon', function() {
   return nodemon({
     exec: './node_modules/babel-cli/bin/babel-node.js',
     script: './app/server/index.js',
-    watch: ['./app/server/**/*.js'],
+    watch: ['./app/server/index.js', './app/server/**/*.js'],
   })
 
     .on('start', function onStart() {
@@ -95,7 +95,7 @@ gulp.task('nodemon', function() {
     })
 
     .on('restart', function onRestart() {
-      console.log('restarted');
+      console.log('Server restarted');
     });
 });
 

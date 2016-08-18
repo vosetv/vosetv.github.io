@@ -29,7 +29,10 @@
   </head>
   <body>
 
-    <div id="root"></div>
+    <div id="root"><%- reactHtml %></div>
+    <script>
+      window.__PRELOADED_STATE__ = <%- preloadedState %>;
+    </script>
     <script src="/bundle.js" async></script>
 
     <script>

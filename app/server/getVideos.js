@@ -2,15 +2,15 @@ import subreddits from '../subreddits';
 import Snoowrap from 'snoowrap';
 import { unique, fetchMore, normalizeVideos } from './util';
 
-export default function getVideos(app) {
+const hotVideos = {};
+
+function getVideos(app) {
   const r = new Snoowrap({
     user_agent: process.env.USER_AGENT,
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
     refresh_token: process.env.REFRESH_TOKEN,
   });
-
-  const hotVideos = {};
 
   function refreshVids() {
     for (const subreddit of subreddits) {
@@ -34,3 +34,8 @@ export default function getVideos(app) {
     }
   });
 }
+
+export {
+  hotVideos,
+  getVideos,
+};

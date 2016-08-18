@@ -1,7 +1,13 @@
 import path from 'path';
 import express from 'express';
 import compression from 'compression';
-import getVideos from './getVideos';
+import { getVideos, hotVideos } from './getVideos';
+
+import React from 'react';
+import { Provider } from 'react-redux';
+import { renderToString } from 'react-dom/server';
+import App from '../containers/app';
+import configureStore from '../configureStore';
 
 require('dotenv').config();
 
@@ -26,9 +32,33 @@ if (process.env.NODE_ENV === 'production') {
 
 getVideos(app);
 
-app.use((req, res) => res.status(200).render('index.ejs', {
-  gacode: process.env.GA_CODE,
-}));
+app.use(function (req, res) {
+
+  const subreddit = req.path.split('/')[2] || 'videos';
+  const store = configureStore({
+    selectedSubreddit: subreddit,
+    videosBySubreddit: {
+      [subreddit]: {
+        items: hotVideos[subreddit] || [],
+        isFetching: false,
+        didInvalidate: false,
+        lastUpdated: Date.now(),
+      }
+    },
+    selectedVideo: 0,
+  });
+  const reactHtml = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+
+  res.status(200).render('index.ejs', {
+    gacode: process.env.GA_CODE,
+    reactHtml,
+    preloadedState: JSON.stringify(store.getState()),
+  })
+});
 
 /**
  * Start server
