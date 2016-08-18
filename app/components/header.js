@@ -34,7 +34,7 @@ export default class Header extends Component {
   }
 
   handleClickOut(event) {
-    if (['menu__dropdown', 'menu__subreddit'].indexOf(event.target.className) !== -1) return;
+    if (['menu__dropdown', 'menu__subreddit'].includes(event.target.className)) return;
     this.setState({ active: false });
   }
 
