@@ -1,5 +1,5 @@
 $header-bg: #20262b;
-$header-fg: #c5c5c5;
+$header-fg: #64b5f6;
 
 .header {
   height: 50px;
@@ -78,7 +78,7 @@ $header-fg: #c5c5c5;
     content: '';
     position: absolute;
     right: 16px;
-    top: calc(50% - 2px);
+    top: calc(50% - 3px);
     width: 0;
     height: 0;
     border-style: solid;
