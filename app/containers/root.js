@@ -3,13 +3,10 @@ import { Provider } from 'react-redux';
 import configureStore from '../configureStore';
 import App from './app';
 
-// const subreddit = location.pathname.split('/')[2] || 'videos';
-// document.title = `vose.tv - /r/${subreddit}`;
-// history.replaceState({}, null, `/r/${subreddit}`);
-// const store = configureStore({
-//   selectedSubreddit: subreddit,
-// });
 const store = configureStore(window.__PRELOADED_STATE__);
+const subreddit = window.__PRELOADED_STATE__.selectedSubreddit;
+document.title = `vose.tv - /r/${subreddit}`;
+history.replaceState({}, null, `/r/${subreddit}`);
 
 export default class Root extends Component {
   render() {

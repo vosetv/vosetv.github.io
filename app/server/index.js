@@ -35,6 +35,7 @@ getVideos(app);
 app.use(function (req, res) {
 
   const subreddit = req.path.split('/')[2] || 'videos';
+  console.log(subreddit);
   const store = configureStore({
     selectedSubreddit: subreddit,
     videosBySubreddit: {
