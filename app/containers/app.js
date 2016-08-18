@@ -76,8 +76,7 @@ class App extends Component {
     this.props.dispatch(selectSubreddit(nextSubreddit, true));
   }
 
-  handleNavigation(event) {
-    console.log(event);
+  handleNavigation() {
     this.props.dispatch(selectSubreddit(location.pathname.split('/')[2]));
   }
 

@@ -48,7 +48,7 @@ export default class Header extends Component {
         <div className={classes}>
           <ul className="menu__dropdown">
             {options.map(
-              option => <li key={option} className={ value === option ? 'menu__active' : null } onClick={() => onChange(option)}>{option}</li>
+              option => <li key={option} className={value === option ? 'menu__active' : null} onClick={() => onChange(option)}>{option}</li>
             )}
           </ul>
         </div>

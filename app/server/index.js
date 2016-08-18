@@ -32,10 +32,8 @@ if (process.env.NODE_ENV === 'production') {
 
 getVideos(app);
 
-app.use(function (req, res) {
-
+app.use((req, res) => {
   const subreddit = req.path.split('/')[2] || 'videos';
-  console.log(subreddit);
   const store = configureStore({
     selectedSubreddit: subreddit,
     videosBySubreddit: {
@@ -44,7 +42,7 @@ app.use(function (req, res) {
         isFetching: false,
         didInvalidate: false,
         lastUpdated: Date.now(),
-      }
+      },
     },
     selectedVideo: 0,
   });
@@ -58,7 +56,7 @@ app.use(function (req, res) {
     gacode: process.env.GA_CODE,
     reactHtml,
     preloadedState: JSON.stringify(store.getState()),
-  })
+  });
 });
 
 /**
