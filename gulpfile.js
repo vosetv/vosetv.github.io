@@ -38,7 +38,11 @@ w.on('log', util.log);
 function watch() {
   util.log('Compiling JS...');
   return w.bundle()
-    .on('error', util.log.bind(util, 'Browserify Error'))
+    // .on('error', util.log.bind(util, 'Browserify Error'))
+    .on('error', function(err) {
+      util.log('Browserify error:', err);
+      this.emit('end');
+    })
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
@@ -48,7 +52,6 @@ function watch() {
 }
 
 function bundle() {
-  util.log('Compiling JS...');
   return b.bundle()
     .on('error', util.log.bind(util, 'Browserify Error'))
     .pipe(source('bundle.js'))
@@ -85,7 +88,7 @@ gulp.task('nodemon', function() {
   return nodemon({
     exec: './node_modules/babel-cli/bin/babel-node.js',
     script: './app/server/index.js',
-    watch: ['./app/server/index.js', './app/server/**/*.js'],
+    watch: './app/server/',
   })
 
     .on('start', function onStart() {
@@ -110,12 +113,13 @@ gulp.task('css', function() {
     .pipe(browserSync.stream());
 });
 
-// Server scripts
+// Server scripts (production only)
 gulp.task('js', function() {
   return gulp.src('./app/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./production'))
 });
+
 gulp.task('views', function() {
   return gulp.src('./app/server/views/*.ejs')
     .pipe(htmlmin({
@@ -131,11 +135,9 @@ gulp.task('views', function() {
 
 gulp.task('default', gulp.series(
   gulp.parallel(
-    gulp.series(
-      'lint:js',
-      watch
-    ),
-    'css'
+    'lint:js',
+    'css',
+    watch
   ),
   'nodemon'
 ));
