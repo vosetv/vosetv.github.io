@@ -35,4 +35,6 @@ Remove source maps?
 
 automatically set top 10 visited subreddits from analytics + all and videos
 
+include includes polyfill
+
 BUG: make subreddit compare .toLower()
