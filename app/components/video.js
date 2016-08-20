@@ -42,12 +42,6 @@ export default class Video extends Component {
     return (
       <li className={classes} onClick={() => handleClick(index)}>
         <img className="video-item__thumb" src={video.thumbnail} role="presentation" />
-        <div
-          className="video-item__percent"
-          style={{
-            width: (watchedVideos[video.id] !== true ? `${watchedVideos[video.id]}px` : null),
-          }}
-        />
         <div className="video-item__title">
           {video.title}
         </div>
