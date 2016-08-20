@@ -53,6 +53,10 @@ export default class Player extends Component {
         {video.flair &&
           <div className="player-flair">{video.flair}</div>
         }
+        <footer className="player-footer">
+          <div className="player-comments">{video.comments} comments</div>
+          <div className="player-score">Score: {video.score}</div>
+        </footer>
       </div>
     );
   }

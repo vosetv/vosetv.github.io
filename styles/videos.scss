@@ -2,20 +2,23 @@
   list-style: none;
   position: fixed;
   top: $header-height;
-  right: 0;
+  right: -30px;
   height: calc(100vh - #{$header-height});
-  overflow-y: scroll;
+  overflow-y: overlay;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
+  padding-right: 30px;
   -webkit-overflow-scrolling: touch;
   @media (max-width: 1024px) {
     white-space: nowrap;
     top: auto;
-    bottom: 0;
+    bottom: -30px;
+    padding-bottom: 30px;
     width: 100%;
     left: 0;
     height: 74px;
-    overflow-y: visible;
+    overflow-y: hidden;
     overflow-x: scroll;
   }
 }

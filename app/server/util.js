@@ -34,7 +34,7 @@ export function normalizeVideos(videos) {
       nsfw: video.over_18,
       flair: video.link_flair_text,
       comments: video.num_comments,
-      votes: video.score,
+      score: video.score,
     };
   });
 }
