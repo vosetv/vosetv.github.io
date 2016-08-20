@@ -124,10 +124,15 @@ gulp.task('views', function() {
   return gulp.src('./app/server/views/*.ejs')
     .pipe(htmlmin({
       minifyJS: true,
+      minifyCSS: true,
       collapseWhitespace: true,
+      collapseInlineTagWhitespace: true,
       removeAttributeQuotes: true,
       removeComments: true,
+      removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
+      removeOptionalTags: true,
+      removeRedundantAttributes: true,
       sortAttributes: true,
     }))
     .pipe(gulp.dest('./production/server/views/'));
