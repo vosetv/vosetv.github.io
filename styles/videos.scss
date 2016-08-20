@@ -5,6 +5,7 @@
   right: -30px;
   height: calc(100vh - #{$header-height});
   overflow-y: overlay;
+  -ms-overflow-style: scrollbar;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
