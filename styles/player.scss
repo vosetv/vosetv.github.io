@@ -19,7 +19,7 @@
 
 .player {
   // box-sizing: border-box;
-  width: calc(100% - 380px - 40px);
+  width: calc(100% - #{$videos-width} - 40px - 36px);
   padding: 20px;
   padding-right: 50px;
   position: fixed;
@@ -55,6 +55,8 @@
 .player-title {
   line-height: 1.2;
   margin: 20px 0;
+  display: inline-block;
+  vertical-align: middle;
   @media (max-width: 480px) {
     padding: 0 10px;
   }
@@ -69,6 +71,18 @@
     color: #818990;
     @include smart-underline(#818990, #262c31, 88%);
   }
+}
+
+.player-flair {
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px;
+  color: #dee5ea;
+  background: #656e75;
+  vertical-align: middle;
+  margin: 0 0 0 20px;
+  border: 1px solid #7d8a94;
+  border-radius: 2px;
 }
 
 .player-footer {

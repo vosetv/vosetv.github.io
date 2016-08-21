@@ -1,6 +1,9 @@
 $header-height: 50px;
 $thumb-width: 100px;
-$videos-width: 344px;
+// $videos-width: 344px;
+
+// Chrome fullscreen 11" macbook air
+$videos-width: 474px;
 @import 'normalize';
 @import 'base';
 @import 'header';

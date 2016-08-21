@@ -1,4 +1,5 @@
 .video-list {
+  box-sizing: border-box;
   list-style: none;
   position: fixed;
   top: $header-height;
@@ -11,6 +12,7 @@
   padding-right: 30px;
   -webkit-overflow-scrolling: touch;
   @media (max-width: 1024px) {
+    box-sizing: content-box;
     white-space: nowrap;
     top: auto;
     bottom: -30px;
