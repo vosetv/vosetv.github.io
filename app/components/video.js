@@ -27,7 +27,7 @@ export default class Video extends Component {
   ensureVisible() {
     const { index, selectedVideo } = this.props;
     if (selectedVideo === index) {
-      ReactDOM.findDOMNode(this).scrollIntoViewIfNeeded(false);
+      this.node.scrollIntoViewIfNeeded(false);
     }
   }
 
@@ -40,7 +40,7 @@ export default class Video extends Component {
         'video-item--watched': (watchedVideos && watchedVideos[video.id] === true),
       });
     return (
-      <li className={classes} onClick={() => handleClick(index)}>
+      <li className={classes} ref={node => this.node = node} onClick={() => handleClick(index)}>
         <img className="video-item__thumb" src={video.thumbnail} role="presentation" />
         <div className="video-item__title">
           {video.title}
