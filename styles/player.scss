@@ -52,14 +52,18 @@
   }
 }
 
-.player-title {
-  line-height: 1.2;
+.player-header {
   margin: 20px 0;
-  display: inline-block;
-  vertical-align: middle;
   @media (max-width: 480px) {
     padding: 0 10px;
   }
+}
+
+.player-title {
+  line-height: 1.2;
+  margin: 20px 0;
+  display: inline;
+  vertical-align: middle;
 }
 
 .player-title a {
