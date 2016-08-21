@@ -34,18 +34,26 @@ getVideos(app);
 
 app.use((req, res) => {
   const subreddit = req.path.split('/')[2] || 'videos';
-  const store = configureStore({
-    selectedSubreddit: subreddit,
-    videosBySubreddit: {
-      [subreddit]: {
-        items: hotVideos[subreddit] || [],
-        isFetching: false,
-        didInvalidate: false,
-        lastUpdated: Date.now(),
+  let store;
+  if (hotVideos[subreddit]) {
+    store = configureStore({
+      selectedSubreddit: subreddit,
+      videosBySubreddit: {
+        [subreddit]: {
+          items: hotVideos[subreddit] || [],
+          isFetching: false,
+          didInvalidate: false,
+          lastUpdated: Date.now(),
+        },
       },
-    },
-    selectedVideo: 0,
-  });
+      selectedVideo: 0,
+    });
+  } else {
+    store = configureStore({
+      selectedSubreddit: subreddit,
+      selectedVideo: 0,
+    });
+  }
   const reactHtml = renderToString(
     <Provider store={store}>
       <App />
