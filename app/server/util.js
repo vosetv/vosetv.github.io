@@ -66,8 +66,8 @@ export function fetchMore(listing) {
       return Promise.reject({ msg: 'next', listing: morePosts });
     })
     .catch(err => {
-      if (err.msg = 'next') return recursiveGet(err.listing, depth + 1);
-      console.error('Recursive Videos Error');
+      if (err.msg === 'next') return recursiveGet(err.listing, depth + 1);
+      return console.error('Recursive Videos Error');
     });
   }
   return recursiveGet(listing, count);
