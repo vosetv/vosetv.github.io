@@ -26,6 +26,7 @@ export function selectSubreddit(subreddit, pushState) {
   if (pushState === true) {
     document.title = `vose.tv - /r/${subreddit}`;
     history.pushState({}, null, `/r/${subreddit}`);
+    ga('send','pageview');
   }
   return {
     type: SELECT_SUBREDDIT,
