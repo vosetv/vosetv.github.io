@@ -31,6 +31,7 @@
   -webkit-overflow-scrolling: touch;
   @media (max-width: 1024px) {
     width: calc(100% - 40px);
+    max-width: none;
     max-height: calc(100vh - 50px - 40px - 73px);
   }
   @media (max-width: 480px) {
