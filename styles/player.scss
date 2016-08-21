@@ -19,6 +19,7 @@
 
 .player {
   width: calc((100vh - #{$videos-width}) / 0.5625);
+  max-width: calc(100vw - 336px);
   padding: 20px;
   padding-right: 50px;
   position: fixed;
