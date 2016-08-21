@@ -3,11 +3,11 @@ function getTimestamp(url) {
 
   if (match === null) return 0;
 
-  const hours = (parseInt(match[1], 10) || 0);
-  const minutes = (parseInt(match[2], 10) || 0);
+  const hours = (parseInt(match[1], 10) * 3600 || 0);
+  const minutes = (parseInt(match[2], 10) * 60 || 0);
   const seconds = (parseInt(match[3], 10) || 0);
 
-  return hours * 3600 + minutes * 60 + seconds;
+  return hours + minutes + seconds;
 }
 
 export function unique(a) {
@@ -40,35 +40,36 @@ export function normalizeVideos(videos) {
 }
 
 export function fetchMore(listing) {
-  let resolve;
-  const p = new Promise((res) => {
-    resolve = res;
-  });
+  const videoLimit = 50;
 
-  // FIXME: Maybe get a better way to do this.
-  function recursiveGet(posts) {
-    const count = 0;
-    function recursiveGetClosure(postArg, depth) {
-      postArg.fetch_more({ amount: 100 }).then(morePosts => {
-        const vids = morePosts.filter(post => (
-            post.secure_media &&
-            post.secure_media.type === 'youtube.com' &&
-            post.over_18 === false
-          )
-        );
-        if (vids.length > 25 || depth >= 7) {
-          resolve(vids);
-        } else {
-          recursiveGetClosure(morePosts, depth + 1);
-        }
-      })
-      .catch(err => {
-        console.error('Recursive Videos Error:', err);
-      });
-    }
-    recursiveGetClosure(posts, count);
+  // Return if we already have more than 25 videos
+  const check = listing.filter(post => (
+      post.secure_media &&
+      post.secure_media.type === 'youtube.com' &&
+      post.over_18 === false
+    )
+  );
+  if (check.length > videoLimit) return check;
+
+  const count = 0;
+  function recursiveGet(posts, depth) {
+    return posts.fetch_more({ amount: 100 }).then(morePosts => {
+      const vids = morePosts.filter(post => (
+          post.secure_media &&
+          post.secure_media.type === 'youtube.com' &&
+          post.over_18 === false
+        )
+      );
+      if (vids.length > videoLimit || depth >= 7) {
+        return Promise.resolve(vids);
+      } else {
+        return Promise.reject({ msg: 'next', listing: morePosts });
+      }
+    })
+    .catch(err => {
+      if (err.msg = 'next') return recursiveGet(err.listing, depth + 1);
+      console.error('Recursive Videos Error');
+    });
   }
-  recursiveGet(listing);
-
-  return p;
+  return recursiveGet(listing, count);
 }
