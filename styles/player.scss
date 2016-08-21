@@ -18,23 +18,23 @@
 }
 
 .player {
-  // box-sizing: border-box;
-  width: calc(100% - #{$videos-width} - 40px - 36px);
+  width: calc((100vh - #{$videos-width}) / 0.5625);
   padding: 20px;
   padding-right: 50px;
   position: fixed;
   top: 50px;
   left: 0;
-  max-height: calc(100vh - 40px - 50px);
+  height: calc(100vh - 40px - 50px);
   overflow-y: overlay;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  @media (max-width: 480px) {
-    padding: 0;
-  }
   @media (max-width: 1024px) {
     width: calc(100% - 40px);
     max-height: calc(100vh - 50px - 40px - 73px);
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0;
   }
 }
 
@@ -91,6 +91,9 @@
   text-align: center;
   border-radius: 3px;
   padding: 5px;
+  @media (max-width: 480px) {
+    border-radius: 0;
+  }
 }
 .player-comments {
   display: inline-block;
