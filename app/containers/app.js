@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
   selectVideo,
-  videoTime,
+  videoWatch,
   selectSubreddit,
   fetchVideosIfNeeded,
   invalidateSubreddit,
@@ -31,7 +31,6 @@ class App extends Component {
     this.handleEnd = this.handleEnd.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
     this.onVideoWatch = this.onVideoWatch.bind(this);
-    this.onVideoTime = this.onVideoTime.bind(this);
   }
 
   componentDidMount() {
@@ -52,11 +51,8 @@ class App extends Component {
   }
 
   onVideoWatch(videoId) {
-    this.props.dispatch(videoTime(videoId, 100));
-  }
-
-  onVideoTime(videoId, percent) {
-    this.props.dispatch(videoTime(videoId, percent));
+    console.log('handler', videoId);
+    this.props.dispatch(videoWatch(videoId));
   }
 
   handleKeyup(nextVideo) {
@@ -97,7 +93,6 @@ class App extends Component {
             selectedVideo={selectedVideo}
             onEnd={this.handleEnd}
             onVideoWatch={this.onVideoWatch}
-            onVideoTime={this.onVideoTime}
           />
         }
         {videos.length > 0 &&

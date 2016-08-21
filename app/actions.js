@@ -6,13 +6,12 @@ export const SELECT_VIDEO = 'SELECT_VIDEO';
 export const WATCHED_VIDEO = 'WATCHED_VIDEO';
 export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT';
 export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT';
-export const VIDEO_TIME = 'VIDEO_TIME';
+export const VIDEO_WATCH = 'VIDEO_WATCH';
 
-export function videoTime(id, percent) {
+export function videoWatch(id) {
   return {
-    type: VIDEO_TIME,
+    type: VIDEO_WATCH,
     id,
-    percent,
   };
 }
 

@@ -6,26 +6,14 @@ export default class Player extends Component {
     video: PropTypes.object.isRequired,
     selectedVideo: PropTypes.number.isRequired,
     onEnd: PropTypes.func.isRequired,
-    onVideoTime: PropTypes.func.isRequired,
     onVideoWatch: PropTypes.func.isRequired,
   };
 
   componentWillReceiveProps(nextProps) {
-    // Check that we are changing video to update the percentage.
     if (nextProps.selectedVideo === this.props.selectedVideo) {
       return;
     }
-
-    const videoId = this.props.video.id;
-    const duration = this.refs.player.internalPlayer.getDuration();
-    const time = this.refs.player.internalPlayer.getCurrentTime();
-
-    Promise.all([duration, time]).then(values => {
-      return this.props.onVideoTime(videoId, Math.floor(values[1] / values[0] * 100));
-    })
-    .catch(err => {
-      console.error('Player Error:', err);
-    });
+    this.props.onVideoWatch(this.props.video.id);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -33,6 +21,7 @@ export default class Player extends Component {
   }
 
   render() {
+    // TODO: videos watched first gets updated here once we get video on ready, but we should try to get it before.
     const { video, onEnd, selectedVideo, onVideoWatch } = this.props;
     const opts = {
       playerVars: {
@@ -45,19 +34,18 @@ export default class Player extends Component {
       <div className="player">
         <div className="player-embed" id="player-embed">
           <YouTube
-            ref="player"
             videoId={video.id}
             opts={opts}
             onEnd={() => onEnd(selectedVideo + 1)}
             onReady={() => onVideoWatch(video.id)}
           />
         </div>
-        <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank">{video.title}</a></h1>
+        <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.title}</a></h1>
         {video.flair &&
           <div className="player-flair">{video.flair}</div>
         }
         <footer className="player-footer">
-          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank">{video.comments} comments</a>
+          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.comments} comments</a>
           <div className="player-score">Score: {video.score}</div>
         </footer>
       </div>

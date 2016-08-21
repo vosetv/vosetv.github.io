@@ -5,23 +5,20 @@ import {
   INVALIDATE_SUBREDDIT,
   REQUEST_VIDEOS,
   RECEIVE_VIDEOS,
-  VIDEO_TIME,
+  VIDEO_WATCH,
 } from './actions';
 
-export function videoTimeReducer(state = {}, action) {
+export function videoWatchReducer(state = {}, action) {
   let videos;
   switch (action.type) {
-    case VIDEO_TIME:
+    case VIDEO_WATCH:
+      console.log(action.id);
       if (localStorage.getItem('watchedVideos') === null) {
         videos = {};
       } else {
         videos = JSON.parse(localStorage.getItem('watchedVideos'));
       }
-      // if (action.percent === 100) {
       videos[action.id] = true;
-      // } else if (videos[action.id] !== true) {
-      //   videos[action.id] = action.percent;
-      // }
       localStorage.setItem('watchedVideos', JSON.stringify(videos));
       return videos;
     default:
@@ -93,7 +90,7 @@ function videosBySubreddit(state = { }, action) {
 
 const rootReducer = combineReducers({
   videosBySubreddit,
-  watchedVideos: videoTimeReducer,
+  watchedVideos: videoWatchReducer,
   selectedSubreddit,
   selectedVideo,
 });
