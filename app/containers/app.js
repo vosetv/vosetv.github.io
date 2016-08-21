@@ -51,7 +51,6 @@ class App extends Component {
   }
 
   onVideoWatch(videoId) {
-    console.log('handler', videoId);
     this.props.dispatch(videoWatch(videoId));
   }
 

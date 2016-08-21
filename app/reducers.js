@@ -12,7 +12,6 @@ export function videoWatchReducer(state = {}, action) {
   let videos;
   switch (action.type) {
     case VIDEO_WATCH:
-      console.log(action.id);
       if (localStorage.getItem('watchedVideos') === null) {
         videos = {};
       } else {

@@ -40,12 +40,12 @@ export default class Player extends Component {
             onReady={() => onVideoWatch(video.id)}
           />
         </div>
-        <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.title}</a></h1>
+        <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank">{video.title}</a></h1>
         {video.flair &&
           <div className="player-flair">{video.flair}</div>
         }
         <footer className="player-footer">
-          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.comments} comments</a>
+          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank">{video.comments} comments</a>
           <div className="player-score">Score: {video.score}</div>
         </footer>
       </div>
