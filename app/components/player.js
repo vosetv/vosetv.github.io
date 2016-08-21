@@ -22,6 +22,9 @@ export default class Player extends Component {
 
     Promise.all([duration, time]).then(values => {
       this.props.onVideoTime(videoId, Math.floor(values[1] / values[0] * 100));
+    })
+    .catch(err => {
+      console.error('Player Error:', err);
     });
   }
 

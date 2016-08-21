@@ -61,6 +61,9 @@ export function fetchMore(listing) {
         } else {
           recursiveGetClosure(morePosts, depth + 1);
         }
+      })
+      .catch(err => {
+        console.error('Recursive Videos Error:', err);
       });
     }
     recursiveGetClosure(posts, count);

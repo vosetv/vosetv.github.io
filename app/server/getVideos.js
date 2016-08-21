@@ -2,6 +2,7 @@ import subreddits from '../subreddits';
 import Snoowrap from 'snoowrap';
 import { unique, fetchMore, normalizeVideos } from './util';
 
+// TODO: Add get and set that stores key in lower.
 const hotVideos = {};
 
 function getVideos(app) {
@@ -17,20 +18,22 @@ function getVideos(app) {
       r.get_hot(subreddit)
         .then(fetchMore)
         .then(videos => {
-          hotVideos[subreddit] = unique(normalizeVideos(videos));
-        });
+          hotVideos[subreddit.toLowerCase()] = unique(normalizeVideos(videos));
+        })
+        .catch(err => console.log(err));
     }
     setTimeout(refreshVids, 300000);
   }
   refreshVids();
 
   app.get('/api/videos/:subreddit', (req, res) => {
-    if (req.params.subreddit in hotVideos) {
-      res.json(hotVideos[req.params.subreddit]);
+    if (req.params.subreddit.toLowerCase() in hotVideos) {
+      res.json(hotVideos[req.params.subreddit.toLowerCase()]);
     } else {
       r.get_hot(req.params.subreddit)
         .then(fetchMore)
-        .then(videos => res.json(unique(normalizeVideos(videos))));
+        .then(videos => res.json(unique(normalizeVideos(videos))))
+        .catch(err => console.log(err));
     }
   });
 }

@@ -62,10 +62,10 @@ function fetchVideos(subreddit) {
     dispatch(requestVideos(subreddit));
     return fetch(`/api/videos/${subreddit}`, { method: 'GET' })
       .then(response => response.json())
-      .then(json => dispatch(receiveVideos(subreddit, json)));
-      // .catch(err => {
-      //   console.error('Fetch Videos Error:', err);
-      // });
+      .then(json => dispatch(receiveVideos(subreddit, json)))
+      .catch(err => {
+        console.error('Fetch Videos Error:', err);
+      });
   };
 }
 

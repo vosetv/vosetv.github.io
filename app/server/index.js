@@ -35,12 +35,12 @@ getVideos(app);
 app.use((req, res) => {
   const subreddit = req.path.split('/')[2] || 'videos';
   let store;
-  if (hotVideos[subreddit]) {
+  if (hotVideos[subreddit.toLowerCase()]) {
     store = configureStore({
       selectedSubreddit: subreddit,
       videosBySubreddit: {
         [subreddit]: {
-          items: hotVideos[subreddit] || [],
+          items: hotVideos[subreddit.toLowerCase()] || [],
           isFetching: false,
           didInvalidate: false,
           lastUpdated: Date.now(),
