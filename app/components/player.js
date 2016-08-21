@@ -21,7 +21,7 @@ export default class Player extends Component {
     const time = this.refs.player.internalPlayer.getCurrentTime();
 
     Promise.all([duration, time]).then(values => {
-      this.props.onVideoTime(videoId, Math.floor(values[1] / values[0] * 100));
+      return this.props.onVideoTime(videoId, Math.floor(values[1] / values[0] * 100));
     })
     .catch(err => {
       console.error('Player Error:', err);

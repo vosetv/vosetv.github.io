@@ -1,5 +1,5 @@
-import subreddits from '../subreddits';
 import Snoowrap from 'snoowrap';
+import subreddits from '../subreddits';
 import { unique, fetchMore, normalizeVideos } from './util';
 
 // TODO: Add get and set that stores key in lower.

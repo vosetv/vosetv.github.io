@@ -1,13 +1,14 @@
 import path from 'path';
 import express from 'express';
 import compression from 'compression';
-import { getVideos, hotVideos } from './getVideos';
 
 import React from 'react';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
+
 import App from '../containers/app';
 import configureStore from '../configureStore';
+import { getVideos, hotVideos } from './getVideos';
 
 require('dotenv').config();
 
