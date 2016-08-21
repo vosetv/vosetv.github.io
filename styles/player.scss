@@ -80,13 +80,25 @@
 }
 .player-comments {
   display: inline-block;
-  padding: 0 0 0 10px;
+  color: #f7f7f7;
+  text-decoration: none;
+  position: relative;
+  margin-right: 40px;
+  &:hover {
+    color: inherit;
+    text-decoration: underline;
+  }
   &:after {
-    content: ' ---- ';
-    letter-spacing: -1px;
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: 9px;
+    width: 20px;
+    height: 2px;
+    background: #f7f7f7;
+    pointer-events: none;
   }
 }
 .player-score {
   display: inline-block;
-  padding: 0 10px 0 0;
 }

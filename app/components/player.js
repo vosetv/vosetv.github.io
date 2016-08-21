@@ -54,7 +54,7 @@ export default class Player extends Component {
           <div className="player-flair">{video.flair}</div>
         }
         <footer className="player-footer">
-          <div className="player-comments">{video.comments} comments</div>
+          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank">{video.comments} comments</a>
           <div className="player-score">Score: {video.score}</div>
         </footer>
       </div>
