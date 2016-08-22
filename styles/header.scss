@@ -1,6 +1,17 @@
 $header-bg: #20262b;
 $header-fg: #64b5f6;
 
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .header {
   height: 50px;
   background: $header-bg;
@@ -26,14 +37,26 @@ $header-fg: #64b5f6;
   vertical-align: middle;
 }
 
-.menu__dropdown {
-  display: none;
-  z-index: 1;
+.menu:before {
+  content: '';
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.menu--opened .menu__dropdown {
+.menu.menu--opened:before {
+  content: '';
+  background: #111;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.menu__dropdown {
+  display: none;
   position: absolute;
-  display: block;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -43,6 +66,10 @@ $header-fg: #64b5f6;
   border-radius: 4px;
   padding: 10px 0;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  animation-name: menuFadeIn;
+  animation-fill-mode: both;
+  animation-duration: 0.2s;
   &:after {
     content: '';
     position: absolute;
@@ -69,6 +96,11 @@ $header-fg: #64b5f6;
     cursor: default;
   }
 }
+
+.menu--opened .menu__dropdown {
+  display: block;
+}
+
 .menu__button {
   display: inline-block;
   cursor: pointer;
