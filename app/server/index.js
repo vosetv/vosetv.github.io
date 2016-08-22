@@ -16,8 +16,6 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
 
-app.use(nodalytics(process.env.GA_CODE_SERVER));
-
 /**
  * Set templates and views folder
  */
@@ -30,6 +28,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(compression({
     threshold: false,
   }));
+  app.use(nodalytics(process.env.GA_CODE_SERVER));
 } else {
   app.use(express.static(path.join(__dirname, '../../public')));
 }
