@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import compression from 'compression';
+import nodalytics from 'nodalytics';
 
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -14,6 +15,8 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(nodalytics(process.env.GA_CODE_SERVER));
 
 /**
  * Set templates and views folder
