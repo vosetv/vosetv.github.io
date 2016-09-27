@@ -18,19 +18,19 @@ export default class Player extends Component {
     window.addEventListener('keyup', this.keyUp);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.keyUp);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedVideo === this.props.selectedVideo) {
+      return;
+    }
+    this.props.onVideoWatch(this.props.video.id);
   }
 
   shouldComponentUpdate(nextProps) {
     return nextProps.video.id !== this.props.video.id;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedVideo === this.props.selectedVideo) {
-      return;
-    }
-    this.props.onVideoWatch(this.props.video.id);
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.keyUp);
   }
 
   keyUp(e) {
