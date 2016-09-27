@@ -9,6 +9,23 @@ export default class Player extends Component {
     onVideoWatch: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.keyUp = this.keyUp.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('keyup', this.keyUp);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.keyUp);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.video.id !== this.props.video.id;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedVideo === this.props.selectedVideo) {
       return;
@@ -16,8 +33,11 @@ export default class Player extends Component {
     this.props.onVideoWatch(this.props.video.id);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.video.id !== this.props.video.id;
+  keyUp(e) {
+    // press letter O
+    if (e.keyCode === 79) {
+      window.open(`https://reddit.com${this.props.video.url}`, '_blank');
+    }
   }
 
   render() {
