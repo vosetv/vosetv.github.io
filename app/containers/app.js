@@ -72,7 +72,7 @@ class App extends Component {
   }
 
   handleNavigation() {
-    this.props.dispatch(selectSubreddit(location.pathname.split('/')[2]));
+    this.props.dispatch(selectSubreddit(location.pathname.replace(/\/{2,}/, '/').split('/')[2]));
   }
 
   handleRefreshClick(e) {

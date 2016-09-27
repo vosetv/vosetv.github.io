@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 getVideos(app);
 
 app.use((req, res) => {
-  const subreddit = req.path.split('/')[2] || 'videos';
+  const subreddit = req.path.replace(/\/{2,}/, '/').split('/')[2] || 'videos';
   let store;
   if (hotVideos[subreddit.toLowerCase()]) {
     store = configureStore({
