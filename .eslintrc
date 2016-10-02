@@ -1,14 +1,22 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "ecmaFeatures": {
     "classes": true
+  },
+  "globals": {
+    "ga": true
   },
   "rules": {
     "max-len": [2, 500, 2, {
       "ignoreUrls": true,
       "ignoreComments": false
     }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "no-confusing-arrow": 0
   }
 }
