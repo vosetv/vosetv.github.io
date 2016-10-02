@@ -38,7 +38,6 @@ w.on('log', util.log);
 function watch() {
   util.log('Compiling JS...');
   return w.bundle()
-    // .on('error', util.log.bind(util, 'Browserify Error'))
     .on('error', function(err) {
       util.log('Browserify error:', err);
       this.emit('end');
@@ -75,10 +74,7 @@ gulp.task('nodemon', function() {
   browserSync.init({
     open: false,
     notify: false,
-    // informs browser-sync to proxy our expressjs app which would run at the following location
     proxy: 'http://localhost:3000',
-    // informs browser-sync to use the following port for the proxied app
-    // notice that the default port is 3000, which would clash with our expressjs
     port: 4000,
   });
 
@@ -147,7 +143,6 @@ gulp.task('default', gulp.series(
   'nodemon'
 ));
 
-// TODO: Compile server files too to node6
 gulp.task('production',
   gulp.parallel(
     bundle,
