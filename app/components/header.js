@@ -44,7 +44,7 @@ export default class Header extends Component {
 
     return (
       <div className="header">
-        <div className="logo"><img src="/img/vose.svg" alt="vose.tv" /></div>
+        <div className="logo"><img onClick={() => onChange('videos')} src="/img/vose.svg" alt="vose.tv" /></div>
         <div className={classes}>
           <ul className="menu__dropdown">
             {options.map(
