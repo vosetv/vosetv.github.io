@@ -11,5 +11,4 @@ export default [
   'trailers',
   'skateboarding',
   'reactjs',
-  'css',
 ];

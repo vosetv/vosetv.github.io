@@ -1,37 +1,32 @@
-import Snoowrap from 'snoowrap';
 import subreddits from '../subreddits';
 import { unique, fetchMore, normalizeVideos } from './util';
 
-// TODO: Add get and set that stores key in lower.
 const hotVideos = {};
 
-function getVideos(app) {
-  const r = new Snoowrap({
-    user_agent: process.env.USER_AGENT,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
-    refresh_token: process.env.REFRESH_TOKEN,
-  });
-
-  function refreshVids() {
-    for (const subreddit of subreddits) {
-      r.get_hot(subreddit)
-        .then(fetchMore)
-        .then(videos => {
-          hotVideos[subreddit.toLowerCase()] = unique(normalizeVideos(videos));
-        })
-        .catch(err => console.log(err));
-    }
-    setTimeout(refreshVids, 300000);
+function refreshVids() {
+  for (const subreddit of subreddits) {
+    fetch(`https://reddit.com/r/${subreddit}.json`)
+      .then(response => response.json())
+      .then(response => fetchMore(response, subreddit))
+      .then(videos => {
+        hotVideos[subreddit.toLowerCase()] = unique(normalizeVideos(videos));
+      })
+      .catch(err => console.log(err));
   }
+  setTimeout(refreshVids, 300000);
+}
+
+function getVideos(app) {
   refreshVids();
 
   app.get('/api/videos/:subreddit', (req, res) => {
-    if (req.params.subreddit.toLowerCase() in hotVideos) {
-      res.json(hotVideos[req.params.subreddit.toLowerCase()]);
+    const subreddit = req.params.subreddit.toLowerCase();
+    if (subreddit in hotVideos) {
+      res.json(hotVideos[subreddit]);
     } else {
-      r.get_hot(req.params.subreddit)
-        .then(fetchMore)
+      fetch(`https://reddit.com/r/${subreddit}.json`)
+        .then(response => response.json())
+        .then(response => fetchMore(response, subreddit))
         .then(videos => res.json(unique(normalizeVideos(videos))))
         .catch(err => console.log(err));
     }
