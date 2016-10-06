@@ -18,57 +18,61 @@ export function unique(a) {
 export function normalizeVideos(videos) {
   return videos.map(video => {
     let id;
-    if (video.secure_media.oembed.url) {
-      id = video.secure_media.oembed.url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&\?]*).*/)[1];
-    } else if (video.secure_media.oembed.thumbnail_url) {
-      id = video.secure_media.oembed.thumbnail_url.split('/')[4];
+    if (video.data.secure_media.oembed.url) {
+      id = video.data.secure_media.oembed.url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&\?]*).*/)[1];
+    } else if (video.data.secure_media.oembed.thumbnail_url) {
+      id = video.data.secure_media.oembed.thumbnail_url.split('/')[4];
     }
     return {
-      url: video.permalink,
+      url: video.data.permalink,
       id,
       thumbnail: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
-      title: video.title,
-      timestamp: getTimestamp(video.url),
-      subreddit: video.subreddit.display_name,
-      date: video.created,
-      nsfw: video.over_18,
-      flair: video.link_flair_text,
-      comments: video.num_comments,
-      score: video.score,
+      title: video.data.title,
+      timestamp: getTimestamp(video.data.url),
+      subreddit: video.data.subreddit.display_name,
+      date: video.data.created,
+      nsfw: video.data.over_18,
+      flair: video.data.link_flair_text,
+      comments: video.data.num_comments,
+      score: video.data.score,
     };
   });
 }
 
-export function fetchMore(listing) {
+export function fetchMore(listing, subreddit) {
   const videoLimit = 50;
 
   // Return if we already have more than 25 videos
-  const check = listing.filter(post => (
-      post.secure_media &&
-      post.secure_media.type === 'youtube.com' &&
-      post.over_18 === false
+  const check = listing.data.children.filter(post => (
+      post.data.secure_media &&
+      post.data.secure_media.type === 'youtube.com' &&
+      post.data.over_18 === false
     )
   );
   if (check.length > videoLimit) return check;
 
   const count = 0;
   function recursiveGet(posts, depth) {
-    return posts.fetch_more({ amount: 100 }).then(morePosts => {
-      const vids = morePosts.filter(post => (
-          post.secure_media &&
-          post.secure_media.type === 'youtube.com' &&
-          post.over_18 === false
-        )
-      );
-      if (vids.length > videoLimit || depth >= 7) {
-        return Promise.resolve(vids);
-      }
-      return Promise.reject({ msg: 'next', listing: morePosts });
-    })
-    .catch(err => {
-      if (err.msg === 'next') return recursiveGet(err.listing, depth + 1);
-      return console.error('Recursive Videos Error', err);
-    });
+    return fetch(`https://reddit.com/r/${subreddit}.json?count=100&after=${posts.data.after}`)
+      .then(response => response.json())
+      .then(morePosts => {
+        // TODO Dry
+        morePosts.data.children = posts.data.children.concat(morePosts.data.children);
+        const vids = morePosts.data.children.filter(post => (
+            post.data.secure_media &&
+            post.data.secure_media.type === 'youtube.com' &&
+            post.data.over_18 === false
+          )
+        );
+        if (vids.length > videoLimit || depth >= 7) {
+          return Promise.resolve(vids);
+        }
+        return Promise.reject({ msg: 'next', listing: morePosts });
+      })
+      .catch(err => {
+        if (err.msg === 'next') return recursiveGet(err.listing, depth + 1);
+        return console.error('Recursive Videos Error', err);
+      });
   }
   return recursiveGet(listing, count);
 }
