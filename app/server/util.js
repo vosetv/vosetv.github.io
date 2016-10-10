@@ -10,12 +10,19 @@ function getTimestamp(url) {
   return hours + minutes + seconds;
 }
 
-export function unique(a) {
+// TODO Make these more fp
+function filter(item) {
+  return (item.data.secure_media &&
+  item.data.secure_media.type === 'youtube.com' &&
+  item.data.over_18 === false);
+}
+
+function unique(a) {
   const seen = {};
   return a.filter((video) => seen[video.id] === true ? false : (seen[video.id] = true));
 }
 
-export function normalizeVideos(videos) {
+function normalizeVideos(videos) {
   return videos.map(video => {
     let id;
     if (video.data.secure_media.oembed.url) {
@@ -31,7 +38,7 @@ export function normalizeVideos(videos) {
       timestamp: getTimestamp(video.data.url),
       subreddit: video.data.subreddit.display_name,
       date: video.data.created,
-      nsfw: video.data.over_18,
+      // nsfw: video.data.over_18,
       flair: video.data.link_flair_text,
       comments: video.data.num_comments,
       score: video.data.score,
@@ -39,40 +46,28 @@ export function normalizeVideos(videos) {
   });
 }
 
-export function fetchMore(listing, subreddit) {
+export function fetchSubreddit(subreddit) {
   const videoLimit = 50;
-
-  // Return if we already have more than 25 videos
-  const check = listing.data.children.filter(post => (
-      post.data.secure_media &&
-      post.data.secure_media.type === 'youtube.com' &&
-      post.data.over_18 === false
-    )
-  );
-  if (check.length > videoLimit) return check;
-
   const count = 0;
-  function recursiveGet(posts, depth) {
-    return fetch(`https://reddit.com/r/${subreddit}.json?count=100&after=${posts.data.after}`)
+  let videos = [];
+
+  function recursiveGet(depth, after) {
+    const url = after
+      ? `https://reddit.com/r/${subreddit}.json?count=${count * 100}&after=${after}`
+      : `https://reddit.com/r/${subreddit}.json`;
+    return fetch(url)
       .then(response => response.json())
-      .then(morePosts => {
-        // TODO Dry
-        morePosts.data.children = posts.data.children.concat(morePosts.data.children);
-        const vids = morePosts.data.children.filter(post => (
-            post.data.secure_media &&
-            post.data.secure_media.type === 'youtube.com' &&
-            post.data.over_18 === false
-          )
-        );
-        if (vids.length > videoLimit || depth >= 7) {
-          return Promise.resolve(vids);
+      .then(posts => {
+        videos = videos.concat(posts.data.children.filter(filter));
+        if (videos.length > videoLimit || depth >= 8) {
+          return Promise.resolve(unique(normalizeVideos(videos)));
         }
-        return Promise.reject({ msg: 'next', listing: morePosts });
+        return Promise.reject({ msg: 'next', after: posts.data.after });
       })
       .catch(err => {
-        if (err.msg === 'next') return recursiveGet(err.listing, depth + 1);
+        if (err.msg === 'next') return recursiveGet(depth + 1, err.after);
         return console.error('Recursive Videos Error', err);
       });
   }
-  return recursiveGet(listing, count);
+  return recursiveGet(count);
 }

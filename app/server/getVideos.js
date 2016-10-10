@@ -1,22 +1,20 @@
 import subreddits from '../subreddits';
-import { unique, fetchMore, normalizeVideos } from './util';
+import { fetchSubreddit } from './util';
 
-const hotVideos = {};
+export const hotVideos = {};
 
 function refreshVids() {
   for (const subreddit of subreddits) {
-    fetch(`https://reddit.com/r/${subreddit}.json`)
-      .then(response => response.json())
-      .then(response => fetchMore(response, subreddit))
+    fetchSubreddit(subreddit)
       .then(videos => {
-        hotVideos[subreddit.toLowerCase()] = unique(normalizeVideos(videos));
+        hotVideos[subreddit.toLowerCase()] = videos;
       })
       .catch(err => console.log(err));
   }
   setTimeout(refreshVids, 300000);
 }
 
-function getVideos(app) {
+export function getVideos(app) {
   refreshVids();
 
   app.get('/api/videos/:subreddit', (req, res) => {
@@ -24,16 +22,9 @@ function getVideos(app) {
     if (subreddit in hotVideos) {
       res.json(hotVideos[subreddit]);
     } else {
-      fetch(`https://reddit.com/r/${subreddit}.json`)
-        .then(response => response.json())
-        .then(response => fetchMore(response, subreddit))
-        .then(videos => res.json(unique(normalizeVideos(videos))))
+      fetchSubreddit(subreddit)
+        .then(videos => res.json(videos))
         .catch(err => console.log(err));
     }
   });
 }
-
-export {
-  hotVideos,
-  getVideos,
-};
