@@ -38,7 +38,6 @@ function normalizeVideos(videos) {
       timestamp: getTimestamp(video.data.url),
       subreddit: video.data.subreddit.display_name,
       date: video.data.created,
-      // nsfw: video.data.over_18,
       flair: video.data.link_flair_text,
       comments: video.data.num_comments,
       score: video.data.score,
@@ -53,8 +52,8 @@ export function fetchSubreddit(subreddit) {
 
   function recursiveGet(depth, after) {
     const url = after
-      ? `https://reddit.com/r/${subreddit}.json?count=${count * 100}&after=${after}`
-      : `https://reddit.com/r/${subreddit}.json`;
+      ? `https://reddit.com/r/${subreddit}.json?raw_json=1&count=${count * 100}&after=${after}`
+      : `https://reddit.com/r/${subreddit}.json?raw_json=1`;
     return fetch(url)
       .then(response => response.json())
       .then(posts => {
@@ -65,7 +64,9 @@ export function fetchSubreddit(subreddit) {
         return Promise.reject({ msg: 'next', after: posts.data.after });
       })
       .catch(err => {
-        if (err.msg === 'next') return recursiveGet(depth + 1, err.after);
+        if (err.msg === 'next') {
+          return recursiveGet(depth + 1, err.after);
+        }
         return console.error('Recursive Videos Error', err);
       });
   }
