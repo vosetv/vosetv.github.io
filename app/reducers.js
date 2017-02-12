@@ -1,7 +1,8 @@
+import get from 'lodash.get';
 import { combineReducers } from 'redux';
 import {
   SELECT_VIDEO,
-  SELECT_SUBREDDIT,
+  SELECT_FILTER,
   INVALIDATE_SUBREDDIT,
   REQUEST_VIDEOS,
   RECEIVE_VIDEOS,
@@ -36,8 +37,17 @@ function selectedVideo(state = 0, action) {
 
 function selectedSubreddit(state = 'videos', action) {
   switch (action.type) {
-    case SELECT_SUBREDDIT:
+    case SELECT_FILTER:
       return action.subreddit;
+    default:
+      return state;
+  }
+}
+
+function selectedFilter(state = 'hot', action) {
+  switch (action.type) {
+    case SELECT_FILTER:
+      return action.filter;
     default:
       return state;
   }
@@ -73,14 +83,20 @@ function getVideos(state = {
   }
 }
 
-function videosBySubreddit(state = { }, action) {
+function videosBySubreddit(state = {
+  hot: {},
+  top: {},
+  new: {},
+}, action) {
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_VIDEOS:
     case REQUEST_VIDEOS:
       return {
         ...state,
-        [action.subreddit]: getVideos(state[action.subreddit], action),
+        [action.filter]: {
+          [action.subreddit]: getVideos(get(state, [action.filter, action.subreddit]), action),
+        },
       };
     default:
       return state;
@@ -91,6 +107,7 @@ const rootReducer = combineReducers({
   videosBySubreddit,
   watchedVideos: videoWatchReducer,
   selectedSubreddit,
+  selectedFilter,
   selectedVideo,
 });
 

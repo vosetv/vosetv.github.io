@@ -37,10 +37,12 @@ getVideos(app);
 
 app.use((req, res) => {
   const subreddit = req.path.replace(/\/{2,}/, '/').split('/')[2] || 'videos';
+  const filter = req.path.replace(/\/{2,}/, '/').split('/')[3] || 'hot';
   let store;
   if (hotVideos[subreddit.toLowerCase()]) {
     store = configureStore({
       selectedSubreddit: subreddit,
+      selectedFilter: filter,
       videosBySubreddit: {
         [subreddit]: {
           items: hotVideos[subreddit.toLowerCase()] || [],

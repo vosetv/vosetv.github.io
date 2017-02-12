@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
+import Dropdown from './dropdown';
 
 export default class Header extends Component {
   static propTypes = {
@@ -10,50 +10,15 @@ export default class Header extends Component {
     onChange: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { active: false };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClickOut = this.handleClickOut.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('click', this.handleClickOut);
-  }
-
-  componentWillUnmount() {
-    document.addEventListener('click', this.handleClickOut);
-  }
-
-  handleClick() {
-    if (this.state.active === true) {
-      this.setState({ active: false });
-    } else {
-      this.setState({ active: true });
-    }
-  }
-
-  handleClickOut(event) {
-    if (['menu__dropdown', 'menu__subreddit'].includes(event.target.className)) return;
-    this.setState({ active: false });
-  }
-
   render() {
-    const { value, onChange, options } = this.props;
-    const classes = classnames('menu', { 'menu--opened': this.state.active });
+    const { value, onChange, onFilterChange, options, filter } = this.props;
 
     return (
       <div className="header">
         <div className="logo"><img onClick={() => onChange('videos')} src="/img/vose.svg" alt="vose.tv" /></div>
-        <div className={classes}>
-          <ul className="menu__dropdown">
-            {options.map(
-              option => <li key={option} className={value === option ? 'menu__active' : null} onClick={() => onChange(option)}>{option}</li>
-            )}
-          </ul>
-        </div>
-        <div className="menu__button" onClick={this.handleClick}>
-          <h1 className="menu__subreddit">{value}</h1>
+        <div className="filter">
+          Subreddit: <Dropdown options={options} value={value} onChange={onChange} />
+          Sort by: <Dropdown options={['hot', 'top', 'new']} value={filter} onChange={onFilterChange} />
         </div>
       </div>
     );

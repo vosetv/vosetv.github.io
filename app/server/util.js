@@ -45,15 +45,15 @@ function normalizeVideos(videos) {
   });
 }
 
-export function fetchSubreddit(subreddit) {
+export function fetchSubreddit(subreddit, subfilter = 'hot') {
   const videoLimit = 50;
   const count = 0;
   let videos = [];
 
   function recursiveGet(depth, after) {
     const url = after
-      ? `https://reddit.com/r/${subreddit}.json?raw_json=1&count=${count * 100}&after=${after}`
-      : `https://reddit.com/r/${subreddit}.json?raw_json=1`;
+      ? `https://reddit.com/r/${subreddit}/${subfilter}.json?raw_json=1&count=${count * 100}&after=${after}`
+      : `https://reddit.com/r/${subreddit}/${subfilter}.json?raw_json=1`;
     return fetch(url)
       .then(response => response.json())
       .then(posts => {

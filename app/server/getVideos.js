@@ -17,7 +17,8 @@ function refreshVids() {
 export function getVideos(app) {
   refreshVids();
 
-  app.get('/api/videos/:subreddit', (req, res) => {
+  app.get('/api/videos/:subreddit/top/:time', (req, res) => {
+    console.log('top', req.params.subreddit, req.params.time);
     const subreddit = req.params.subreddit.toLowerCase();
     if (subreddit in hotVideos) {
       res.json(hotVideos[subreddit]);
@@ -27,4 +28,26 @@ export function getVideos(app) {
         .catch(err => console.log(err));
     }
   });
+
+  app.get('/api/videos/:subreddit/:filter', (req, res) => {
+    console.log('filtered', req.params.subreddit, req.params.filter);
+    const subreddit = req.params.subreddit.toLowerCase();
+    const filter = req.params.filter.toLowerCase();
+    fetchSubreddit(subreddit, filter)
+      .then(videos => res.json(videos))
+      .catch(err => console.log(err));
+  });
+
+  app.get('/api/videos/:subreddit', (req, res) => {
+    console.log('hot', req.params.subreddit);
+    const subreddit = req.params.subreddit.toLowerCase();
+    if (subreddit in hotVideos) {
+      res.json(hotVideos[subreddit]);
+    } else {
+      fetchSubreddit(subreddit)
+        .then(videos => res.json(videos))
+        .catch(err => console.log(err));
+    }
+  });
+
 }
