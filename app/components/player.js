@@ -9,11 +9,6 @@ export default class Player extends Component {
     onVideoWatch: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.keyUp = this.keyUp.bind(this);
-  }
-
   componentDidMount() {
     window.addEventListener('keyup', this.keyUp);
   }
@@ -33,7 +28,7 @@ export default class Player extends Component {
     window.removeEventListener('keyup', this.keyUp);
   }
 
-  keyUp(e) {
+  keyUp = (e) => {
     // press letter O
     if (e.keyCode === 79) {
       window.open(`https://reddit.com${this.props.video.url}`, '_blank');
@@ -61,13 +56,13 @@ export default class Player extends Component {
           />
         </div>
         <header className="player-header">
-          <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank">{video.title}</a></h1>
+          <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.title}</a></h1>
           {video.flair &&
             <div className="player-flair">{video.flair}</div>
           }
         </header>
         <footer className="player-footer">
-          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank">{video.comments} comments</a>
+          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank" rel="noopener noreferrer">{video.comments} comments</a>
           <div className="player-score">Score: {video.score}</div>
         </footer>
       </div>

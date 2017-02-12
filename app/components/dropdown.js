@@ -1,15 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 
 export default class Dropdown extends Component {
   static propTypes = {
-  };
+  }
 
-  constructor(props) {
-    super(props);
-    this.state = { active: false };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClickOut = this.handleClickOut.bind(this);
+  state = {
+    active: false,
   }
 
   componentDidMount() {
@@ -20,7 +17,7 @@ export default class Dropdown extends Component {
     document.addEventListener('click', this.handleClickOut);
   }
 
-  handleClick() {
+  handleClick = () => {
     if (this.state.active === true) {
       this.setState({ active: false });
     } else {
@@ -28,7 +25,7 @@ export default class Dropdown extends Component {
     }
   }
 
-  handleClickOut(event) {
+  handleClickOut = event => {
     if (['dropdown', 'dropdown__value'].includes(event.target.className)) return;
     this.setState({ active: false });
   }
@@ -41,13 +38,19 @@ export default class Dropdown extends Component {
       <div style={{ display: 'inline-block' }}>
         <div className={classes}>
           <ul className="dropdown__items">
-            {options.map(
-              option => <li key={option} className={value === option ? 'dropdown__item--active' : null} onClick={() => onChange(option)}>{option}</li>
+            {options.map(option =>
+              <li
+                key={option}
+                className={value === option ? 'dropdown__item--active' : null}
+                onClick={() => onChange(option)}
+              >
+                {option}
+              </li>
             )}
           </ul>
         </div>
         <div className="dropdown__button" onClick={this.handleClick}>
-          <h1 className="dropdown__value">{value}</h1>
+          <div className="dropdown__value">{value}</div>
         </div>
       </div>
     );

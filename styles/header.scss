@@ -8,6 +8,8 @@ $header-fg: #64b5f6;
   width: 100%;
   padding: 0 20px;
   top: 0;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -17,6 +19,12 @@ $header-fg: #64b5f6;
     height: 30px;
     margin-bottom: 3px;
     vertical-align: middle;
+    cursor: pointer;
+  }
+}
+
+.nav_item {
+  &:hover {
     cursor: pointer;
   }
 }

@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
 const EnsureVisibleMixin = InnerComponent => class extends Component {
-  constructor(props) {
-    super(props);
-    this.ensureVisible = this.ensureVisible.bind(this);
-    this.getNode = this.getNode.bind(this);
-  }
-
   componentDidMount() {
     this.ensureVisible();
   }
@@ -15,19 +9,19 @@ const EnsureVisibleMixin = InnerComponent => class extends Component {
     this.ensureVisible();
   }
 
-  getNode(node) {
+  getNode = (node) => {
     this.node = node;
   }
 
   // TODO Put this in prop
-  ensureVisible() {
+  ensureVisible = () => {
     const { index, selectedVideo } = this.props;
     if (selectedVideo === index) {
       this.node.scrollIntoViewIfNeeded(false);
     }
   }
 
-  render () {
+  render() {
     return <InnerComponent getNode={this.getNode} {...this.props} />;
   }
 };

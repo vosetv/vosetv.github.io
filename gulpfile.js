@@ -1,35 +1,35 @@
 require('dotenv').config();
-var gulp = require('gulp');
-var util = require('gulp-util');
-var gulpif = require('gulp-if');
+const gulp = require('gulp');
+const util = require('gulp-util');
+const gulpif = require('gulp-if');
 
 // Gulp Plugins
-var sourcemaps = require('gulp-sourcemaps');
-var eslint = require('gulp-eslint');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var uglify = require('gulp-uglify');
-var cssnano = require('gulp-cssnano');
-var babel = require('gulp-babel');
-var htmlmin = require('gulp-htmlmin');
+const sourcemaps = require('gulp-sourcemaps');
+const eslint = require('gulp-eslint');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const uglify = require('gulp-uglify');
+const cssnano = require('gulp-cssnano');
+const babel = require('gulp-babel');
+const htmlmin = require('gulp-htmlmin');
 
 // Browserify stuff
-var watchify = require('watchify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+const watchify = require('watchify');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 // Live coding dev tools
-var nodemon = require('nodemon');
-var browserSync = require('browser-sync').create();
+const nodemon = require('nodemon');
+const browserSync = require('browser-sync').create();
 
-var opts = {
+const opts = {
   entries: ['./app/client/index.js'],
   debug: true,
   transform: ['envify', 'babelify', 'rollupify'],
 };
-var w = watchify(browserify(opts));
-var b = browserify(opts);
+const w = watchify(browserify(opts));
+const b = browserify(opts);
 
 // Add events
 w.on('update', watch);
@@ -38,16 +38,16 @@ w.on('log', util.log);
 function watch() {
   util.log('Compiling JS...');
   return w.bundle()
-    .on('error', function(err) {
+    .on('error', (err) => {
       util.log('Browserify error:', err);
       this.emit('end');
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public'))
-    .pipe(browserSync.stream({once: true}));
+    .pipe(browserSync.stream({ once: true }));
 }
 
 function bundle() {
@@ -55,7 +55,7 @@ function bundle() {
     .on('error', util.log.bind(util, 'Browserify Error'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({loadMaps: true})))
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({ loadMaps: true })))
     .pipe(gulpif((process.env.NODE_ENV === 'production'), uglify()))
     .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.write('.')))
     .pipe(gulp.dest('./public'));
@@ -64,13 +64,13 @@ function bundle() {
 /**
  * Lint js
  */
-gulp.task('lint:js', function() {
-  return gulp.src('./app/**/*.js')
+gulp.task('lint:js', () =>
+  gulp.src('./app/**/*.js')
     .pipe(eslint())
-    .pipe(eslint.format());
-});
+    .pipe(eslint.format())
+);
 
-gulp.task('nodemon', function() {
+gulp.task('nodemon', () => {
   browserSync.init({
     open: false,
     notify: false,
@@ -78,8 +78,8 @@ gulp.task('nodemon', function() {
     port: 4000,
   });
 
-  gulp.watch('./styles/**/*.scss',  gulp.series('css'));
-  gulp.watch('./app/**/*.js',  gulp.series('lint:js'));
+  gulp.watch('./styles/**/*.scss', gulp.series('css'));
+  gulp.watch('./app/**/*.js', gulp.series('lint:js'));
 
   return nodemon({
     exec: './node_modules/babel-cli/bin/babel-node.js',
@@ -87,37 +87,37 @@ gulp.task('nodemon', function() {
     watch: './app/server/',
   })
 
-    .on('start', function onStart() {
-      setTimeout(function() {
-        browserSync.reload({stream: false});
+    .on('start', () => {
+      setTimeout(() => {
+        browserSync.reload({ stream: false });
       }, 500);
     })
 
-    .on('restart', function onRestart() {
+    .on('restart', () => {
       console.log('Server restarted');
     });
 });
 
-gulp.task('css', function() {
-  return gulp.src('./styles/main.scss')
-    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({loadMaps: true})))
+gulp.task('css', () =>
+  gulp.src('./styles/main.scss')
+    .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.init({ loadMaps: true })))
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(gulpif((process.env.NODE_ENV === 'production'), cssnano()))
     .pipe(gulpif((process.env.NODE_ENV === 'develop'), sourcemaps.write('.')))
     .pipe(gulp.dest('./public'))
-    .pipe(browserSync.stream());
-});
+    .pipe(browserSync.stream())
+);
 
 // Server scripts (production only)
-gulp.task('js', function() {
-  return gulp.src('./app/**/*.js')
+gulp.task('js', () =>
+  gulp.src('./app/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./production'))
-});
+);
 
-gulp.task('views', function() {
-  return gulp.src('./app/server/views/*.ejs')
+gulp.task('views', () =>
+  gulp.src('./app/server/views/*.ejs')
     .pipe(htmlmin({
       minifyJS: true,
       minifyCSS: true,
@@ -131,8 +131,8 @@ gulp.task('views', function() {
       removeRedundantAttributes: true,
       sortAttributes: true,
     }))
-    .pipe(gulp.dest('./production/server/views/'));
-});
+    .pipe(gulp.dest('./production/server/views/'))
+);
 
 gulp.task('default', gulp.series(
   gulp.parallel(
