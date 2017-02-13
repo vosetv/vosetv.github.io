@@ -7,7 +7,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 
-import App from '../containers/app';
+import App from '../components/app';
 import configureStore from '../configureStore';
 import { getVideos, hotVideos } from './getVideos';
 

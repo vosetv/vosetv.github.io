@@ -26,9 +26,9 @@ const browserSync = require('browser-sync').create();
 const opts = {
   entries: ['./app/client/index.js'],
   debug: true,
-  transform: ['envify', 'babelify', 'rollupify'],
+  transform: ['babelify'],
 };
-const w = watchify(browserify(opts));
+const w = watchify(browserify(Object.assign(opts, watchify.args)));
 const b = browserify(opts);
 
 // Add events
@@ -38,8 +38,12 @@ w.on('log', util.log);
 function watch() {
   util.log('Compiling JS...');
   return w.bundle()
-    .on('error', (err) => {
-      util.log('Browserify error:', err);
+    .on('error', function(err) {
+      util.log(
+        util.colors.red('Browserify Error:'),
+        err.message,
+        err.codeFrame ? `\n\n${err.codeFrame}` : ''
+      );
       this.emit('end');
     })
     .pipe(source('bundle.js'))
@@ -79,7 +83,7 @@ gulp.task('nodemon', () => {
   });
 
   gulp.watch('./styles/**/*.scss', gulp.series('css'));
-  gulp.watch('./app/**/*.js', gulp.series('lint:js'));
+  // gulp.watch('./app/**/*.js', gulp.series('lint:js'));
 
   return nodemon({
     exec: './node_modules/babel-cli/bin/babel-node.js',
@@ -136,7 +140,6 @@ gulp.task('views', () =>
 
 gulp.task('default', gulp.series(
   gulp.parallel(
-    'lint:js',
     'css',
     watch
   ),
