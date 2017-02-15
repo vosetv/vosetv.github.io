@@ -50,7 +50,7 @@ function filter(state = {
 }, action) {
   switch (action.type) {
     case CHANGE_FILTER:
-      return { ...action.filter, state};
+      return { ...state, action.filter };
     default:
       return state;
   }
@@ -68,17 +68,9 @@ function isFetching(state = false, action) {
 }
 
 function watchedVideos(state = [], action) {
-  let videos;
   switch (action.type) {
     case WATCH_VIDEO:
-      if (localStorage.getItem('watchedVideos') === null) {
-        videos = {};
-      } else {
-        videos = JSON.parse(localStorage.getItem('watchedVideos'));
-      }
-      videos[action.id] = true;
-      localStorage.setItem('watchedVideos', JSON.stringify(videos));
-      return videos;
+      return [...state, action.id];
     default:
       return state;
   }

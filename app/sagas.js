@@ -12,3 +12,11 @@ function* fetchVideos(action) {
 export function* requestVideos() {
   yield takeLatest('REQUEST_VIDEOS', fetchVideos);
 }
+
+// TODO Save watched videos
+// if a user is logged in this will be done with an api request
+// if (localStorage.getItem('watchedVideos') !== null) {
+//   videos = JSON.parse(localStorage.getItem('watchedVideos'));
+// }
+// videos[action.id] = true;
+// localStorage.setItem('watchedVideos', JSON.stringify(videos));

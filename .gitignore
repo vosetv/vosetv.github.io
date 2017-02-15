@@ -6,6 +6,8 @@ production/
 .env
 .DS_Store
 
+.tern_port
+
 # Logs
 logs
 *.log
