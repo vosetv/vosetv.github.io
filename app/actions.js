@@ -23,19 +23,6 @@ export function selectVideo(video) {
   };
 }
 
-// export function selectSubreddit(subreddit, pushState) {
-//   if (pushState === true) {
-//     document.title = `vose.tv - /r/${subreddit}`;
-//     history.pushState({}, null, `/r/${subreddit}`);
-//     ga('set', 'page', `/r/${subreddit}`);
-//     ga('send', 'pageview');
-//   }
-//   return {
-//     type: SELECT_SUBREDDIT,
-//     subreddit,
-//   };
-// }
-
 export function selectFilter(subreddit, filter, pushState) {
   if (pushState === true) {
     if (filter === 'hot') {
@@ -82,7 +69,7 @@ function receiveVideos(subreddit, filter, videos) {
 }
 
 function fetchVideos(subreddit, filter = 'hot') {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(requestVideos(subreddit, filter));
     return fetch(`/api/videos/${subreddit}/${filter}`, { method: 'GET' })
       .then(response => response.json())
@@ -101,6 +88,19 @@ function fetchVideos(subreddit, filter = 'hot') {
 //     return false;
 //   }
 //   return videos.didInvalidate;
+// }
+
+// export function selectSubreddit(subreddit, pushState) {
+//   if (pushState === true) {
+//     document.title = `vose.tv - /r/${subreddit}`;
+//     history.pushState({}, null, `/r/${subreddit}`);
+//     ga('set', 'page', `/r/${subreddit}`);
+//     ga('send', 'pageview');
+//   }
+//   return {
+//     type: SELECT_SUBREDDIT,
+//     subreddit,
+//   };
 // }
 
 export function fetchVideosIfNeeded(subreddit, filter) {

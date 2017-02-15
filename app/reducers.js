@@ -30,6 +30,8 @@ function selectedVideo(state = 0, action) {
   switch (action.type) {
     case SELECT_VIDEO:
       return action.video;
+    case SELECT_FILTER: // Reset selected video on filter change
+      return 0;
     default:
       return state;
   }

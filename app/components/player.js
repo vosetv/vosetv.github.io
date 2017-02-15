@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import YouTube from 'react-youtube';
+import { connect } from 'react-redux';
+import { videoWatch, selectVideo } from '../actions';
 
-export default class Player extends Component {
+export class Player extends Component {
   static propTypes = {
-    video: PropTypes.object.isRequired,
     selectedVideo: PropTypes.number.isRequired,
     onEnd: PropTypes.func.isRequired,
     onVideoWatch: PropTypes.func.isRequired,
@@ -14,10 +15,11 @@ export default class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedVideo === this.props.selectedVideo) {
+    const { onVideoWatch, video, selectedVideo } = this.props;
+    if (nextProps.selectedVideo === selectedVideo) {
       return;
     }
-    this.props.onVideoWatch(this.props.video.id);
+    onVideoWatch(video.id);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -69,3 +71,13 @@ export default class Player extends Component {
     );
   }
 }
+
+export default connect(state => ({
+}), dispatch => ({
+  onVideoWatch: (videoId) => {
+    dispatch(videoWatch(videoId));
+  },
+  handleEnd: (nextVideo) => {
+    dispatch(selectVideo(nextVideo));
+  },
+}))(Player);

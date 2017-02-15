@@ -1,20 +1,13 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import { selectVideo } from '../actions';
 import Video from './video';
 
-// TODO: Change dumb way to select class
-export default class Videos extends Component {
-  static propTypes = {
-    videos: PropTypes.array.isRequired,
-    watchedVideos: PropTypes.object.isRequired,
-    handleKeyup: PropTypes.func.isRequired,
-    handleClick: PropTypes.func.isRequired,
-    selectedVideo: PropTypes.number.isRequired,
-  };
 
-  constructor(props) {
-    super(props);
-    this.keyUp = this.keyUp.bind(this);
-  }
+// TODO: Change dumb way to select class
+export class VideoList extends Component {
+  static propTypes = {
+  };
 
   componentDidMount() {
     window.addEventListener('keyup', this.keyUp);
@@ -24,7 +17,7 @@ export default class Videos extends Component {
     window.removeEventListener('keyup', this.keyUp);
   }
 
-  keyUp(e) {
+  keyUp = (e) => {
     const { handleKeyup, selectedVideo, videos } = this.props;
 
     if (e.keyCode === 39 && selectedVideo !== videos.length) {
@@ -36,14 +29,22 @@ export default class Videos extends Component {
 
   render() {
     // TODO: Just pass a watched flag and selected flag.
-    /* eslint-disable no-unused-vars */
     const { videos, handleKeyup, ...other } = this.props;
-    /* eslint-enable no-unused-vars */
 
     return (
       <ul className="video-list">
-        {videos.map((video, i) => <Video {...other} video={video} key={i} index={i} />)}
+        {videos.map((video, i) => <Video {...other} video={video} key={video.id} index={i} />)}
       </ul>
     );
   }
 }
+
+export default connect(state => ({
+}), dispatch => ({
+  handleKeyup: (nextVideo) => {
+    dispatch(selectVideo(nextVideo));
+  },
+  handleClick: (nextVideo) => {
+    dispatch(selectVideo(nextVideo));
+  },
+}))(VideoList);

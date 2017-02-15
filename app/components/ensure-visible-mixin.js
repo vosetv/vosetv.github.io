@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// TODO This could be done a lot better
 const EnsureVisibleMixin = InnerComponent => class extends Component {
   componentDidMount() {
     this.ensureVisible();

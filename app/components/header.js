@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import subreddits from '../subreddits';
+import { selectFilter } from '../actions';
 
-const Header = ({ value, onChange, onFilterChange, options, filter }) =>
+export const Header = ({ value, onChange, onFilterChange, options, filter }) =>
   <div className="header">
     <div className="logo">
       <img onClick={() => onChange('videos')} src="/img/vose.svg" alt="vose.tv" />
@@ -18,4 +20,15 @@ Header.propTypes = {
   filter: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default connect(state => ({
+}), dispatch => ({
+
+  handleChange: (nextSubreddit) => {
+    dispatch(selectFilter(nextSubreddit, null, true));
+  },
+
+  handleFilterChange: (nextFilter) => {
+    dispatch(selectFilter(null, nextFilter, true));
+  },
+
+}))(Header);
