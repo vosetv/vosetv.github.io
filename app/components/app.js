@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
-  selectFilter,
-  fetchVideosIfNeeded,
+  changeFilter,
+  fetchVideos,
 } from '../actions';
 import Header from '../components/header';
 import VideoList from '../components/video-list';
 import Player from '../components/player';
 
-class App extends Component {
+export default class App extends Component {
   static propTypes = {
   }
 
@@ -32,12 +32,12 @@ class App extends Component {
 
   handleNavigation = () => {
     // TODO Handle filter
-    const path = location.pathname.replace(/\/{2,}/, '/').split('/');
-    this.props.dispatch(selectFilter(path[2], path[3]));
+    const [,,subreddit, sort] = location.pathname.replace(/\/{2,}/, '/').split('/');
+    this.props.dispatch(changeFilter({ subreddit, sort }));
   }
 
   render() {
-    const { selectedVideo, selectedSubreddit, selectedFilter, videos, isFetching, watchedVideos } = this.props;
+    const { selectedVideo, selectedSubreddit, selectedFilter, videos, watchedVideos } = this.props;
     return (
       <div>
         <Header

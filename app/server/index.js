@@ -9,7 +9,9 @@ import { renderToString } from 'react-dom/server';
 
 import App from '../components/app';
 import configureStore from '../configureStore';
-import { getVideos, hotVideos } from './getVideos';
+import refreshVideos from './refreshVideos';
+import { apiRouter } from './api';
+import hotVideos from './hotVideos';
 
 require('dotenv').config();
 
@@ -33,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../public')));
 }
 
-getVideos(app);
+app.use('/api', apiRouter);
 
 app.use((req, res) => {
   const subreddit = req.path.replace(/\/{2,}/, '/').split('/')[2] || 'videos';

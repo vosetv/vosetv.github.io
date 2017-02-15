@@ -5,10 +5,12 @@ export default [
   'gaming',
   'Documentaries',
   'cookingvideos',
+  'instant_regret',
   'listentothis',
   'youtubehaiku',
   'mealtimevideos',
   'trailers',
+  'movies',
+  'television',
   'skateboarding',
-  'reactjs',
 ];

@@ -1,18 +1,76 @@
 import get from 'lodash.get';
 import { combineReducers } from 'redux';
 import {
-  SELECT_VIDEO,
-  SELECT_FILTER,
-  INVALIDATE_SUBREDDIT,
-  REQUEST_VIDEOS,
+  CHANGE_VIDEO,
+  CHANGE_FILTER,
+  WATCH_VIDEO,
   RECEIVE_VIDEOS,
-  VIDEO_WATCH,
+  REQUEST_VIDEOS,
 } from './actions';
 
-export function videoWatchReducer(state = {}, action) {
+/**
+ * Store should be a respresentation of the app's state
+ * do not use it as memory
+ * store cached subreddits in indexdb or localstorage
+ * store: {
+ *   videos: array
+ *   currentVideo: number or obj
+ *   filter: {
+ *     subreddit: string
+ *     sort: string
+ *   }
+ *   isFetching: bool
+ *   watchedVideos: array
+ * }
+ */
+
+function videos(state = [], action) {
+  switch (action.type) {
+    case RECEIVE_VIDEOS:
+      return action.videos;
+    default:
+      return state;
+  }
+}
+
+function currentVideo(state, action) {
+  switch (action.type) {
+    case CHANGE_VIDEO:
+      return action.video;
+    case CHANGE_FILTER:
+      return 0;
+    default:
+      return state;
+  }
+}
+
+function filter(state = {
+  subreddit: 'videos',
+  sort: 'hot',
+}, action) {
+  switch (action.type) {
+    case CHANGE_FILTER:
+      return { ...action.filter, state};
+    default:
+      return state;
+  }
+}
+
+function isFetching(state = false, action) {
+  switch (action.type) {
+    case RECEIVE_VIDEOS:
+      return false,
+    case REQUEST_VIDEOS:
+      return true;
+    default:
+      return state;
+  }
+}
+
+function watchedVideos(state = [], action) {
   let videos;
   switch (action.type) {
-    case VIDEO_WATCH:
+    case WATCH_VIDEO:
       if (localStorage.getItem('watchedVideos') === null) {
         videos = {};
       } else {
@@ -26,91 +84,12 @@ export function videoWatchReducer(state = {}, action) {
   }
 }
 
-function selectedVideo(state = 0, action) {
-  switch (action.type) {
-    case SELECT_VIDEO:
-      return action.video;
-    case SELECT_FILTER: // Reset selected video on filter change
-      return 0;
-    default:
-      return state;
-  }
-}
-
-function selectedSubreddit(state = 'videos', action) {
-  switch (action.type) {
-    case SELECT_FILTER:
-      return action.subreddit;
-    default:
-      return state;
-  }
-}
-
-function selectedFilter(state = 'hot', action) {
-  switch (action.type) {
-    case SELECT_FILTER:
-      return action.filter;
-    default:
-      return state;
-  }
-}
-
-function getVideos(state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: [],
-}, action) {
-  switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-      return {
-        ...state,
-        didInvalidate: true,
-      };
-    case REQUEST_VIDEOS:
-      return {
-        ...state,
-        isFetching: true,
-        didInvalidate: false,
-      };
-    case RECEIVE_VIDEOS:
-      return {
-        ...state,
-        isFetching: false,
-        didInvalidate: false,
-        items: action.videos,
-        lastUpdated: action.receivedAt,
-      };
-    default:
-      return state;
-  }
-}
-
-function videosBySubreddit(state = {
-  hot: {},
-  top: {},
-  new: {},
-}, action) {
-  switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-    case RECEIVE_VIDEOS:
-    case REQUEST_VIDEOS:
-      return {
-        ...state,
-        [action.filter]: {
-          [action.subreddit]: getVideos(get(state, [action.filter, action.subreddit]), action),
-        },
-      };
-    default:
-      return state;
-  }
-}
-
 const rootReducer = combineReducers({
-  videosBySubreddit,
-  watchedVideos: videoWatchReducer,
-  selectedSubreddit,
-  selectedFilter,
-  selectedVideo,
+  videos,
+  currentVideo,
+  filter,
+  isFetching,
+  watchedVideos,
 });
 
 export default rootReducer;

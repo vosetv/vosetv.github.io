@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Overlay = () =>
+const Overlay = ({ children }) =>
   <div className="overlay">
     <div className="overlay__content">
-      <svg viewBox="0 0 40 40">
-        <path opacity="0.2" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
-        <path id="overlay__loader" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0 C22.32,8.481,24.301,9.057,26.013,10.047z" />
+      <svg viewBox="0 0 30 30">
+        <circle style="stroke-width: 3" cx="15" cy="15" r="13"/>
+        <circle id="overlay__loader" style="stroke-width: 3.2" stroke-dasharray="7, 80" stroke-dashoffset="0" cx="15" cy="15" r="13"/>
       </svg>
-      <h2>Loading</h2>
+      { children }
     </div>
   </div>
 

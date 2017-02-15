@@ -4,7 +4,6 @@ import { selectVideo } from '../actions';
 import Video from './video';
 
 
-// TODO: Change dumb way to select class
 export class VideoList extends Component {
   static propTypes = {
   };

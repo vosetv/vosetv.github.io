@@ -73,11 +73,12 @@ export class Player extends Component {
 }
 
 export default connect(state => ({
+  video: state.video,
 }), dispatch => ({
   onVideoWatch: (videoId) => {
     dispatch(videoWatch(videoId));
   },
-  handleEnd: (nextVideo) => {
+  onEnd: (nextVideo) => {
     dispatch(selectVideo(nextVideo));
   },
 }))(Player);

@@ -45,7 +45,7 @@ function normalizeVideos(videos) {
   });
 }
 
-export function fetchSubreddit(subreddit, subfilter = 'hot') {
+export default function fetchSubreddit(subreddit, subfilter = 'hot') {
   const videoLimit = 50;
   const count = 0;
   let videos = [];

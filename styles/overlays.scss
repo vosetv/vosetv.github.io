@@ -21,8 +21,9 @@
     width: 5vw;
     height: 5vw;
   }
-  svg path {
-    fill: #2196f3;
+  svg circle {
+    stroke: #2196f3;
+    fill: transparent;
   }
   h2 {
     color: #ddd;

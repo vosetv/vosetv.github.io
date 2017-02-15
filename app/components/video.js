@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import EnsureVisibleMixin from './ensure-visible-mixin';
 
-const Video = props => {
-  const { handleClick, video, index, selectedVideo, watchedVideos, getNode } = props;
+const Video = ({ handleClick, video, index, selectedVideo, watchedVideos, getNode }) => {
   const classes = classnames(
     'video-item',
     {

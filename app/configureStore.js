@@ -1,13 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
+import { requestVideos } from './sagas'
+
+const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState) {
   return createStore(
     rootReducer,
     initialState,
     applyMiddleware(
-      thunkMiddleware,
+      sagaMiddleware,
     ),
   );
 }
+
+sagaMiddleware.run(requestVideos);
