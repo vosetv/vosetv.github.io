@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import subreddits from '../subreddits';
 import { selectFilter } from '../actions';
 
@@ -10,20 +11,10 @@ export const Header = ({ value, onChange, onFilterChange, options, filter }) =>
     <div>Filter v</div>
   </div>;
 
-Header.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.string.isRequired,
-  ).isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};
-
 export default connect(state => ({
 }), dispatch => ({
 
-  handleChange: (nextSubreddit) => {
+  onChange: (nextSubreddit) => {
     dispatch(selectFilter(nextSubreddit, null, true));
   },
 

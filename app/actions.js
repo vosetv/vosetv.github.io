@@ -43,7 +43,7 @@ export function changeFilter(filter, pushState) {
   };
 }
 
-function receiveVideos(subreddit, sort, videos) {
+export function receiveVideos(subreddit, sort, videos) {
   return {
     type: RECEIVE_VIDEOS,
     filter: { subreddit, sort },
@@ -51,17 +51,24 @@ function receiveVideos(subreddit, sort, videos) {
   };
 }
 
-function fetchVideos(subreddit, filter = 'hot') {
-  return (dispatch) => {
-    dispatch(requestVideos(subreddit, filter));
-    return fetch(`/api/videos/${subreddit}/${filter}`, { method: 'GET' })
-      .then(response => response.json())
-      .then(json => dispatch(receiveVideos(subreddit, filter, json)))
-      .catch(err => {
-        console.error('Fetch Videos Error:', err);
-      });
+export function requestVideos(filter) {
+  return {
+    type: REQUEST_VIDEOS,
+    filter,
   };
 }
+
+// function fetchVideos(subreddit, filter = 'hot') {
+//   return (dispatch) => {
+//     dispatch(requestVideos(subreddit, filter));
+//     return fetch(`/api/videos/${subreddit}/${filter}`, { method: 'GET' })
+//       .then(response => response.json())
+//       .then(json => dispatch(receiveVideos(subreddit, filter, json)))
+//       .catch(err => {
+//         console.error('Fetch Videos Error:', err);
+//       });
+//   };
+// }
 
 export function fetchVideosIfNeeded(subreddit, filter) {
   return dispatch => dispatch(fetchVideos(subreddit, filter));

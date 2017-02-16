@@ -8,13 +8,13 @@ import Header from '../components/header';
 import VideoList from '../components/video-list';
 import Player from '../components/player';
 
-export default class App extends Component {
+class App extends Component {
   static propTypes = {
   }
 
   componentDidMount() {
     const { dispatch, selectedSubreddit, selectedFilter } = this.props;
-    dispatch(fetchVideosIfNeeded(selectedSubreddit, selectedFilter));
+    dispatch(fetchVideos(selectedSubreddit, selectedFilter));
     window.addEventListener('popstate', this.handleNavigation);
   }
 
@@ -22,7 +22,7 @@ export default class App extends Component {
     if (nextProps.selectedSubreddit !== this.props.selectedSubreddit
     || nextProps.selectedFilter !== this.props.selectedFilter) {
       const { dispatch, selectedSubreddit, selectedFilter } = nextProps;
-      dispatch(fetchVideosIfNeeded(selectedSubreddit, selectedFilter));
+      dispatch(fetchVideos(selectedSubreddit, selectedFilter));
     }
   }
 
@@ -61,3 +61,7 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  videos: state.videos,
+}))(App);

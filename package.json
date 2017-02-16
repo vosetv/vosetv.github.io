@@ -9,6 +9,7 @@
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "dotenv": "^4.0.0",

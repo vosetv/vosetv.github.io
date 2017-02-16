@@ -33,7 +33,7 @@ function videos(state = [], action) {
   }
 }
 
-function currentVideo(state, action) {
+function currentVideo(state = 0, action) {
   switch (action.type) {
     case CHANGE_VIDEO:
       return action.video;
@@ -50,7 +50,7 @@ function filter(state = {
 }, action) {
   switch (action.type) {
     case CHANGE_FILTER:
-      return { ...state, action.filter };
+      return { ...state, ...action.filter };
     default:
       return state;
   }
@@ -59,7 +59,7 @@ function filter(state = {
 function isFetching(state = false, action) {
   switch (action.type) {
     case RECEIVE_VIDEOS:
-      return false,
+      return false;
     case REQUEST_VIDEOS:
       return true;
     default:
