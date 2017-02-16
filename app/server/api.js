@@ -4,7 +4,7 @@ import hotVideos from './hotVideos';
 
 export const apiRouter = Router();
 
-apiRouter.get('/videos/:subreddit/top/:time', async (req, res) => {
+apiRouter.get('/:subreddit/top/:time', async (req, res) => {
   console.log('top', req.params.subreddit, req.params.time);
   const subreddit = req.params.subreddit.toLowerCase();
   if (subreddit in hotVideos) {
@@ -15,15 +15,15 @@ apiRouter.get('/videos/:subreddit/top/:time', async (req, res) => {
   }
 });
 
-apiRouter.get('/videos/:subreddit/:filter', async (req, res) => {
-  console.log('filtered', req.params.subreddit, req.params.filter);
+apiRouter.get('/:subreddit/:sort', async (req, res) => {
+  console.log('sorted', req.params.subreddit, req.params.sort);
   const subreddit = req.params.subreddit.toLowerCase();
-  const filter = req.params.filter.toLowerCase();
-  const videos = await fetchSubreddit(subreddit, filter);
+  const sort = req.params.sort.toLowerCase();
+  const videos = await fetchSubreddit(subreddit, sort);
   return res.json(videos);
 });
 
-apiRouter.get('/videos/:subreddit', async (req, res) => {
+apiRouter.get('/:subreddit', async (req, res) => {
   console.log('hot', req.params.subreddit);
   const subreddit = req.params.subreddit.toLowerCase();
   if (subreddit in hotVideos) {

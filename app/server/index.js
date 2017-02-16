@@ -35,30 +35,24 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../public')));
 }
 
-app.use('/api', apiRouter);
+app.use('/api/videos', apiRouter);
 
 app.use((req, res) => {
   const subreddit = req.path.replace(/\/{2,}/, '/').split('/')[2] || 'videos';
-  const filter = req.path.replace(/\/{2,}/, '/').split('/')[3] || 'hot';
+  const sort = req.path.replace(/\/{2,}/, '/').split('/')[3] || 'hot';
+  // TODO Time
   let store;
   if (hotVideos[subreddit.toLowerCase()]) {
     store = configureStore({
-      selectedSubreddit: subreddit,
-      selectedFilter: filter,
-      videosBySubreddit: {
-        [subreddit]: {
-          items: hotVideos[subreddit.toLowerCase()] || [],
-          isFetching: false,
-          didInvalidate: false,
-          lastUpdated: Date.now(),
-        },
-      },
-      selectedVideo: 0,
+      filter: { subreddit, sort },
+      isFetching: false,
+      videos: hotVideos[subreddit.toLowerCase()],
+      currentVideo: 0,
     });
   } else {
     store = configureStore({
-      selectedSubreddit: subreddit,
-      selectedVideo: 0,
+      filter: { subreddit, sort },
+      currentVideo: 0,
     });
   }
   const reactHtml = renderToString(

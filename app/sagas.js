@@ -7,18 +7,15 @@ import {
 
 function* fetchVideos(action) {
   try {
-    const videos = yield call(fetch, `/api/videos/${subreddit}/${filter}`, { method: 'GET' });
-      videos.then(response => response.json())
-      // .then(json => dispatch(receiveVideos(subreddit, filter, json)))
-    // const videos = yield call(Api.fetchUser, action.payload.userId);
-    // yield put({ type: 'RECEIVE_VIDEOS', videos });
+    const response = yield call(fetch, `/api/videos/${subreddit}/${filter}`, { method: 'GET' });
+    const videos = yield response.json();
     yield put(receiveVideos(videos));
   } catch (e) {
-    // yield put({type: "USER_FETCH_FAILED", message: e.message});
+    console.log('we threw in the fetch saga');
   }
 }
 
-function* requestVideosSaga() {
+function* watchFetchVideos() {
   yield takeLatest(REQUEST_VIDEOS, fetchVideos);
 }
 
