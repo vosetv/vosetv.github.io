@@ -7,6 +7,7 @@ import configureStore, { sagaMiddleware } from '../configureStore';
 import rootSaga from '../sagas';
 
 const store = configureStore(window.PRELOADED_STATE);
+store.watchedVideos = JSON.parse(localStorage.getItem('watchedVideos') || [];
 // TODO Integration test
 const subreddit = window.PRELOADED_STATE.filter.subreddit;
 

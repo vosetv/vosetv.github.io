@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   REQUEST_VIDEOS,
+  WATCH_VIDEO,
   receiveVideos,
 } from './actions';
 
@@ -11,20 +12,30 @@ function* fetchVideos(action) {
   yield put(receiveVideos(videos));
 }
 
+function* watchVideo({ id }) {
+  const watchedVideos = []; // TODO Get watchedvideos
+  if (watchedVideos.includes(id) === false) {
+    watchedVideos.push(id);
+  }
+  // Make sure we don't go over our local storage limit
+  if (watchedVideos.length > 50000) {
+    // TODO Splice array.
+    watchedVideos.splice(0, 25000);
+  }
+  localStorage.setItem('watchedVideos', JSON.stringify(watchedVideos));
+}
+
 function* watchFetchVideos() {
   yield takeLatest(REQUEST_VIDEOS, fetchVideos);
 }
 
-// TODO Save watched videos
-// if a user is logged in this will be done with an api request
-// if (localStorage.getItem('watchedVideos') !== null) {
-//   videos = JSON.parse(localStorage.getItem('watchedVideos'));
-// }
-// videos[action.id] = true;
-// localStorage.setItem('watchedVideos', JSON.stringify(videos));
+function* watchWatchVideo() {
+  yield takeLatest(WATCH_VIDEO, watchVideo);
+}
 
 export default function* rootSaga() {
   yield [
     watchFetchVideos(),
+    watchWatchVideo(),
   ];
 }
