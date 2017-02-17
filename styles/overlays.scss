@@ -6,6 +6,7 @@
     transform: rotate(360deg);
   }
 }
+
 .overlay {
   position: absolute;
   height: 100vh;
@@ -15,6 +16,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .overlay__content {
   text-align: center;
   svg {
@@ -35,10 +37,11 @@
     font-size: 3vw;
   }
 }
+
 #overlay__loader {
   animation-name: loaderRotate;
   animation-duration: 1s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  transform-origin: 20px 20px;
+  transform-origin: center;
 }
