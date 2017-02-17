@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
   changeFilter,
-  fetchVideos,
+  requestVideos,
 } from '../actions';
 import Header from '../components/header';
 import VideoList from '../components/video-list';
@@ -13,8 +13,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, selectedSubreddit, selectedFilter } = this.props;
-    dispatch(fetchVideos(selectedSubreddit, selectedFilter));
+    const { dispatch } = this.props;
+    const { subreddit, sort } = this.props.filter;
+    dispatch(requestVideos({ subreddit, sort }));
+
     window.addEventListener('popstate', this.handleNavigation);
   }
 
@@ -22,7 +24,7 @@ class App extends Component {
     if (nextProps.selectedSubreddit !== this.props.selectedSubreddit
     || nextProps.selectedFilter !== this.props.selectedFilter) {
       const { dispatch, selectedSubreddit, selectedFilter } = nextProps;
-      dispatch(fetchVideos(selectedSubreddit, selectedFilter));
+      dispatch(requestVideos({ subreddit: selectedSubreddit, sort: selectedFilter }));
     }
   }
 
@@ -37,23 +39,20 @@ class App extends Component {
   }
 
   render() {
-    const { selectedVideo, selectedSubreddit, selectedFilter, videos, watchedVideos } = this.props;
+    const { currentVideo, videos, watchedVideos } = this.props;
     return (
       <div>
-        <Header
-          value={selectedSubreddit}
-          filter={selectedFilter}
-        />
+        <Header />
         {videos.length > 0 &&
           <Player
-            video={videos[selectedVideo]}
-            selectedVideo={selectedVideo}
+            video={videos[currentVideo]}
+            currentVideo={currentVideo}
           />
         }
         {videos.length > 0 &&
           <VideoList
             videos={videos}
-            selectedVideo={selectedVideo}
+            currentVideo={currentVideo}
             watchedVideos={watchedVideos}
           />
         }
@@ -64,4 +63,6 @@ class App extends Component {
 
 export default connect(state => ({
   videos: state.videos,
+  filter: state.filter,
+  currentVideo: state.currentVideo,
 }))(App);

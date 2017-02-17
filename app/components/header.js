@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import subreddits from '../subreddits';
-import { selectFilter } from '../actions';
+import { changeFilter } from '../actions';
 
-export const Header = ({ value, onChange, onFilterChange, options, filter }) =>
+export const Header = ({ value, handleFilterChange, onFilterChange, options, filter }) =>
   <div className="header">
     <div className="logo">
-      <img onClick={() => onChange('videos')} src="/img/vose.svg" alt="vose.tv" />
+      <img onClick={() => handleFilterChange('videos', 'hot')} src="/img/vose.svg" alt="vose.tv" />
     </div>
     <div>Filter v</div>
   </div>;
@@ -14,12 +14,8 @@ export const Header = ({ value, onChange, onFilterChange, options, filter }) =>
 export default connect(state => ({
 }), dispatch => ({
 
-  onChange: (nextSubreddit) => {
-    dispatch(selectFilter(nextSubreddit, null, true));
-  },
-
-  handleFilterChange: (nextFilter) => {
-    dispatch(selectFilter(null, nextFilter, true));
+  handleFilterChange: (subreddit = null, sort = null) => {
+    dispatch(changeFilter({ subreddit, sort }, true));
   },
 
 }))(Header);

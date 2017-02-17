@@ -22,17 +22,19 @@ export function changeVideo(video) {
 
 export function changeFilter(filter, pushState) {
 
+  const { subreddit, sort } = filter;
+
   // Side effects
   // Put in middelware?
   if (pushState === true) {
-    if (filter.sort === 'hot') {
+    if (sort === 'hot') {
       document.title = `vose.tv - /r/${subreddit}`;
       history.pushState({}, null, `/r/${subreddit}`);
       ga('set', 'page', `/r/${subreddit}`);
     } else {
-      document.title = `vose.tv - /r/${subreddit}/${filter}`;
-      history.pushState({}, null, `/r/${subreddit}/${filter}`);
-      ga('set', 'page', `/r/${subreddit}/${filter}`);
+      document.title = `vose.tv - /r/${subreddit}/${sort}`;
+      history.pushState({}, null, `/r/${subreddit}/${sort}`);
+      ga('set', 'page', `/r/${subreddit}/${sort}`);
     }
     ga('send', 'pageview');
   }
@@ -43,10 +45,9 @@ export function changeFilter(filter, pushState) {
   };
 }
 
-export function receiveVideos(subreddit, sort, videos) {
+export function receiveVideos(videos) {
   return {
     type: RECEIVE_VIDEOS,
-    filter: { subreddit, sort },
     videos,
   };
 }
@@ -57,18 +58,6 @@ export function requestVideos(filter) {
     filter,
   };
 }
-
-// function fetchVideos(subreddit, filter = 'hot') {
-//   return (dispatch) => {
-//     dispatch(requestVideos(subreddit, filter));
-//     return fetch(`/api/videos/${subreddit}/${filter}`, { method: 'GET' })
-//       .then(response => response.json())
-//       .then(json => dispatch(receiveVideos(subreddit, filter, json)))
-//       .catch(err => {
-//         console.error('Fetch Videos Error:', err);
-//       });
-//   };
-// }
 
 export function fetchVideosIfNeeded(subreddit, filter) {
   return dispatch => dispatch(fetchVideos(subreddit, filter));

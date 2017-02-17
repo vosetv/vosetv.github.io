@@ -49,8 +49,8 @@ function filter(state = {
   sort: 'hot',
 }, action) {
   switch (action.type) {
-    case CHANGE_FILTER:
-      return { ...state, ...action.filter };
+    // case CHANGE_FILTER:
+    //   return { ...state, ...action.filter };
     default:
       return state;
   }

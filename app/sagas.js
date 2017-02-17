@@ -1,18 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   REQUEST_VIDEOS,
-  requestVideos,
-  receiveVideos
+  receiveVideos,
 } from './actions';
 
 function* fetchVideos(action) {
-  try {
-    const response = yield call(fetch, `/api/videos/${subreddit}/${filter}`, { method: 'GET' });
-    const videos = yield response.json();
-    yield put(receiveVideos(videos));
-  } catch (e) {
-    console.log('we threw in the fetch saga');
-  }
+  const { subreddit, sort } = action.filter;
+  const response = yield call(fetch, `/api/videos/${subreddit}/${sort}`, { method: 'GET' });
+  const videos = yield response.json();
+  yield put(receiveVideos(videos));
 }
 
 function* watchFetchVideos() {
@@ -29,6 +25,6 @@ function* watchFetchVideos() {
 
 export default function* rootSaga() {
   yield [
-    requestVideosSaga(),
+    watchFetchVideos(),
   ];
 }

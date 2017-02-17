@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import EnsureVisibleMixin from './ensure-visible-mixin';
 
-const Video = ({ handleClick, video, index, selectedVideo, watchedVideos, getNode }) => {
+const Video = ({ handleClick, video, index, currentVideo, watchedVideos, getNode }) => {
   const classes = classnames(
     'video-item',
     {
-      'video-item--selected': (selectedVideo === index),
-      'video-item--watched': (watchedVideos && watchedVideos[video.id] === true),
+      'video-item--selected': (currentVideo === index),
+      'video-item--watched': (watchedVideos.includes(video.id)),
     },
   );
   return (
@@ -23,10 +23,10 @@ const Video = ({ handleClick, video, index, selectedVideo, watchedVideos, getNod
 Video.propTypes = {
   video: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  watchedVideos: PropTypes.object.isRequired,
+  watchedVideos: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
   getNode: PropTypes.func.isRequired,
-  selectedVideo: PropTypes.number.isRequired,
+  currentVideo: PropTypes.number.isRequired,
 };
 
 export default EnsureVisibleMixin(Video);

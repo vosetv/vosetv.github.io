@@ -1,13 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import YouTube from 'react-youtube';
 import { connect } from 'react-redux';
-import { videoWatch, selectVideo } from '../actions';
+import { watchVideo, changeVideo } from '../actions';
 
-export class Player extends Component {
+class Player extends Component {
   static propTypes = {
-    selectedVideo: PropTypes.number.isRequired,
-    onEnd: PropTypes.func.isRequired,
-    onVideoWatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -15,8 +12,8 @@ export class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { onVideoWatch, video, selectedVideo } = this.props;
-    if (nextProps.selectedVideo === selectedVideo) {
+    const { onVideoWatch, video, currentVideo } = this.props;
+    if (nextProps.currentVideo === currentVideo) {
       return;
     }
     onVideoWatch(video.id);
@@ -39,7 +36,7 @@ export class Player extends Component {
 
   render() {
     // TODO: videos watched first gets updated here once we get video on ready, but we should try to get it before.
-    const { video, onEnd, selectedVideo, onVideoWatch } = this.props;
+    const { video, onEnd, currentVideo, onVideoWatch } = this.props;
     const opts = {
       playerVars: {
         autoplay: 1,
@@ -53,7 +50,7 @@ export class Player extends Component {
           <YouTube
             videoId={video.id}
             opts={opts}
-            onEnd={() => onEnd(selectedVideo + 1)}
+            onEnd={() => onEnd(currentVideo + 1)}
             onReady={() => onVideoWatch(video.id)}
           />
         </div>
@@ -73,12 +70,11 @@ export class Player extends Component {
 }
 
 export default connect(state => ({
-  video: state.video,
 }), dispatch => ({
   onVideoWatch: (videoId) => {
-    dispatch(videoWatch(videoId));
+    dispatch(watchVideo(videoId));
   },
   onEnd: (nextVideo) => {
-    dispatch(selectVideo(nextVideo));
+    dispatch(changeVideo(nextVideo));
   },
 }))(Player);

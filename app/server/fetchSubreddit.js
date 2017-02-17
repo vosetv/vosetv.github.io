@@ -19,14 +19,14 @@ function filter(item) {
 
 function unique(a) {
   const seen = {};
-  return a.filter((video) => seen[video.id] === true ? false : (seen[video.id] = true));
+  return a.filter(video => seen[video.id] === true ? false : (seen[video.id] = true));
 }
 
 function normalizeVideos(videos) {
-  return videos.map(video => {
+  return videos.map((video) => {
     let id;
     if (video.data.secure_media.oembed.url) {
-      id = video.data.secure_media.oembed.url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&\?]*).*/)[1];
+      id = video.data.secure_media.oembed.url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/)[1];
     } else if (video.data.secure_media.oembed.thumbnail_url) {
       id = video.data.secure_media.oembed.thumbnail_url.split('/')[4];
     }
@@ -56,14 +56,14 @@ export default function fetchSubreddit(subreddit, subfilter = 'hot') {
       : `https://reddit.com/r/${subreddit}/${subfilter}.json?raw_json=1`;
     return fetch(url)
       .then(response => response.json())
-      .then(posts => {
+      .then((posts) => {
         videos = videos.concat(posts.data.children.filter(filter));
         if (videos.length > videoLimit || depth >= 8) {
           return Promise.resolve(unique(normalizeVideos(videos)));
         }
         return Promise.reject({ msg: 'next', after: posts.data.after });
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.msg === 'next') {
           return recursiveGet(depth + 1, err.after);
         }

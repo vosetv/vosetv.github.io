@@ -7,7 +7,8 @@ import configureStore, { sagaMiddleware } from '../configureStore';
 import rootSaga from '../sagas';
 
 const store = configureStore(window.PRELOADED_STATE);
-const subreddit = window.PRELOADED_STATE.selectedSubreddit;
+// TODO Integration test
+const subreddit = window.PRELOADED_STATE.filter.subreddit;
 
 sagaMiddleware.run(rootSaga);
 

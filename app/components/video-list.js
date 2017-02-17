@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { selectVideo } from '../actions';
+import { changeVideo } from '../actions';
 import Video from './video';
 
 
@@ -17,12 +17,12 @@ export class VideoList extends Component {
   }
 
   keyUp = (e) => {
-    const { handleKeyup, selectedVideo, videos } = this.props;
+    const { handleKeyup, currentVideo, videos } = this.props;
 
-    if (e.keyCode === 39 && selectedVideo !== videos.length) {
-      handleKeyup(selectedVideo + 1);
-    } else if (e.keyCode === 37 && selectedVideo > 0) {
-      handleKeyup(selectedVideo - 1);
+    if (e.keyCode === 39 && currentVideo !== videos.length) {
+      handleKeyup(currentVideo + 1);
+    } else if (e.keyCode === 37 && currentVideo > 0) {
+      handleKeyup(currentVideo - 1);
     }
   }
 
@@ -39,11 +39,12 @@ export class VideoList extends Component {
 }
 
 export default connect(state => ({
+  watchedVideos: state.watchedVideos,
 }), dispatch => ({
   handleKeyup: (nextVideo) => {
-    dispatch(selectVideo(nextVideo));
+    dispatch(changeVideo(nextVideo));
   },
   handleClick: (nextVideo) => {
-    dispatch(selectVideo(nextVideo));
+    dispatch(changeVideo(nextVideo));
   },
 }))(VideoList);
