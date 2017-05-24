@@ -4,7 +4,9 @@
   "description": "Reddit Video App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
@@ -23,7 +25,8 @@
     "react-redux": "^4.4.5",
     "react-youtube": "^7.0.1",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "snyk": "^1.30.1"
   },
   "devDependencies": {
     "babel-preset-es2015-node5": "^1.2.0",
@@ -57,5 +60,6 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
-  }
+  },
+  "snyk": true
 }
