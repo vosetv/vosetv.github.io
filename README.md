@@ -13,3 +13,4 @@ vose.tv aims to provide an actively developed platform for viewing Reddit videos
 MIT
 
 Logo and name are trademarked.
+
