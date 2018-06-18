@@ -24,6 +24,7 @@
     "react-youtube": "7.6.0"
   },
   "devDependencies": {
+    "@babel/node": "7.0.0-beta.51",
     "ansi-colors": "2.0.1",
     "autoprefixer": "8.6.2",
     "browser-sync": "2.24.4",
@@ -43,10 +44,11 @@
     "postcss-nested": "3.0.0",
     "postcss-normalize": "6.0.0",
     "postcss-reporter": "5.0.0",
+    "postcss-scss": "1.0.5",
     "postcss-simple-vars": "4.1.0",
     "postcss-strip-inline-comments": "0.1.5",
     "webpack": "3.10.0",
-    "webpack-dev-middleware": "3.1.3",
-    "webpack-hot-middleware": "2.22.2"
+    "webpack-dev-middleware": "2.0.4",
+    "webpack-hot-middleware": "2.21.0"
   }
 }
