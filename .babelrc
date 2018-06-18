@@ -1,22 +1,21 @@
 {
-  "env": {
-    "production": {
-      "presets": ["es2015", "react"],
-      "plugins": [
-        "transform-object-rest-spread",
-        "transform-class-properties",
-        "transform-export-extensions",
-        "syntax-trailing-function-commas"
-      ]
-    },
-    "development": {
-      "presets": ["es2015-node5", "react"],
-      "plugins": [
-        "transform-object-rest-spread",
-        "transform-class-properties",
-        "transform-export-extensions",
-        "syntax-trailing-function-commas"
-      ]
-    }
-  }
+  "plugins": [
+    "@babel/syntax-dynamic-import",
+    "@babel/proposal-optional-chaining",
+    "@babel/proposal-nullish-coalescing-operator",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
+    "@babel/proposal-async-generator-functions",
+    "@babel/proposal-do-expressions",
+    "@babel/proposal-pipeline-operator",
+    "react-hot-loader/babel"
+  ],
+  "presets": [
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "modules": false,
+      "useBuiltIns": "usage",
+      "debug": false
+    }]
+  ]
 }
