@@ -1,6 +1,2 @@
-@import 'variables';
-@import 'base';
-@import 'header';
-@import 'player';
-@import 'videos';
-@import 'overlays';
+@import 'settings/**/*';
+@import 'components/**/*';

@@ -10,15 +10,6 @@ export default class Player extends Component {
     onVideoWatch: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.keyUp = this.keyUp.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('keyup', this.keyUp);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedVideo === this.props.selectedVideo) {
       return;
@@ -28,17 +19,6 @@ export default class Player extends Component {
 
   shouldComponentUpdate(nextProps) {
     return nextProps.video.id !== this.props.video.id;
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.keyUp);
-  }
-
-  keyUp(e) {
-    // press letter O
-    if (e.keyCode === 79) {
-      window.open(`https://reddit.com${this.props.video.url}`, '_blank');
-    }
   }
 
   render() {
@@ -62,13 +42,21 @@ export default class Player extends Component {
           />
         </div>
         <header className="player-header">
-          <h1 className="player-title"><a href={`https://reddit.com${video.url}`} target="_blank">{video.title}</a></h1>
-          {video.flair &&
-            <div className="player-flair">{video.flair}</div>
-          }
+          <h1 className="player-title">
+            <a href={`https://reddit.com${video.url}`} target="_blank">
+              {video.title}
+            </a>
+          </h1>
+          {video.flair && <div className="player-flair">{video.flair}</div>}
         </header>
         <footer className="player-footer">
-          <a className="player-comments" href={`https://reddit.com${video.url}`} target="_blank">{video.comments} comments</a>
+          <a
+            className="player-comments"
+            href={`https://reddit.com${video.url}`}
+            target="_blank"
+          >
+            {video.comments} comments
+          </a>
           <div className="player-score">Score: {video.score}</div>
         </footer>
       </div>
