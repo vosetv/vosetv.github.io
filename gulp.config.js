@@ -22,7 +22,7 @@ exports.default = {
   img: {
     any: ['./src/img/**/*'], // Files to watch
     src: ['./src/img/**/*'], // File(s) to source
-    dest: './.public/', // Where to put transformed file(s)
+    dest: './.public/img', // Where to put transformed file(s)
   },
   assets: {
     any: ['./src/assets/**/*'], // Files to watch
