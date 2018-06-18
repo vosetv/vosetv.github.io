@@ -17,8 +17,10 @@ $header-fg: #64b5f6;
   background: $header-bg;
   position: fixed;
   width: 100%;
+  box-sizing: border-box;
   padding: 0 20px;
   top: 0;
+  left: 0;
 }
 
 .logo {
