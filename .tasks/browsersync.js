@@ -23,8 +23,7 @@ function browsersync() {
         //   cert: './src/server/localhost.crt',
         // },
         proxy: {
-          target: 'https://localhost:4004', // server/index.js
-          ws: true,
+          target: 'http://localhost:4004', // server/index.js
           middleware: [
             webpackDevMiddleware(bundler, {
               publicPath: config.output.publicPath,
