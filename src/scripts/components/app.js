@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   selectVideo,
@@ -7,10 +8,10 @@ import {
   fetchVideosIfNeeded,
   invalidateSubreddit,
 } from '../actions';
-import Header from '../components/header';
-import Videos from '../components/videos';
-import Player from '../components/player';
-import subreddits from '../subreddits';
+import Header from './header';
+import Videos from './videos';
+import Player from './player';
+import subreddits from '../../subreddits';
 
 class App extends Component {
   static propTypes = {

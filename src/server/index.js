@@ -7,8 +7,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 
-import App from '../containers/app';
-import configureStore from '../configureStore';
+import App from '../scripts/components/app';
+import configureStore from '../scripts/configureStore';
 import { getVideos, hotVideos } from './get-videos';
 
 require('dotenv').config();
@@ -19,7 +19,7 @@ const port = process.env.PORT;
 /**
  * Set templates and views folder
  */
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.set('view cache', true);
 
@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   }));
   app.use(nodalytics(process.env.GA_CODE_SERVER));
 } else {
-  app.use(express.static(path.join(__dirname, '../../public')));
+  app.use(express.static(path.join(__dirname, '../../.public')));
 }
 
 getVideos(app);

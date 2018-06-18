@@ -8,8 +8,7 @@ const nodemon = require('gulp-nodemon');
 function start(done) {
   nodemon({
     exec: './node_modules/@babel/node/bin/babel-node.js \
-    --no-babelrc \
-    --plugins=transform-es2015-modules-commonjs,@babel/proposal-object-rest-spread',
+    --plugins=@babel/transform-modules-commonjs,@babel/proposal-object-rest-spread',
     script: './src/server/index.js',
     watch: './src/server/',
     done,

@@ -4,7 +4,7 @@
   position: fixed;
   top: $header-height;
   right: -30px;
-  height: calc(100vh - #{$header-height});
+  height: calc(100vh - $header-height);
   overflow-y: overlay;
   overflow-x: hidden;
   margin: 0;
@@ -87,7 +87,7 @@
 
 .video-item__title {
   // width: calc(100vw - #{$videos-width} - #{$thumb-width});
-  width: calc(100vw - (100vh - #{$videos-width}) / 0.5625 - 176px);
+  width: calc(100vw - (100vh - $videos-width) / 0.5625 - 176px);
   min-width: 200px;
   display: inline-block;
   float: left;
