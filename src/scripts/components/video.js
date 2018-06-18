@@ -1,23 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import EnsureVisibleMixin from './ensure-visible-mixin';
+import objstr from 'obj-str';
+import ensureVisibleHOC from './ensure-visible-mixin';
 
-const Video = props => {
-  const { handleClick, video, index, selectedVideo, watchedVideos, getNode } = props;
-  const classes = classnames(
-    'video-item',
-    {
-      'video-item--selected': (selectedVideo === index),
-      'video-item--watched': (watchedVideos && watchedVideos[video.id] === true),
-    },
-  );
+// TODO Clean up props, lots aren't necessary
+const Video = ({
+  handleClick,
+  video,
+  index,
+  selectedVideo,
+  watchedVideos,
+  getNode,
+}) => {
+  const classes = objstr({
+    'video-item': true,
+    'video-item--selected': selectedVideo === index,
+    'video-item--watched': watchedVideos && watchedVideos[video.id] === true,
+  });
   return (
-    <li className={classes} ref={node => getNode(node)} onClick={() => handleClick(index)}>
-      <img className="video-item__thumb" src={video.thumbnail} role="presentation" />
-      <div className="video-item__title">
-        {video.title}
-      </div>
+    <li
+      className={classes}
+      ref={node => getNode(node)}
+      onClick={() => handleClick(index)}
+    >
+      <img className="video-item__thumb" src={video.thumbnail} alt="" />
+      <div className="video-item__title">{video.title}</div>
     </li>
   );
 };
@@ -31,4 +38,4 @@ Video.propTypes = {
   selectedVideo: PropTypes.number.isRequired,
 };
 
-export default EnsureVisibleMixin(Video);
+export default ensureVisibleHOC(Video);

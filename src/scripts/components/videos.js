@@ -12,11 +12,6 @@ export default class Videos extends Component {
     selectedVideo: PropTypes.number.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.keyUp = this.keyUp.bind(this);
-  }
-
   componentDidMount() {
     window.addEventListener('keyup', this.keyUp);
   }
@@ -38,14 +33,15 @@ export default class Videos extends Component {
   render() {
     // TODO: Just pass a watched flag and selected flag.
     /* eslint-disable no-unused-vars */
-    const { videos, handleKeyup, ...other } = this.props;
+    const { videos, handleKeyup, ...rest } = this.props;
     /* eslint-enable no-unused-vars */
 
     return (
       <ul className="video-list">
-        {videos.map((video, i) => <Video {...other} video={video} key={i} index={i} />)}
+        {videos.map((video, i) => (
+          <Video {...rest} video={video} key={i} index={i} />
+        ))}
       </ul>
     );
   }
 }
-
