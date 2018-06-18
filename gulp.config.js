@@ -9,14 +9,14 @@ exports.default = {
   },
   styles: {
     any: ['./src/styles/**/*.+(scss|css)'], // Files to watch
-    src: ['./src/styles/admin.+(scss|css)', './src/styles/client.+(scss|css)'], // File(s) to source
+    src: ['./src/styles/main.+(scss|css)'], // File(s) to source
     base: './src/styles/', // Files to watch
     dest: './.public/', // Where to put transformed file(s)
   },
   scripts: {
-    any: ['./src/client/**/*.js'], // Files to watch
-    src: ['./src/client/index.js'], // File(s) to source
-    base: './src/client/', // Files to watch
+    any: ['./src/scripts/**/*.js'], // Files to watch
+    src: ['./src/scripts/index.js'], // File(s) to source
+    base: './src/scripts/', // Files to watch
     dest: './.public/', // Where to put transformed file(s)
   },
   img: {
@@ -28,10 +28,5 @@ exports.default = {
     any: ['./src/assets/**/*'], // Files to watch
     src: ['./src/assets/**/*'], // File(s) to source
     dest: './.public/', // Where to put transformed file(s)
-  },
-  content: {
-    any: ['./content/**.md'], // Files to watch
-    src: ['./content/**.md'], // File(s) to source
-    dest: './src/scripts/content/', // Where to put transformed file(s)
   },
 };

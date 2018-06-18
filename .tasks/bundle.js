@@ -1,7 +1,8 @@
 'use strict';
 
 const gulp = require('gulp');
-const util = require('gulp-util');
+const log = require('fancy-log');
+const colors = require('ansi-colors');
 const webpack = require('webpack');
 const config = require('../webpack.config.js').production;
 
@@ -11,8 +12,8 @@ function build(override = {}) {
 
   return new Promise(resolve => webpack({ ...config, ...override}, (err, stats) => {
     if (err) {
-      util.log(
-        util.colors.red('Webpack Error:'),
+      log(
+        colors.red('Webpack Error:'),
         err.message,
         err.codeFrame ? `\n\n${err.codeFrame}` : ''
       );

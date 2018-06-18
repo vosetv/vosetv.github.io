@@ -5,9 +5,9 @@ module.exports = {
   dev: {
     devtool: 'cheap-module-source-map',
     entry: {
-      client: [
+      app: [
         'webpack-hot-middleware/client',
-        './src/client/index.js',
+        './src/scripts/index.js',
       ],
     },
     output: {
@@ -28,8 +28,8 @@ module.exports = {
   },
   production: {
     entry: {
-      client: [
-        './src/client/index.js',
+      app: [
+        './src/scripts/index.js',
       ],
     },
     output: {

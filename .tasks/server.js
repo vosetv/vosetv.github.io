@@ -1,7 +1,8 @@
 'use strict';
 
 const gulp = require('gulp');
-const util = require('gulp-util');
+const log = require('fancy-log');
+const colors = require('ansi-colors');
 const nodemon = require('gulp-nodemon');
 
 function start(done) {
@@ -13,7 +14,7 @@ function start(done) {
     watch: './src/server/',
     done,
   })
-    .on('restart', () => util.log(util.colors.cyan('Server restarted')))
+    .on('restart', () => log(colors.cyan('Server restarted')))
     .on('start', global.reload);
 }
 

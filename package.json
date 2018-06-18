@@ -5,6 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "start": "gulp dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
@@ -23,14 +24,27 @@
     "react-youtube": "7.6.0"
   },
   "devDependencies": {
+    "ansi-colors": "2.0.1",
     "autoprefixer": "8.6.2",
     "browser-sync": "2.24.4",
     "cssnano": "3.10.0",
+    "fancy-log": "1.3.2",
     "gulp": "4.0.0",
+    "gulp-changed": "3.2.0",
     "gulp-eslint": "4.0.2",
     "gulp-htmlmin": "4.0.0",
+    "gulp-imagemin": "4.1.0",
+    "gulp-load-plugins": "1.5.0",
+    "gulp-nodemon": "2.2.1",
+    "gulp-postcss": "7.0.1",
     "gulp-sourcemaps": "2.6.4",
-    "nodemon": "1.17.5",
+    "postcss-easy-import": "3.0.0",
+    "postcss-mixins": "6.2.0",
+    "postcss-nested": "3.0.0",
+    "postcss-normalize": "6.0.0",
+    "postcss-reporter": "5.0.0",
+    "postcss-simple-vars": "4.1.0",
+    "postcss-strip-inline-comments": "0.1.5",
     "webpack": "3.10.0",
     "webpack-dev-middleware": "3.1.3",
     "webpack-hot-middleware": "2.22.2"
