@@ -9,7 +9,7 @@ import { renderToString } from 'react-dom/server';
 
 import App from '../containers/app';
 import configureStore from '../configureStore';
-import { getVideos, hotVideos } from './getVideos';
+import { getVideos, hotVideos } from './get-videos';
 
 require('dotenv').config();
 
