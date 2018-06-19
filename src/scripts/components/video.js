@@ -29,13 +29,13 @@ const Video = ({
   );
 };
 
-Video.propTypes = {
-  video: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  watchedVideos: PropTypes.object.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  getNode: PropTypes.func.isRequired,
-  selectedVideo: PropTypes.number.isRequired,
-};
+// Video.propTypes = {
+//   video: PropTypes.object.isRequired,
+//   index: PropTypes.number.isRequired,
+//   watchedVideos: PropTypes.object.isRequired,
+//   handleClick: PropTypes.func.isRequired,
+//   getNode: PropTypes.func.isRequired,
+//   selectedVideo: PropTypes.number.isRequired,
+// };
 
 export default ensureVisibleHOC(Video);

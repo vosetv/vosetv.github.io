@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 function getTimestamp(url) {
   const match = url.match(/(?:#|&|\?)t=(\d+h)?(\d+m)?(\d+(?:s|$))?/);
 
