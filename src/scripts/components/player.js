@@ -2,54 +2,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 
-export default class Player extends Component {
-  static propTypes = {
-    video: PropTypes.object.isRequired,
-    selectedVideo: PropTypes.number.isRequired,
-    onEnd: PropTypes.func.isRequired,
-    onVideoWatch: PropTypes.func.isRequired,
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedVideo === this.props.selectedVideo) {
-      return;
-    }
-    this.props.onVideoWatch(this.props.video.id);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.video.id !== this.props.video.id;
-  }
-
-  render() {
-    // TODO: videos watched first gets updated here once we get video on ready, but we should try to get it before.
-    const { video, onEnd, selectedVideo, onVideoWatch } = this.props;
-    const opts = {
-      playerVars: {
-        autoplay: 1,
-        start: video.timestamp,
-      },
-    };
-
-    return (
-      <div className="player">
-        <div className="player-embed" id="player-embed">
-          <YouTube
-            videoId={video.id}
-            opts={opts}
-            onEnd={() => onEnd(selectedVideo + 1)}
-            onReady={() => onVideoWatch(video.id)}
-          />
-        </div>
-        <header className="player-header">
-          <h1 className="player-title">
-            <a href={`https://reddit.com${video.url}`} target="_blank">
-              {video.title}
-            </a>
-          </h1>
-          {video.flair && <div className="player-flair">{video.flair}</div>}
-        </header>
-        <footer className="player-footer">
+// TODO: videos watched first gets updated here once we get video on ready, but we should try to get it before.
+// Props:
+// timestamp
+const Player = ({ video, onEnd, selectedVideo, onVideoWatch }) => (
+  <div className="player">
+    <div className="player-embed" id="player-embed">
+      {video ? (
+        <YouTube
+          videoId={video.id}
+          opts={{
+            playerVars: {
+              autoplay: 1,
+              start: video.timestamp,
+            },
+          }}
+          onEnd={() => onEnd(selectedVideo + 1)}
+          onReady={() => onVideoWatch(video.id)}
+        />
+      ) : null}
+    </div>
+    <header className="player-header">
+      {video ? (
+        <h1 className="player-title">
+          <a href={`https://reddit.com${video.url}`} target="_blank">
+            {video.title}
+          </a>
+        </h1>
+      ) : <div className="player-title--preview" />}
+      {/* TODO Null operator here */}
+      {video &&
+        video.flair && <div className="player-flair">{video.flair}</div>}
+    </header>
+    <footer className="player-footer">
+      {video ? (
+        <>
           <a
             className="player-comments"
             href={`https://reddit.com${video.url}`}
@@ -58,8 +45,10 @@ export default class Player extends Component {
             {video.comments} comments
           </a>
           <div className="player-score">Score: {video.score}</div>
-        </footer>
-      </div>
-    );
-  }
-}
+        </>
+      ) : <div className="player-comments--preview" />}
+    </footer>
+  </div>
+);
+
+export default Player;

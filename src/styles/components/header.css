@@ -1,21 +1,17 @@
 .header {
-  height: 50px;
-  background: $header-bg;
-  // position: fixed;
-  width: 100%;
   box-sizing: border-box;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: $header-bg;
   padding: 0 20px;
-  // top: 0;
-  // left: 0;
 }
 
 .logo {
-  display: inline-block;
-  vertical-align: middle;
-  img {
-    height: 30px;
-    margin-bottom: 3px;
-    vertical-align: middle;
-    cursor: pointer;
-  }
+  height: 30px;
+  cursor: pointer;
+  // TODO Build this in the svg
+  margin-bottom: 3px;
 }

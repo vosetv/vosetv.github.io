@@ -23,6 +23,7 @@
     "obj-str": "1.0.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",
+    "react-loadable": "5.4.0",
     "react-redux": "5.0.7",
     "react-youtube": "7.6.0",
     "redux": "4.0.0",

@@ -1,4 +1,5 @@
 .video-list {
+  // width: calc(336px + 30px);
   box-sizing: border-box;
   list-style: none;
   position: fixed;
@@ -44,6 +45,7 @@
     border-right: 1px solid #252c31;
   }
 }
+
 .video-item--watched:after {
   content: 'Watched';
   text-transform: uppercase;
@@ -61,9 +63,6 @@
   background: #3a424a;
   .video-item__title {
     color: #dedede;
-  }
-  .video-item__percent {
-    display: none;
   }
   &:after {
     content: '';
@@ -113,11 +112,24 @@
     display: none;
   }
 }
-.video-item__percent {
-  height: 3px;
-  background: red;
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  z-index: 1;
+
+.video-list--preview {
+  overflow: hidden;
+  .video-item {
+    &:hover {
+      cursor: default;
+      background: #30373e;
+    }
+  }
+  .video-item__thumb {
+    background-color: #464b51;
+  }
+  .video-item__title {
+    background-color: #464b51;
+    padding: 0;
+    margin: 10px;
+    height: 20px;
+    border-radius: 2px;
+  }
 }
+

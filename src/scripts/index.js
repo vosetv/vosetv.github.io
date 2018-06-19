@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from 'react-dom';
-import 'element.scrollintoviewifneeded-polyfill';
-import Root from './components/root';
+import { hydrate, render } from 'react-dom';
+import Loadable from 'react-loadable';
+import Document from './components/document';
 
-render(
-  <Root />,
-  document.getElementById('root')
-);
+window.main = () => {
+  Loadable.preloadReady().then(() => {
+    const renderMethod = !!module.hot ? render : hydrate;
+    renderMethod(<Document />, document.getElementById('root'));
+  });
+};
