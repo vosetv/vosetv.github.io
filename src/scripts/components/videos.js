@@ -19,7 +19,7 @@ const Videos = ({ videos }) =>
           thumbnail={video.thumbnail}
           isSelected={false}
           isWatched={false}
-          key={i}
+          key={video.id}
           index={i}
         />
       ))}
