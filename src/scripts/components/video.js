@@ -18,11 +18,11 @@ const Video = ({ thumbnail, title, isSelected, isWatched }) => {
 };
 
 Video.propTypes = {
-  thumbnail: Proptypes.string.isRequired,
-  title: Proptypes.string.isRequired,
-  isSelected: Proptypes.bool.isRequired,
-  isWatched: Proptypes.bool.isRequired,
-  ensureVisible: Proptypes.bool.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  isWatched: PropTypes.bool.isRequired,
+  ensureVisible: PropTypes.bool.isRequired,
 };
 
 export default ensureVisible(Video);
