@@ -15,8 +15,8 @@ const Logo = ({ className, color }) => (
 );
 
 Logo.propTypes = {
-  className: Proptypes.string,
-  color: Proptypes.string,
+  className: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default Logo;

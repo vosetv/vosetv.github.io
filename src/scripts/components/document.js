@@ -15,9 +15,11 @@ import Player from './player';
  */
 const App = () => (
   <>
-    <Header />
-    <Player />
-    <Videos />
+    <React.StrictMode>
+      <Header />
+      <Player />
+      <Videos />
+    </React.StrictMode>
   </>
 );
 
