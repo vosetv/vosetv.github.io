@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader'
 import PropTypes from 'prop-types';
 import Header from './header';
 import Videos from './videos';
@@ -20,4 +21,4 @@ const App = () => (
   </>
 );
 
-export default App;
+export default hot(module)(App);

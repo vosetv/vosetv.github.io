@@ -1,4 +1,5 @@
 .header {
+  grid-area: header;
   box-sizing: border-box;
   height: 50px;
   width: 100%;

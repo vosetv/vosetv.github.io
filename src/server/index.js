@@ -34,7 +34,7 @@ app.use((req, res) => {
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
 <link rel="stylesheet" href="/main.css">
 <body>
-<div id="root"></div>
+<div id="root" class="app"></div>
 <script src="/bundle.js"></script>
 <script>window.main()</script>
 `);

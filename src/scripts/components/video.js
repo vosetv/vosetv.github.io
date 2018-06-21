@@ -1,41 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
-import ensureVisibleHOC from './ensure-visible-mixin';
+import ensureVisible from './ensure-visible';
 
-// TODO Clean up props, lots aren't necessary
-const Video = ({
-  handleClick,
-  video,
-  index,
-  selectedVideo,
-  watchedVideos,
-  getNode,
-}) => {
+const Video = ({ thumbnail, title, isSelected, isWatched }) => {
   const classes = objstr({
     'video-item': true,
-    'video-item--selected': selectedVideo === index,
-    'video-item--watched': watchedVideos && watchedVideos[video.id] === true,
+    'video-item--selected': isSelected,
+    'video-item--watched': isWatched,
   });
   return (
-    <li
-      className={classes}
-      ref={node => getNode(node)}
-      onClick={() => handleClick(index)}
-    >
-      <img className="video-item__thumb" src={video.thumbnail} alt="" />
-      <div className="video-item__title">{video.title}</div>
+    <li className={classes}>
+      <img className="video-item__thumb" src={thumbnail} alt="" />
+      <div className="video-item__title">{title}</div>
     </li>
   );
 };
 
-// Video.propTypes = {
-//   video: PropTypes.object.isRequired,
-//   index: PropTypes.number.isRequired,
-//   watchedVideos: PropTypes.object.isRequired,
-//   handleClick: PropTypes.func.isRequired,
-//   getNode: PropTypes.func.isRequired,
-//   selectedVideo: PropTypes.number.isRequired,
-// };
+Video.propTypes = {
+  thumbnail: Proptypes.string.isRequired,
+  title: Proptypes.string.isRequired,
+  isSelected: Proptypes.bool.isRequired,
+  isWatched: Proptypes.bool.isRequired,
+  ensureVisible: Proptypes.bool.isRequired,
+};
 
-export default ensureVisibleHOC(Video);
+export default ensureVisible(Video);
