@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-const ensureVisibleHOC = InnerComponent =>
+const ensureVisible = InnerComponent =>
   class extends Component {
     componentDidMount() {
-      this.ensureVisible();
+      this.scrollIntoViewIfNeeded();
     }
 
     componentDidUpdate() {
-      this.ensureVisible();
+      this.scrollIntoViewIfNeeded();
     }
 
     getNode = node => {
@@ -15,9 +15,8 @@ const ensureVisibleHOC = InnerComponent =>
     };
 
     // TODO Put this in prop
-    ensureVisible() {
-      const { index, selectedVideo } = this.props;
-      if (selectedVideo === index) {
+    scrollIntoViewIfNeeded() {
+      if (this.props.scrollIntoView) {
         this.node.scrollIntoViewIfNeeded(false);
       }
     }
@@ -27,4 +26,4 @@ const ensureVisibleHOC = InnerComponent =>
     }
   };
 
-export default ensureVisibleHOC;
+export default ensureVisible;

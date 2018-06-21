@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
-import Menu from './menu';
+import Sort from './sort';
+import Logo from './logo';
 
 const Header = ({ value, onChange, options }) => (
   <header className="header">
-    <img
+    <Logo
       className="logo"
       onClick={() => onChange('videos')}
-      src="/img/vose.svg"
-      alt="vose.tv"
     />
-    <Menu />
+    <Sort />
   </header>
 );
 

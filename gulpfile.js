@@ -9,7 +9,7 @@ const config = require('./gulp.config');
 const css = require('./.tasks/css');
 const bundle = require('./.tasks/bundle');
 const assets = require('./.tasks/assets');
-const images = require('./.tasks/images');
+// const images = require('./.tasks/images');
 const server = require('./.tasks/server');
 const browsersync = require('./.tasks/browsersync');
 
@@ -19,7 +19,7 @@ global.config = config.default;
 gulp.task('build', gulp.parallel(
   css.build,
   assets.build,
-  images.build,
+  // images.build,
   bundle.build,
 ));
 
@@ -31,7 +31,7 @@ gulp.task('serve', gulp.parallel(
 gulp.task('watch', gulp.parallel(
   css.watch,
   assets.watch,
-  images.watch,
+  // images.watch,
 ));
 
 gulp.task('dev', gulp.series(

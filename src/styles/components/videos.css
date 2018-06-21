@@ -1,15 +1,12 @@
 .video-list {
-  // width: calc(336px + 30px);
+  grid-area: videos;
   box-sizing: border-box;
   list-style: none;
-  position: fixed;
-  top: $header-height;
-  right: -30px;
-  height: calc(100vh - $header-height);
   overflow-y: overlay;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  margin-right: -30px;
   padding-right: 30px;
   background: #30373e;
   -webkit-overflow-scrolling: touch;
@@ -59,6 +56,7 @@
   top: 8px;
   background: rgba(0, 0, 0, 0.7);
 }
+
 .video-item--selected {
   background: #3a424a;
   .video-item__title {
@@ -132,4 +130,3 @@
     border-radius: 2px;
   }
 }
-
