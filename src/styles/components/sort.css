@@ -1,6 +1,5 @@
 .sort {
   display: flex;
-  text-transform: uppercase;
   & > * {
     margin-left: 20px;
   }
@@ -10,6 +9,7 @@
   font-weight: bold;
   font-size: 0.8em;
   margin-top: 0.26em;
+  text-transform: uppercase;
 }
 
 .button {
@@ -29,11 +29,11 @@
     content: '';
     position: absolute;
     right: 5px;
-    top: calc(50% - 3px);
+    top: calc(50% - 1px);
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 7px 5px 0 5px;
+    border-width: 5px 4px 0 4px;
     border-color: $header-fg transparent transparent transparent;
   }
 }

@@ -1,0 +1,32 @@
+.video-list {
+  grid-area: videos;
+  box-sizing: border-box;
+
+  margin-right: -30px;
+  padding-right: 30px;
+  background: #30373e;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  // @media (max-width: 1023px) {
+  //   box-sizing: content-box;
+  //   white-space: nowrap;
+  //   top: auto;
+  //   bottom: -30px;
+  //   padding-bottom: 30px;
+  //   width: 100%;
+  //   left: 0;
+  //   height: 74px;
+  //   overflow-y: hidden;
+  //   overflow-x: scroll;
+  // }
+}
+
+.video-list--preview {
+  overflow: hidden;
+}
