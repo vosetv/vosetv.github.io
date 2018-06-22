@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader'
 import PropTypes from 'prop-types';
+import { hot } from 'react-hot-loader'
+import { Provider } from 'unstated';
 import Header from './header';
 import Videos from './videos';
 import Player from './player';
@@ -15,11 +16,13 @@ import Player from './player';
  */
 const App = () => (
   <>
-    <React.StrictMode>
-      <Header />
-      <Player />
-      <Videos />
-    </React.StrictMode>
+    <Provider>
+      <React.StrictMode>
+        <Header />
+        <Player />
+        <Videos />
+      </React.StrictMode>
+    </Provider>
   </>
 );
 
