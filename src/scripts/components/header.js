@@ -4,12 +4,9 @@ import objstr from 'obj-str';
 import Sort from './sort';
 import Logo from './logo';
 
-const Header = ({ value, onChange, options }) => (
+const Header = () => (
   <header className="header">
-    <Logo
-      className="logo"
-      onClick={() => onChange('videos')}
-    />
+    <Logo className="logo" />
     <Sort />
   </header>
 );
