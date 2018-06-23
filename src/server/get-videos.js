@@ -3,6 +3,8 @@ import { fetchSubreddit } from './util';
 
 export const hotVideos = {};
 
+const fiveMinutes = 300000;
+
 function refreshVids() {
   for (const subreddit of subreddits) {
     fetchSubreddit(subreddit)
@@ -11,7 +13,7 @@ function refreshVids() {
       })
       .catch(err => console.log(err));
   }
-  setTimeout(refreshVids, 300000);
+  setTimeout(refreshVids, fiveMinutes);
 }
 
 export function getVideos(app) {

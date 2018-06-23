@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Subscribe } from 'unstated';
-import objstr from 'obj-str';
-import State from './state';
+import Dropdown from './dropdown';
+import StateContainer from './state-container';
 
 const Sort = () => (
-  <Subscribe to={[State]}>
-    {({ state }) =>
+  <Subscribe to={[StateContainer]}>
+    {store => (
       <div className="sort">
         <div className="sort__text">Sort</div>
-        <button className="button sort__button">{state.subreddit}</button>
-        <button className="button sort__button">{state.sort}</button>
+        <Dropdown buttonText={store.state.subreddit} onChange={store.setSubreddit} />
+        <Dropdown buttonText={store.state.sort} onChange={store.setSort} />
       </div>
-    }
+    )}
   </Subscribe>
 );
 

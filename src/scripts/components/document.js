@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader'
-import { Provider } from 'unstated';
+import { hot } from 'react-hot-loader';
 import Header from './header';
 import Videos from './videos';
 import Player from './player';
+import { Provider } from 'unstated';
 
 /*
  * TODO: Error screen, suggest new subreddits.
@@ -14,16 +14,14 @@ import Player from './player';
  *   - /r/shittyrobots
  *   - ...
  */
-const App = () => (
-  <>
+const Document = () => (
+  <React.StrictMode>
     <Provider>
-      <React.StrictMode>
-        <Header />
-        <Player />
-        <Videos />
-      </React.StrictMode>
+      <Header />
+      <Player />
+      <Videos />
     </Provider>
-  </>
+  </React.StrictMode>
 );
 
-export default hot(module)(App);
+export default hot(module)(Document);
