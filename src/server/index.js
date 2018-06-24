@@ -35,6 +35,7 @@ app.use((req, res) => {
 <link rel="stylesheet" href="/main.css">
 <body>
 <div id="root" class="app"></div>
+<div id="modal"></div>
 <script src="/bundle.js"></script>
 <script>window.main()</script>
 `);

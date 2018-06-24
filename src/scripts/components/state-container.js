@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import { Container } from 'unstated';
+import subreddits from '../../subreddits';
 
 class StateContainer extends Container {
   state = {
@@ -9,6 +9,12 @@ class StateContainer extends Container {
     sort: null,
     videos: null,
     watchedVideos: null,
+    subreddits,
+    sortOptions: [
+      'hot',
+      'top',
+      'new',
+    ],
   };
 
   constructor() {
@@ -66,24 +72,26 @@ class StateContainer extends Container {
     });
   };
 
-  setSubreddit(subreddit) {
+  setSubreddit = subreddit => {
     fetch(`/api/videos/${subreddit}`)
       .then(res => res.json())
       .then(videos => {
         this.setState({
+          subreddit,
           videos,
-          sort,
+          // TODO Set currentVideo
         });
       });
   }
 
-  setSort(sort) {
-    fetch(`/api/videos/${subreddit}`)
+  setSort = sort => {
+    fetch(`/api/videos/${this.state.subreddit}/${sort}`)
       .then(res => res.json())
       .then(videos => {
         this.setState({
-          videos,
           sort,
+          videos,
+          // TODO Set currentVideo
         });
       });
   }
