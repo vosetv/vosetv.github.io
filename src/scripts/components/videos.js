@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import { Subscribe } from 'unstated';
@@ -24,7 +24,7 @@ const Videos = ({ videos, currentVideoIndex, changeVideo }) => (
       >
         <Filter />
         {state.videos ? (
-          <ul>
+          <ul className="list-bare">
             {state.videos.map((video, i) => (
               <Video
                 ensureVisible={false}
