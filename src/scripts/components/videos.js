@@ -39,7 +39,7 @@ const Videos = ({ videos, currentVideoIndex, changeVideo }) => (
             ))}
           </ul>
         ) : (
-          <ul>
+          <ul className="list-bare">
             {[...Array(32)].map((_, i) => (
               <li className="video-item" key={i}>
                 <div className="video-item__thumb" />

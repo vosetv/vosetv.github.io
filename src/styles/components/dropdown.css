@@ -3,13 +3,11 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  top: 40px;
-  left: 0;
   background: white;
   border-radius: 4px;
   padding: 10px 0;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  z-index: 11;
   &:after {
     content: '';
     position: absolute;
@@ -36,4 +34,3 @@
     }
   }
 }
-

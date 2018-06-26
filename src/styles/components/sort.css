@@ -1,8 +1,7 @@
 .sort {
   display: flex;
-  & > * {
-    margin-left: 20px;
-  }
+  height: 100%;
+  align-items: stretch;
 }
 
 .sort__text {
@@ -10,6 +9,11 @@
   font-size: 0.8em;
   margin-top: 0.26em;
   text-transform: uppercase;
+  padding-left: 20px;
+
+  // "Hack" to vertically align text node.
+  display: flex;
+  align-items: center;
 }
 
 .button {
@@ -24,11 +28,15 @@
 
 .sort__button {
   position: relative;
-  padding-right: 25px;
+  padding-right: 30px;
+  padding-left: 20px;
+  &:not(:last-child) {
+    border-right: 1px solid #444b54;
+  }
   &:after {
     content: '';
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: calc(50% - 1px);
     width: 0;
     height: 0;
