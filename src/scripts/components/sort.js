@@ -21,6 +21,14 @@ const Sort = () => (
           activeItem={store.state.sort}
           onChange={store.setSort}
         />
+        {['top', 'controversial'].includes(store.state.sort) && (
+          <Dropdown
+            id={3}
+            items={store.state.timeRangeOptions}
+            activeItem={store.state.timeRange}
+            onChange={store.setTimeRange}
+          />
+        )}
       </div>
     )}
   </Subscribe>

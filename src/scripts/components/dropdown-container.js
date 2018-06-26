@@ -12,4 +12,4 @@ class DropdownContainer extends Container {
   };
 }
 
-export default DropdownContainer;
+export default new DropdownContainer();

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
+import { Provider } from 'unstated';
 import Header from './header';
 import Videos from './videos';
 import Player from './player';
-import { Provider } from 'unstated';
+import dropdownContainer from './dropdown-container';
 
 /*
  * TODO: Error screen, suggest new subreddits.
@@ -16,7 +17,7 @@ import { Provider } from 'unstated';
  */
 const Document = () => (
   <React.StrictMode>
-    <Provider>
+    <Provider inject={[dropdownContainer]}>
       <Header />
       <Player />
       <Videos />
