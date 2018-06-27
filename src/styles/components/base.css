@@ -17,3 +17,8 @@ body {
 h1 {
   margin: 0.67em 0 0;
 }
+
+a {
+  color: #64b5f6;
+  text-decoration: none;
+}

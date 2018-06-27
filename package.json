@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp dev",
+    "update-stats": "npx browserslist-ga",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
