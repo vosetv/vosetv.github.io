@@ -7,14 +7,6 @@ import Videos from './videos';
 import Player from './player';
 import dropdownContainer from './dropdown-container';
 
-/*
- * TODO: Error screen, suggest new subreddits.
- * We couldn't find any videos for you...
- * Try some of our favourites:
- *   - /r/artisanvideos
- *   - /r/shittyrobots
- *   - ...
- */
 const Document = () => (
   <React.StrictMode>
     <Provider inject={[dropdownContainer]}>
