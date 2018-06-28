@@ -1,4 +1,29 @@
 .message {
+  grid-area: player / span 2;
   font-size: 1.2em;
   padding: 0 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  b {
+    color: white;
+    font-size: 1.2em;
+  }
+  ul {
+    color: white;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    display: inline-block;
+    line-height: 1.6;
+  }
+  li:before {
+    content: '';
+    display: inline-block;
+    border-style: solid;
+    border-width: 5px 0 5px 6px;
+    margin-right: 10px;
+    border-color: transparent transparent transparent #63b5f7;
+  }
 }

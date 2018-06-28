@@ -2503,10 +2503,6 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
   version "1.3.48"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.48.tgz#d3b0d8593814044e092ece2108fc3ac9aea4b900"
 
-element.scrollintoviewifneeded-polyfill@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/element.scrollintoviewifneeded-polyfill/-/element.scrollintoviewifneeded-polyfill-1.0.1.tgz#89a023481e81e7dfd72105c4c9170e83b357454f"
-
 elliptic@^6.0.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.0.tgz#cac9af8762c85836187003c8dfe193e5e2eae5df"
@@ -3430,6 +3426,16 @@ glob@^4.3.1:
 glob@^5.0.3:
   version "5.0.15"
   resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
+  dependencies:
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "2 || 3"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
+glob@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
   dependencies:
     inflight "^1.0.4"
     inherits "2"
@@ -6155,6 +6161,14 @@ postcss-reporter@5.0.0:
     log-symbols "^2.0.0"
     postcss "^6.0.8"
 
+postcss-sassy-mixins@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/postcss-sassy-mixins/-/postcss-sassy-mixins-2.1.0.tgz#368f200946bfdef6a8b12d68c0f6379b9a222f26"
+  dependencies:
+    glob "^6.0.4"
+    postcss "^5.0.14"
+    postcss-simple-vars "^1.2.0"
+
 postcss-scss@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/postcss-scss/-/postcss-scss-1.0.5.tgz#40a10cfd03766accf0a3cf8e65a8af887b2bf6c4"
@@ -6182,6 +6196,12 @@ postcss-simple-vars@4.1.0, postcss-simple-vars@^4.1.0:
   resolved "https://registry.yarnpkg.com/postcss-simple-vars/-/postcss-simple-vars-4.1.0.tgz#043248cfef8d3f51b3486a28c09f8375dbf1b2f9"
   dependencies:
     postcss "^6.0.9"
+
+postcss-simple-vars@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/postcss-simple-vars/-/postcss-simple-vars-1.2.0.tgz#2e6689921144b74114e765353275a3c32143f150"
+  dependencies:
+    postcss "^5.0.13"
 
 postcss-strip-inline-comments@0.1.5:
   version "0.1.5"

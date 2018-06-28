@@ -15,7 +15,7 @@ const $ = loadPlugins({
 function build() {
   const processors = [
     $.easyImport(),
-    $.mixins(),
+    $.sassyMixins(),
     $.nested(),
     $.simpleVars(),
     $.stripInlineComments(),

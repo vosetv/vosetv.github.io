@@ -24,28 +24,23 @@ const Player = () => (
             />
           ) : null}
         </div>
-        <header className="player-header">
-          {state.currentVideo ? (
-            <h1 className="player-title">
-              <a
-                href={`https://reddit.com${state.currentVideo.url}`}
-                target="_blank"
-              >
-                {state.currentVideo.title}
-              </a>
-            </h1>
-          ) : (
-            <div className="player-title--preview" />
-          )}
-          {/* TODO Null operator here */}
-          {state.currentVideo &&
-            state.currentVideo.flair && (
-              <div className="player-flair">{state.currentVideo.flair}</div>
-            )}
-        </header>
-        <footer className="player-footer">
-          {state.currentVideo ? (
-            <>
+        {state.currentVideo ? (
+          <>
+            <header className="player-header">
+              <h1 className="player-title">
+                <a
+                  href={`https://reddit.com${state.currentVideo.url}`}
+                  target="_blank"
+                >
+                  {state.currentVideo.title}
+                </a>
+              </h1>
+              {/* TODO Null operator here */}
+              {state.currentVideo.flair && (
+                <div className="player-flair">{state.currentVideo.flair}</div>
+              )}
+            </header>
+            <footer className="player-footer">
               <a
                 className="player-comments"
                 href={`https://reddit.com${state.currentVideo.url}`}
@@ -57,11 +52,18 @@ const Player = () => (
               <div className="player-score">
                 Score: <ShortNumber>{state.currentVideo.score}</ShortNumber>
               </div>
-            </>
-          ) : (
-            <div className="player-comments--preview" />
-          )}
-        </footer>
+            </footer>
+          </>
+        ) : (
+          <>
+            <header className="player-header">
+              <div className="player-title--preview" />
+            </header>
+            <footer className="player-footer">
+              <div className="player-comments--preview" />
+            </footer>
+          </>
+        )}
       </div>
     )}
   </Subscribe>
