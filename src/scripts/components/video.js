@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
-import ensureVisible from './ensure-visible';
 
 class Video extends React.Component {
+  myRef = React.createRef();
+
   componentDidMount() {
     this.scrollIntoViewIfNeeded();
   }
@@ -14,8 +15,12 @@ class Video extends React.Component {
 
   // TODO Put this in prop
   scrollIntoViewIfNeeded() {
-    if (this.props.scrollIntoView) {
-      this.myRef.current.scrollIntoViewIfNeeded(false);
+    if (this.props.isSelected) {
+      this.myRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
     }
   }
 
@@ -27,7 +32,7 @@ class Video extends React.Component {
       'video-item--watched': isWatched,
     });
     return (
-      <li className={classes} onClick={onClick}>
+      <li ref={this.myRef} className={classes} onClick={onClick}>
         <img className="video-item__thumb" src={thumbnail} alt="" />
         <div className="video-item__title">{title}</div>
       </li>
@@ -40,7 +45,6 @@ Video.propTypes = {
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   isWatched: PropTypes.bool.isRequired,
-  ensureVisible: PropTypes.bool.isRequired,
 };
 
-export default ensureVisible(Video);
+export default Video;
