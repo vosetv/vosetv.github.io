@@ -31,7 +31,6 @@ app.use((req, res) => {
 <title>vose.tv - /r/videos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta id="theme-color" name="theme-color" content="#20262b">
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
 <link rel="stylesheet" href="/main.css">
 <body>
 <div id="root" class="app"></div>

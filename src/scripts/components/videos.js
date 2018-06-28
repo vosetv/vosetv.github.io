@@ -7,7 +7,6 @@ import Video from './video';
 import Filter from './filter';
 import Link from './link';
 
-// TODO Ensure visible state
 // States:
 //  - With videos
 //  - No filtered videos
@@ -28,7 +27,6 @@ const Videos = ({ videos, currentVideoIndex, changeVideo }) => (
             <ul className="list-bare">
               {state.videos.map((video, i) => (
                 <Video
-                  ensureVisible={false}
                   title={video.title}
                   thumbnail={video.thumbnail}
                   isSelected={state.currentVideoIndex === i}
@@ -41,14 +39,8 @@ const Videos = ({ videos, currentVideoIndex, changeVideo }) => (
             </ul>
           ) : (
             <div className="message">
-              <p>We couldn't find any videos for you...</p>
-              <p>Try a different sorting, or some of our favorites:</p>
-              <ul>
-                <li><Link to="/r/artisanvideos">/r/artisanvideos</Link></li>
-                <li><Link to="/r/shittyrobots">/r/shittyrobots</Link></li>
-                <li><Link to="/r/shittyrobots">/r/shittyrobots</Link></li>
-                <li><Link to="/r/shittyrobots">/r/shittyrobots</Link></li>
-              </ul>
+              <p>No videos to show...</p>
+              <button>Clear all filters</button>
             </div>
           )
         ) : (

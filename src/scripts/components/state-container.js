@@ -30,59 +30,7 @@ class StateContainer extends Container {
     // Watch for back button
     window.addEventListener('popstate', this.historyUpdate);
 
-    // this.historyUpdate();
-
-    // Get URL Segments
-    const segments = location.pathname
-      .replace(/\/{2,}/g, '/')
-      .replace(/^\/|\/$/g, '')
-      .split('/')
-      .slice(1); // Remove "r"
-
-    // Get time range for top and controversial sorting
-    const searchParams = new URLSearchParams(location.search);
-    let timeRange = searchParams.get('t');
-    let [subreddit, sort = 'hot'] = segments;
-
-    const watchedVideos =
-      localStorage.getItem('watchedVideos') === null
-        ? {}
-        : JSON.parse(localStorage.getItem('watchedVideos'));
-
-    if (segments.length === 2) {
-      if (!this.state.sortOptions.includes(sort)) {
-        sort = 'hot';
-        history.replaceState(null, null, `/r/${subreddit}`)
-      } else if (['top', 'controversial'].includes(sort)) {
-        // Don't rewrite URL since it is implicitly correct
-      } else {
-        history.replaceState(null, null, `/r/${subreddit}/${sort}`)
-      }
-    }
-
-    if (timeRange === null) {
-      timeRange = 'day';
-    }
-
-    this.setState({
-      subreddit,
-      sort,
-      timeRange,
-      watchedVideos,
-    });
-
-    const currentSession = {};
-    this.lastSession = currentSession;
-
-    fetch(`/api/videos/${subreddit}/${sort}/${timeRange}`)
-      .then(res => res.json())
-      .then(videos => {
-        if (this.lastSession !== currentSession) return;
-        this.setState({
-          videos,
-          currentVideo: videos[0],
-        });
-      });
+    this.historyUpdate();
   }
 
   historyUpdate = () => {
@@ -113,11 +61,11 @@ class StateContainer extends Container {
     if (segments.length === 2) {
       if (!this.state.sortOptions.includes(sort)) {
         sort = 'hot';
-        history.replaceState(null, null, `/r/${subreddit}`)
+        history.replaceState(null, null, `/r/${subreddit}`);
       } else if (['top', 'controversial'].includes(sort)) {
         // Don't rewrite URL since it is implicitly correct
       } else {
-        history.replaceState(null, null, `/r/${subreddit}/${sort}`)
+        history.replaceState(null, null, `/r/${subreddit}/${sort}`);
       }
     }
 
@@ -144,7 +92,7 @@ class StateContainer extends Container {
           currentVideo: videos[0],
         });
       });
-  }
+  };
 
   changeVideo = index => {
     this.setState(
@@ -165,18 +113,20 @@ class StateContainer extends Container {
     );
   };
 
-
   // TODO Tons of non dry boilerplate, maybe we can clean this up
   setSubreddit = async subreddit => {
-    this.setState({
-      subreddit,
-      sort: 'hot',
-      videos: null,
-      currentVideo: null,
-      currentVideoIndex: 0,
-    }, () => {
-      history.pushState(null, null, `/r/${this.state.subreddit}`);
-    });
+    this.setState(
+      {
+        subreddit,
+        sort: 'hot',
+        videos: null,
+        currentVideo: null,
+        currentVideoIndex: 0,
+      },
+      () => {
+        history.pushState(null, null, `/r/${this.state.subreddit}`);
+      },
+    );
 
     const currentSession = {};
     this.lastSession = currentSession;
@@ -192,15 +142,22 @@ class StateContainer extends Container {
   };
 
   setSort = async sort => {
-    this.setState({
-      sort,
-      timeRange: 'day',
-      videos: null,
-      currentVideo: null,
-      currentVideoIndex: 0,
-    }, () => {
-      history.pushState(null, null, `/r/${this.state.subreddit}/${this.state.sort}`);
-    });
+    this.setState(
+      {
+        sort,
+        timeRange: 'day',
+        videos: null,
+        currentVideo: null,
+        currentVideoIndex: 0,
+      },
+      () => {
+        history.pushState(
+          null,
+          null,
+          `/r/${this.state.subreddit}/${this.state.sort}`,
+        );
+      },
+    );
 
     const currentSession = {};
     this.lastSession = currentSession;
@@ -215,19 +172,28 @@ class StateContainer extends Container {
   };
 
   setTimeRange = async timeRange => {
-    this.setState({
-      timeRange,
-      videos: null,
-      currentVideo: null,
-      currentVideoIndex: 0,
-    }, () => {
-      history.pushState(null, null, `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`);
-    });
+    this.setState(
+      {
+        timeRange,
+        videos: null,
+        currentVideo: null,
+        currentVideoIndex: 0,
+      },
+      () => {
+        history.pushState(
+          null,
+          null,
+          `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`,
+        );
+      },
+    );
 
     const currentSession = {};
     this.lastSession = currentSession;
 
-    const res = await fetch(`/api/videos/${this.state.subreddit}/${this.state.sort}/${timeRange}`);
+    const res = await fetch(
+      `/api/videos/${this.state.subreddit}/${this.state.sort}/${timeRange}`,
+    );
     const videos = await res.json();
     if (this.lastSession !== currentSession) return;
     this.setState({
