@@ -62,9 +62,9 @@ class StateContainer extends Container {
     if (segments.length === 2) {
       if (!this.state.sortOptions.includes(sort)) {
         sort = 'hot';
-        history.replaceState(null, null, `/r/${subreddit}`);
+        this.replaceState(`/r/${subreddit}`);
       } else if (!['top', 'controversial'].includes(sort)) {
-        history.replaceState(null, null, `/r/${subreddit}/${sort}`);
+        this.replaceState(`/r/${subreddit}/${sort}`);
       }
       // Don't rewrite URL for timeRange since it is implicitly correct
     }
@@ -94,7 +94,10 @@ class StateContainer extends Container {
     }
     if (event.keyCode === 39) {
       this.changeVideo(
-        Math.min(this.state.currentVideoIndex + 1, this.state.videos.length - 1),
+        Math.min(
+          this.state.currentVideoIndex + 1,
+          this.state.videos.length - 1,
+        ),
       );
     }
   };
@@ -110,30 +113,39 @@ class StateContainer extends Container {
           ...{ [this.state.videos[index].id]: true },
         },
       }),
-      () => {
+      () =>
         localStorage.setItem(
           'watchedVideos',
           JSON.stringify(this.state.watchedVideos),
-        );
-      },
+        ),
     );
   };
 
   // TODO Tons of non dry boilerplate, maybe we can clean this up
-  sort = async ({
-    subreddit,
-    sort,
-    timeRange,
-  }) => {
+  sort = async ({ subreddit, sort, timeRange }) => {
     if (subreddit) {
-      history.pushState({}, '', `/r/${subreddit}`);
+      this.pushState(`/r/${subreddit}`);
     } else if (sort) {
-      history.pushState({}, '', `/r/${this.state.subreddit}/${sort}`);
+      this.pushState(`/r/${this.state.subreddit}/${sort}`);
     } else {
-      history.pushState({}, '', `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`);
+      this.pushState(
+        `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`,
+      );
     }
     this.historyUpdate();
   };
+
+  replaceState(url) {
+    const { pathname } = new URL(url);
+    history.pushState({}, '', url);
+    document.title = pathname;
+  }
+
+  pushState(url) {
+    const { pathname } = new URL(url);
+    history.pushState({}, '', url);
+    document.title = pathname;
+  }
 }
 
 export default StateContainer;

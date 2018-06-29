@@ -23,7 +23,44 @@ if (process.env.NODE_ENV === 'production') {
 getVideos(app);
 
 app.use((req, res) => {
-  res.status(200).send(`
+  if (process.env.NODE_ENV === 'production') {
+    const reactHtml = renderToString(
+      // <App />
+    );
+    res.status(200).send(`
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>vose.tv - /r/videos</title>
+<meta name="description" content="Watch the top videos on vose.tv">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta id="theme-color" name="theme-color" content="#20262b">
+<link rel="stylesheet" href="/main.css">
+
+<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@simonmlaroche">
+<meta name="twitter:creator" content="@simonmlaroche">
+<meta property="og:url" content="https://vose.tv">
+<meta property="og:title" content="vose.tv">
+<meta property="og:description" content="Watch the top videos on vose.tv">
+<meta property="og:image" content="https://vose.tv/vose-card.png">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="1725542221039137">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="vose.tv">
+<!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" href="/img/startup-retina.png"> -->
+
+<body>
+<div id="root" class="app">${reactHtml}</div>
+<div id="modal"></div>
+<script src="/bundle.js"></script>
+`);
+  } else {
+    res.status(200).send(`
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
@@ -36,8 +73,8 @@ app.use((req, res) => {
 <div id="root" class="app"></div>
 <div id="modal"></div>
 <script src="/bundle.js"></script>
-<script>window.main()</script>
 `);
+  }
 });
 
 /**
