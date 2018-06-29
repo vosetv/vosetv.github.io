@@ -10,23 +10,23 @@ const Sort = () => (
       <div className="sort">
         <div className="sort__text">Sort</div>
         <Dropdown
-          id={1}
+          id="subreddit"
           items={store.state.subreddits}
           activeItem={store.state.subreddit}
-          onChange={store.setSubreddit}
+          onChange={store.sort}
         />
         <Dropdown
-          id={2}
+          id="sort"
           items={store.state.sortOptions}
           activeItem={store.state.sort}
-          onChange={store.setSort}
+          onChange={store.sort}
         />
         {['top', 'controversial'].includes(store.state.sort) && (
           <Dropdown
-            id={3}
+            id="timeRange"
             items={store.state.timeRangeOptions}
             activeItem={store.state.timeRange}
-            onChange={store.setTimeRange}
+            onChange={store.sort}
           />
         )}
       </div>
