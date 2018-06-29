@@ -93,13 +93,13 @@
     }
   }
   .video-item__thumb {
-    background-color: #464b51;
+    @include preview;
   }
   .video-item__title {
-    background-color: #464b51;
     padding: 0;
     margin: 10px;
     height: 20px;
     border-radius: 2px;
+    @include preview;
   }
 }
