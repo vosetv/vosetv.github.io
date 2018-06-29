@@ -45,9 +45,7 @@ class Dropdown extends Component {
                   <div
                     className="dropdown"
                     style={{
-                      top:
-                        this.buttonRef.current.getBoundingClientRect().bottom +
-                        20,
+                      top: this.buttonRef.current.getBoundingClientRect().bottom + 20,
                       left: this.buttonRef.current.getBoundingClientRect().left,
                     }}
                   >
@@ -57,7 +55,7 @@ class Dropdown extends Component {
                           className={objstr({
                             dropdown__active: item === activeItem,
                           })}
-                          onClick={() => onChange(item)}
+                          onClick={() => onChange({ [id]: item })}
                           key={i}
                         >
                           {item}

@@ -19,18 +19,6 @@ function refreshVids() {
 export function getVideos(app) {
   refreshVids();
 
-  app.get('/api/videos/:subreddit/:sort', (req, res) => {
-    const subreddit = req.params.subreddit.toLowerCase();
-    const sort = req.params.sort.toLowerCase();
-    if (subreddit in hotVideos && sort === 'hot') {
-      res.json(hotVideos[subreddit]);
-    } else {
-      fetchSubreddit(subreddit, sort)
-        .then(videos => res.json(videos))
-        .catch(err => console.log(err));
-    }
-  });
-
   app.get('/api/videos/:subreddit/:sort/:timeRange', (req, res) => {
     const subreddit = req.params.subreddit.toLowerCase();
     const sort = req.params.sort.toLowerCase();
