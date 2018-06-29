@@ -4,7 +4,6 @@ import objstr from 'obj-str';
 import { Subscribe } from 'unstated';
 import StateContainer from './state-container';
 import Video from './video';
-import Filter from './filter';
 import Link from './link';
 
 // States:
@@ -21,7 +20,6 @@ const Videos = ({ videos, currentVideoIndex, changeVideo }) => (
           'video-list--preview': !state.videos,
         })}
       >
-        <Filter />
         {state.videos ? (
           state.videos.length ? (
             <ul className="list-bare">
