@@ -130,21 +130,23 @@ class StateContainer extends Container {
     } else {
       this.pushState(
         `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`,
+        false
       );
     }
     this.historyUpdate();
   };
 
   replaceState(url) {
-    const { pathname } = new URL(url);
     history.pushState({}, '', url);
-    document.title = pathname;
+    document.title = url;
   }
 
-  pushState(url) {
-    const { pathname } = new URL(url);
+  pushState(url, updateTitle) {
     history.pushState({}, '', url);
-    document.title = pathname;
+    if (updateTitle) {
+      const { pathname } = new URL(url);
+      document.title = pathname;
+    }
   }
 }
 
