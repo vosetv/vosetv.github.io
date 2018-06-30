@@ -2,8 +2,10 @@ import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import nodalytics from 'nodalytics';
+import ReactDOMServer from 'react-dom/server';
 
 import { getVideos, hotVideos } from './get-videos';
+import Document from '../scripts/components/document';
 
 require('dotenv').config();
 
@@ -24,9 +26,15 @@ getVideos(app);
 
 app.use((req, res) => {
   if (process.env.NODE_ENV === 'production') {
-    const reactHtml = renderToString(
-      // <App />
-    );
+    res.write("<!DOCTYPE html><html><head><title>My Page</title></head><body>");
+    res.write("<div id='content'>"); 
+    const stream = renderToNodeStream(<MyPage/>);
+    stream.pipe(res, { end: false });
+    stream.on('end', () => {
+      res.write("</div></body></html>");
+      res.end();
+    });
+    ReactDOMServer.renderToNodeStream(<Document />).pipe(res);
     res.status(200).send(`
 <!doctype html>
 <html lang="en">
