@@ -1,21 +1,6 @@
 {
   "plugins": [
-    "@babel/syntax-dynamic-import",
-    "@babel/proposal-optional-chaining",
-    "@babel/proposal-nullish-coalescing-operator",
-    "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread",
-    "@babel/proposal-async-generator-functions",
-    "@babel/proposal-do-expressions",
-    "@babel/proposal-pipeline-operator",
-    "react-hot-loader/babel"
-  ],
-  "presets": [
-    "@babel/preset-react",
-    ["@babel/preset-env", {
-      "modules": false,
-      "useBuiltIns": "usage",
-      "debug": false
-    }]
+    ["transform-class-properties", { "spec": true }],
+    "transform-object-rest-spread"
   ]
 }
