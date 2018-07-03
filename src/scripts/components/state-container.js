@@ -138,14 +138,14 @@ class StateContainer extends Container {
 
   replaceState(url) {
     history.pushState({}, '', url);
-    document.title = url;
+    // document.title = url;
   }
 
   pushState(url, updateTitle) {
     history.pushState({}, '', url);
     if (updateTitle) {
       const { pathname } = new URL(url);
-      document.title = pathname;
+      // document.title = pathname;
     }
   }
 }
