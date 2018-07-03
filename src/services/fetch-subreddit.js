@@ -12,15 +12,6 @@ function getTimestamp(url) {
   return hours + minutes + seconds;
 }
 
-// TODO Make these more fp
-function filter(item) {
-  return (
-    item.data.secure_media &&
-    item.data.secure_media.type === 'youtube.com' &&
-    item.data.over_18 === false
-  );
-}
-
 function unique(a) {
   const seen = {};
   return a.filter(
@@ -69,7 +60,13 @@ export default function fetchSubreddit(subreddit, sort, timeRange) {
     return fetch(url)
       .then(response => response.json())
       .then(posts => {
-        videos = videos.concat(posts.data.children.filter(filter));
+        videos = videos.concat(
+          posts.data.children.filter(
+            item =>
+              item.data.secure_media &&
+              item.data.secure_media.type === 'youtube.com',
+          ),
+        );
         if (videos.length > videoLimit || depth >= 8) {
           return Promise.resolve(unique(normalizeVideos(videos)));
         }
