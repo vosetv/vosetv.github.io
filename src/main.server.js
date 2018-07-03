@@ -4,9 +4,11 @@ import compression from 'compression';
 import nodalytics from 'nodalytics';
 import ReactDOMServer from 'react-dom/server';
 
-import { getVideos, hotVideos } from './get-videos';
 import Document from '../scripts/components/document';
+import subreddits from './subreddits';
+import fetchSubreddit from './fetch-subreddit.js';
 
+// // // Init express app
 require('dotenv').config();
 
 const app = express();
@@ -22,7 +24,36 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../.public')));
 }
 
-getVideos(app);
+// // // Caching
+// TODO Put in another module
+// TODO Cache all SSR requests
+const hotVideos = {};
+const fiveMinutes = 300000;
+function refreshVids() {
+  for (const subreddit of subreddits) {
+    fetchSubreddit(subreddit, 'hot')
+      .then(videos => {
+        hotVideos[subreddit.toLowerCase()] = videos;
+      })
+      .catch(err => console.log(err));
+  }
+  setTimeout(refreshVids, fiveMinutes);
+}
+refreshVids();
+
+// // // Endpoints
+app.get('/api/videos/:subreddit/:sort/:timeRange', (req, res) => {
+  const subreddit = req.params.subreddit.toLowerCase();
+  const sort = req.params.sort.toLowerCase();
+  const timeRange = req.params.timeRange.toLowerCase();
+  if (subreddit in hotVideos && sort === 'hot') {
+    res.json(hotVideos[subreddit]);
+  } else {
+    fetchSubreddit(subreddit, sort, timeRange)
+      .then(videos => res.json(videos))
+      .catch(err => console.log(err));
+  }
+});
 
 app.use((req, res) => {
   if (process.env.NODE_ENV === 'production') {
