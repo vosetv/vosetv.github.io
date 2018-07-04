@@ -1,5 +1,5 @@
 import { Container } from 'unstated';
-import subreddits from '../../subreddits';
+import subreddits from '../data/subreddits';
 
 class StateContainer extends Container {
   state = {

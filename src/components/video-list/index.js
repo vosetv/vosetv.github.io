@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import { Subscribe } from 'unstated';
-import StateContainer from './state-container';
+import StateContainer from '../state-container';
 import VideoItem from '../video-item';
 import Link from '../link';
 import './styles.css';
@@ -57,4 +57,4 @@ const VideoList = ({ videos, currentVideoIndex, changeVideo }) => (
   </Subscribe>
 );
 
-export default VideosList;
+export default VideoList;

@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "yarn nodemon src/server/index.js & yarn parcel watch src/scripts/index.js -d .public",
+    "start": "yarn nodemon src/main.server.development.js & yarn parcel watch src/main.client.js -d .public",
     "update-stats": "npx browserslist-ga",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,6 +32,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-register": "6.26.0",
+    "ignore-styles": "5.0.1",
     "nodemon": "1.17.5",
     "parcel-bundler": "1.9.4",
     "postcss-easy-import": "3.0.0",

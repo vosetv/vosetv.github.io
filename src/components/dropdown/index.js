@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Subscribe } from 'unstated';
 import objstr from 'obj-str';
 import Modal from '../modal';
-import dropdownContainer from '../container';
+import dropdownContainer from './container';
 import './styles.css';
 
 class Dropdown extends Component {
