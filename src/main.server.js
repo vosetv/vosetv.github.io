@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
   }));
   app.use(nodalytics(process.env.GA_CODE_SERVER));
 } else {
-  app.use(express.static(path.join(__dirname, '../../.public')));
+  app.use(express.static(path.join(__dirname, '../.public')));
 }
 
 // // // Caching
@@ -107,11 +107,11 @@ app.use((req, res) => {
 <title>vose.tv - /r/videos</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta id="theme-color" name="theme-color" content="#20262b">
-<link rel="stylesheet" href="/index.css">
+<link rel="stylesheet" href="/main.css">
 <body>
 <div id="root" class="app"></div>
 <div id="modal"></div>
-<script src="/index.js"></script>
+<script src="/main.client.js"></script>
 `);
   }
 });

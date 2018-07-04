@@ -8,18 +8,6 @@
   overflow-y: overlay;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  // @media (max-width: 1023px) {
-  //   box-sizing: content-box;
-  //   white-space: nowrap;
-  //   top: auto;
-  //   bottom: -30px;
-  //   padding-bottom: 30px;
-  //   width: 100%;
-  //   left: 0;
-  //   height: 74px;
-  //   overflow-y: hidden;
-  //   overflow-x: scroll;
-  // }
 }
 
 .video-list--preview {

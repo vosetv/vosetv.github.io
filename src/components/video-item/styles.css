@@ -93,13 +93,13 @@
     }
   }
   .video-item__thumb {
-    @include preview;
+    /* @include preview; */
   }
   .video-item__title {
     padding: 0;
     margin: 10px;
     height: 20px;
     border-radius: 2px;
-    @include preview;
+    /* @include preview; */
   }
 }

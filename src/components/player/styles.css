@@ -20,11 +20,10 @@
   }
 }
 
-// TODO: Set dynamic aspect ratio.
 .player-embed {
   position: relative;
   padding-top: 56.25%;
-  background: black; // To match video loading
+  background: black;
   iframe {
     position: absolute;
     top: 0;
@@ -52,7 +51,7 @@
   height: 37px;
   margin: 20px 0;
   border-radius: 2px;
-  @include preview;
+  /* @include preview; */
 }
 
 .player-title a {
@@ -62,7 +61,6 @@
   text-decoration: none;
   &:hover {
     color: #818990;
-    @include smart-underline(#818990, #262c31, 88%);
   }
 }
 
@@ -117,7 +115,7 @@
   width: 200px;
   display: inline-block;
   vertical-align: middle;
-  @include preview;
+  /* @include preview; */
 }
 
 .player-score {
