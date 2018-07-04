@@ -1,6 +1,6 @@
 .player {
   grid-area: player;
-  width: calc((100vh - $videos-width) / 0.5625);
+  width: calc((100vh - var(--videos-width)) / 0.5625);
   max-width: calc(100vw - 376px);
   padding: 20px;
   margin-right: -30px;

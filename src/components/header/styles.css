@@ -4,13 +4,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background: $header-bg;
+  background: var(--header-bg);
   padding: 0 20px;
 }
 
 .logo {
   height: 30px;
   cursor: pointer;
-  // TODO Build this in the svg
+  /* TODO Build this in the svg */
   margin-bottom: 4px;
 }

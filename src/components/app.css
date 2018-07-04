@@ -1,9 +1,0 @@
-.app {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "player videos";
-  grid-template-rows: 50px auto;
-  height: 100vh;
-  overflow: hidden;
-}

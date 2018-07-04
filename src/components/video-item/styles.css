@@ -9,7 +9,7 @@
     background: #293038;
   }
   @media (max-width: 1023px) {
-    width: $thumb-width;
+    width: var(--thumb-width);
     display: inline-block;
     vertical-align: middle;
     border: none;
@@ -50,27 +50,26 @@
 
 .video-item__thumb {
   vertical-align: middle;
-  width: $thumb-width;
-  // TODO Make this a function of our width.
+  width: var(--thumb-width);
+  /* TODO Make this a function of our width. */
   height: 56px;
   float: left;
 }
 
 .video-item__title {
-  // width: calc(100vw - #{$videos-width} - #{$thumb-width});
-  width: calc(100vw - (100vh - $videos-width) / 0.5625 - 176px);
+  width: calc(100vw - (100vh - var(--videos-width)) / 0.5625 - 176px);
   min-width: 200px;
   display: inline-block;
   float: left;
   padding: 10px;
-  // // Overwrite inherited value.
-  // white-space: normal;
+  /* Overwrite inherited value. */
+  /* white-space: normal; */
 
   font-size: 12px;
   color: #adadad;
   letter-spacing: 0.02em;
 
-  // Limit text to two lines
+  /* Limit text to two lines */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

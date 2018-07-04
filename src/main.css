@@ -1,3 +1,54 @@
-@import './variables';
-@import './preview';
-@import './smart-underline';
+:root {
+  --body-bg: #262c31;
+  --body-fg: #9e9e9e;
+  --header-height: 50px;
+  --header-bg: #20262b;
+  --header-fg: #64b5f6;
+  --thumb-width: 100px;
+  --videos-width: 197px;
+}
+
+::selection {
+  color: white;
+  background: var(--header-fg);
+  opacity: 1;
+  text-shadow: none;
+}
+
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: var(--body-fg);
+  background: var(--body-bg);
+  height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  margin: 0.67em 0 0;
+}
+
+a {
+  color: var(--header-fg);
+  text-decoration: none;
+}
+
+.app {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "player videos";
+  grid-template-rows: 50px auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
