@@ -4,9 +4,9 @@ import compression from 'compression';
 import nodalytics from 'nodalytics';
 import ReactDOMServer from 'react-dom/server';
 
-import Document from '../scripts/components/document';
-import subreddits from './subreddits';
-import fetchSubreddit from './fetch-subreddit.js';
+import Document from './components/document';
+import subreddits from './data/subreddits';
+import fetchSubreddit from './services/fetch-subreddit.js';
 
 // // // Init express app
 require('dotenv').config();

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'unstated';
 import { Subscribe } from 'unstated';
-import StateContainer from './state-container';
+import StateContainer from '../state-container';
 import Header from '../header';
-import Videos from '../videos';
+import VideoList from '../video-list';
 import Player from '../player';
 // TODO Check if needed
 import dropdownContainer from '../dropdown/container';
@@ -22,7 +22,7 @@ const Document = () => (
           ) : (
             <React.Fragment>
               <Player />
-              <Videos />
+              <VideoList />
             </React.Fragment>
           )
         }

@@ -1,4 +1,4 @@
-import './index.css';
+import './main.css';
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import Document from './components/document';

@@ -1,6 +1,7 @@
 .public/
 production/
 .env
+.cache/
 
 # Logs
 logs
