@@ -59,6 +59,11 @@ class StateContainer extends Container {
     let timeRange = searchParams.get('t');
     let [subreddit, sort = 'hot'] = segments;
 
+    if (subreddit === undefined) {
+      subreddit = 'videos';
+      this.replaceState(`/r/${subreddit}`);
+    }
+
     if (segments.length === 2) {
       if (!this.state.sortOptions.includes(sort)) {
         sort = 'hot';
