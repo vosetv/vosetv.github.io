@@ -8,6 +8,10 @@ import Document from './components/document';
 import subreddits from './data/subreddits';
 import fetchSubreddit from './services/fetch-subreddit.js';
 
+if (process.env.NODE_ENV === 'production') {
+  require('../.public/parcel-manifest.json')['main.client.js'];
+}
+
 // // // Init express app
 require('dotenv').config();
 
