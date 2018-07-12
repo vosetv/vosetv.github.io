@@ -4,7 +4,7 @@
 
   margin-right: -30px;
   padding-right: 30px;
-  background: #30373e;
+  background: var(--video-item-background);
   overflow-y: overlay;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;

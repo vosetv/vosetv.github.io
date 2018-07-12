@@ -51,16 +51,16 @@
   height: 37px;
   margin: 20px 0;
   border-radius: 2px;
-  /* @include preview; */
+  @include preview;
 }
 
 .player-title a {
   letter-spacing: -0.02em;
-  color: #818990;
+  color: var(--player-title-color);
   font-weight: 400;
   text-decoration: none;
   &:hover {
-    color: #818990;
+    color: var(--player-title-color);
   }
 }
 
@@ -68,17 +68,17 @@
   display: inline-block;
   font-size: 14px;
   padding: 5px;
-  color: #dee5ea;
-  background: #656e75;
+  color: var(--flair-color);
+  background: var(--flair-background);
   vertical-align: middle;
   margin: 0 0 0 20px;
-  border: 1px solid #7d8a94;
+  border: 1px solid var(--flair-border);
   border-radius: 2px;
 }
 
 .player-footer {
-  color: #f7f7f7;
-  background: #2e353c;
+  color: var(--footer-color);
+  background: var(--footer-background);
   text-align: center;
   border-radius: 3px;
   padding: 5px;
@@ -89,7 +89,7 @@
 
 .player-comments {
   display: inline-block;
-  color: #f7f7f7;
+  color: var(--footer-color);
   text-decoration: none;
   position: relative;
   margin-right: 40px;
@@ -104,7 +104,7 @@
     top: 9px;
     width: 20px;
     height: 2px;
-    background: #f7f7f7;
+    background: var(--footer-color);
     pointer-events: none;
   }
 }
@@ -115,7 +115,7 @@
   width: 200px;
   display: inline-block;
   vertical-align: middle;
-  /* @include preview; */
+  @include preview;
 }
 
 .player-score {

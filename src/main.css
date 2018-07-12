@@ -1,11 +1,55 @@
+@keyframes preview {
+  0% {
+    background-position: 0% 72%;
+  }
+  100% {
+    background-position: 100% 29%;
+  }
+}
+
+@mixin preview() {
+  background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
+  background-size: 300% 300%;
+  animation: preview 1.2s linear infinite;
+}
+
 :root {
   --body-bg: #262c31;
   --body-fg: #9e9e9e;
-  --header-height: 50px;
+
   --header-bg: #20262b;
   --header-fg: #64b5f6;
+  --header-separator: #444b54;
+  --header-height: 50px;
+
+  --highlight-color: #2196f3;
+
   --thumb-width: 100px;
   --videos-width: 197px;
+
+  --player-title-color: #818990;
+  --flair-color: #dee5ea;
+  --flair-background: #656e75;
+  --flair-border: #7d8a94;
+
+  --footer-color: #f7f7f7;
+  --footer-background: #2e353c;
+
+  --dropdown-color: #5c5f63;
+  --dropdown-background: white;
+  --dropdown-hover-color: black;
+  --dropdown-hover-background: #eee;
+  --dropdown-active-color: white;
+  --dropdown-active-background: var(--highlight-color);
+
+  --video-item-background: #30373e;
+  --video-item-color: #adadad;
+  --video-item-color-selected: #dedede;
+  --video-item-background-selected: #3a424a;
+  --video-item-background-hover: #293038;
+  --video-item-separator: #252c31;
+
+  --message-color: white;
 }
 
 ::selection {
