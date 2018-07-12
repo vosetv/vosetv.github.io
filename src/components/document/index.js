@@ -7,6 +7,7 @@ import StateContainer from '../state-container';
 import Header from '../header';
 import VideoList from '../video-list';
 import Player from '../player';
+import Message from '../message';
 // TODO Check if needed
 import dropdownContainer from '../dropdown/container';
 

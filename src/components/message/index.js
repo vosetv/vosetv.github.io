@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from '../link';
-import favorites from '../../../favorite-subreddits';
+import favorites from '../../data/favorite-subreddits';
+import './styles.css';
 
 const Message = () => (
   <div className="message">
@@ -17,7 +18,7 @@ const Message = () => (
           .sort(() => 0.5 - Math.random())
           .slice(0, 3)
           .map(link => (
-            <li>
+            <li key={link}>
               <Link to={link}>{link}</Link>
             </li>
           ))}
