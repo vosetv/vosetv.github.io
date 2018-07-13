@@ -2,9 +2,12 @@
   display: flex;
   height: 100%;
   align-items: stretch;
+  & > :not(:last-child):not(:first-child) {
+    border-right: 1px solid var(--header-separator);
+  }
 }
 
-.sort__text {
+.sort__title {
   font-weight: bold;
   font-size: 0.8em;
   margin-top: 0.26em;
@@ -14,34 +17,4 @@
   /* "Hack" to vertically align text node. */
   display: flex;
   align-items: center;
-}
-
-.button {
-  background: none;
-  border-radius: 0;
-  border: 0;
-  color: var(--header-fg);
-  font-family: Roboto, sans-serif;
-  padding: 0;
-  font-size: 16px;
-}
-
-.sort__button {
-  position: relative;
-  padding-right: 30px;
-  padding-left: 20px;
-  &:not(:last-child) {
-    border-right: 1px solid var(--header-separator);
-  }
-  &:after {
-    content: '';
-    position: absolute;
-    right: 10px;
-    top: calc(50% - 1px);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 5px 4px 0 4px;
-    border-color: var(--header-fg) transparent transparent transparent;
-  }
 }

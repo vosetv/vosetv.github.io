@@ -9,7 +9,7 @@ const Sort = () => (
   <Subscribe to={[StateContainer]}>
     {store => (
       <div className="sort">
-        <div className="sort__text">Sort</div>
+        <div className="sort__title">Sort</div>
         <Dropdown
           id="subreddit"
           items={store.state.subreddits}

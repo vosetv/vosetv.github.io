@@ -45,6 +45,15 @@
   margin: 20px 0;
   display: inline;
   vertical-align: middle;
+  a {
+    letter-spacing: -0.02em;
+    color: var(--body-fg);
+    font-weight: 400;
+    text-decoration: none;
+    &:hover {
+      color: var(--body-fg);
+    }
+  }
 }
 
 .player-title--preview {
@@ -56,25 +65,15 @@
   animation: preview 1.2s linear infinite;
 }
 
-.player-title a {
-  letter-spacing: -0.02em;
-  color: var(--body-fg);
-  font-weight: 400;
-  text-decoration: none;
-  &:hover {
-    color: var(--body-fg);
-  }
-}
-
 .player-flair {
+  color: var(--flair-color);
+  background: var(--flair-background);
+  border: 1px solid var(--flair-border);
   display: inline-block;
   font-size: 14px;
   padding: 3px 5px;
-  color: var(--flair-color);
-  background: var(--flair-background);
   vertical-align: middle;
-  margin: 0 0 0 20px;
-  border: 1px solid var(--flair-border);
+  margin-left: 20px;
   border-radius: 2px;
 }
 

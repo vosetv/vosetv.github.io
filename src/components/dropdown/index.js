@@ -18,7 +18,7 @@ class Dropdown extends Component {
   }
 
   handleClickOut = event => {
-    if (['dropdown', 'button sort__button'].includes(event.target.className)) return;
+    if (['dropdown', 'button button--dropdown'].includes(event.target.className)) return;
     // TODO Test if DropdownContainer would work now
     dropdownContainer.toggle(null);
   };
@@ -30,7 +30,7 @@ class Dropdown extends Component {
         {container => (
           <React.Fragment>
             <button
-              className="button sort__button"
+              className="button button--dropdown"
               onClick={() => container.toggle(id)}
               ref={this.buttonRef}
             >
