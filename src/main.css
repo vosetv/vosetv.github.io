@@ -7,33 +7,28 @@
   }
 }
 
-@mixin preview() {
-  background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
-  background-size: 300% 300%;
-  animation: preview 1.2s linear infinite;
-}
-
 :root {
   --body-bg: #262c31;
-  --body-fg: #9e9e9e;
+  --body-fg: #818990;
 
   --header-bg: #20262b;
+
+  /* todo Link color */
   --header-fg: #64b5f6;
   --header-separator: #444b54;
   --header-height: 50px;
 
+  --bright-color: #f7f7f7;
   --highlight-color: #2196f3;
 
   --thumb-width: 100px;
   --videos-width: 197px;
 
-  --player-title-color: #818990;
-  --flair-color: #dee5ea;
+  --player-title-color: var(--body-fg);
+  /* --flair-color: #dee5ea; */
+  --flair-color: var(--bright-color);
   --flair-background: #656e75;
   --flair-border: #7d8a94;
-
-  --footer-color: #f7f7f7;
-  --footer-background: #2e353c;
 
   --dropdown-color: #5c5f63;
   --dropdown-background: white;
@@ -49,11 +44,50 @@
   --video-item-background-hover: #293038;
   --video-item-separator: #252c31;
 
-  --message-color: white;
+  --footer-color: var(--bright-color);
+  --footer-background: var(--video-item-background);
+
+  --message-color: var(--bright-color);
+
+  /* test
+
+  --body-bg: white;
+  --body-fg: #333;
+
+  --header-bg: #f1f1f1;
+  --header-fg: #64b5f6;
+  --header-separator: #e0e0e0;
+
+  --bright-color: black;
+  --highlight-color: #2196f3;
+
+  --flair-color: var(--body-fg);
+  --flair-background: #c8dcec;
+  --flair-border: #85b1d4;
+
+  --dropdown-color: #5c5f63;
+  --dropdown-background: white;
+  --dropdown-hover-color: black;
+  --dropdown-hover-background: #eee;
+  --dropdown-active-color: white;
+  --dropdown-active-background: var(--highlight-color);
+
+  --video-item-background: #f7f7f7;
+  --video-item-color: #666;
+  --video-item-color-selected: black;
+  --video-item-background-selected: white;
+  --video-item-background-hover: white;
+  --video-item-separator: #eee;
+
+  --footer-color: var(--bright-color);
+  --footer-background: var(--video-item-background);
+
+  --message-color: var(--bright-color);
+ */
 }
 
 ::selection {
-  color: white;
+  color: var(--bright-color);
   background: var(--header-fg);
   opacity: 1;
   text-shadow: none;
@@ -86,7 +120,7 @@ a {
   grid-template-areas:
     "header header"
     "player videos";
-  grid-template-rows: 50px auto;
+  grid-template-rows: var(--header-height) auto;
   height: 100vh;
   overflow: hidden;
 }

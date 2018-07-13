@@ -1,11 +1,7 @@
 {
   "modules": false,
-  "parser": "scss",
   "plugins": {
-    "postcss-easy-import": true,
-    "postcss-sassy-mixins": true,
     "postcss-nested": true,
-    "postcss-strip-inline-comments": true,
     "postcss-normalize": true,
     "autoprefixer": {
       "grid": true

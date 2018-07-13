@@ -6,13 +6,6 @@ import './styles.css';
 class VideoItem extends React.Component {
   myRef = React.createRef();
 
-  static propTypes = {
-    thumbnail: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool.isRequired,
-    isWatched: PropTypes.bool.isRequired,
-  };
-
   componentDidMount() {
     this.scrollIntoViewIfNeeded();
   }
@@ -47,5 +40,12 @@ class VideoItem extends React.Component {
     );
   }
 }
+
+VideoItem.propTypes = {
+  thumbnail: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  isWatched: PropTypes.bool.isRequired,
+};
 
 export default VideoItem;

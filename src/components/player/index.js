@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import YouTube from 'react-youtube';
+import YouTube from '../youtube';
 import { Subscribe } from 'unstated';
 import StateContainer from '../state-container';
 import ShortNumber from '../short-number';

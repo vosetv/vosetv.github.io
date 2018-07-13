@@ -7,10 +7,6 @@ import dropdownContainer from './container';
 import './styles.css';
 
 class Dropdown extends Component {
-  static propTypes = {
-    id: PropTypes.any.isRequired,
-  };
-
   buttonRef = React.createRef();
 
   componentDidMount() {
@@ -73,5 +69,9 @@ class Dropdown extends Component {
     );
   }
 }
+
+Dropdown.propTypes = {
+  id: PropTypes.any.isRequired,
+};
 
 export default Dropdown;

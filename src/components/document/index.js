@@ -12,7 +12,7 @@ import Message from '../message';
 import dropdownContainer from '../dropdown/container';
 
 // TODO Extract error element into component.
-const Document = () => (
+let Document = () => (
   <React.StrictMode>
     <Provider inject={[dropdownContainer]}>
       <Header />
