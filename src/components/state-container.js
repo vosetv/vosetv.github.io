@@ -59,6 +59,8 @@ class StateContainer extends Container {
     let timeRange = searchParams.get('t');
     let [subreddit, sort = 'hot'] = segments;
 
+    console.log(subreddit);
+
     if (subreddit === undefined) {
       subreddit = 'videos';
       this.replaceState(`/r/${subreddit}`);
@@ -79,6 +81,8 @@ class StateContainer extends Container {
       sort,
       timeRange: timeRange ? timeRange : 'day',
     });
+
+    document.title = `/r/${subreddit} - vose.tv`;
 
     // Create session to avoid race condition
     const currentSession = {};
@@ -135,7 +139,6 @@ class StateContainer extends Container {
     } else {
       this.pushState(
         `/r/${this.state.subreddit}/${this.state.sort}/?t=${timeRange}`,
-        false
       );
     }
     this.historyUpdate();
@@ -143,15 +146,11 @@ class StateContainer extends Container {
 
   replaceState(url) {
     history.pushState({}, '', url);
-    // document.title = url;
+    console.log(url);
   }
 
-  pushState(url, updateTitle) {
+  pushState(url) {
     history.pushState({}, '', url);
-    if (updateTitle) {
-      const { pathname } = new URL(url);
-      // document.title = pathname;
-    }
   }
 }
 

@@ -8,6 +8,5 @@ export default [
   'Documentaries',
   'youtubehaiku',
   'mealtimevideos',
-  'teslamotors',
   'listentothis',
 ];
