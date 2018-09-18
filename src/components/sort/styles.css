@@ -5,6 +5,11 @@
   & > :not(:last-child):not(:first-child) {
     border-right: 1px solid var(--header-separator);
   }
+
+  @media (max-width: 1023px) {
+    height: 35px;
+    align-self: center;
+  }
 }
 
 .sort__title {
@@ -18,4 +23,9 @@
   /* "Hack" to vertically align text node. */
   display: flex;
   align-items: center;
+
+  @media (max-width: 1023px) {
+    /* TODO Visually hidden */
+    display: none;
+  }
 }

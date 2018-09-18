@@ -9,11 +9,9 @@
     background: var(--video-item-background-hover);
   }
   @media (max-width: 1023px) {
-    width: var(--thumb-width);
-    display: inline-block;
-    vertical-align: middle;
     border: none;
     border-right: 1px solid var(--video-item-separator);
+    flex-shrink: 0;
   }
 }
 
@@ -79,9 +77,6 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  @media (max-width: 1023px) {
-    display: none;
-  }
 }
 
 .video-list--preview {

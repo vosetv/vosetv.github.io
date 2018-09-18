@@ -1,13 +1,23 @@
 .video-list {
   grid-area: videos;
   box-sizing: border-box;
-
-  margin-right: -30px;
-  padding-right: 30px;
   background: var(--video-item-background);
-  overflow-y: overlay;
-  overflow-x: hidden;
+  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 1023px) {
+    height: 72px;
+    .list {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    margin-right: -30px;
+    padding-right: 30px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+  }
 }
 
 .video-list--preview {

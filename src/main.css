@@ -46,6 +46,7 @@
   --video-item-background-selected: #3a424a;
   --video-item-background-hover: #293038;
   --video-item-separator: #252c31;
+  --video-item-height: 72px;
 
   --footer-color: var(--bright-color);
   --footer-background: var(--video-item-background);
@@ -126,6 +127,16 @@ a {
   grid-template-rows: var(--header-height) auto;
   height: 100vh;
   overflow: hidden;
+  @media (max-width: 1023px) {
+    grid-template-areas:
+      "header"
+      "player"
+      "videos";
+    grid-template-rows:
+      70px
+      1fr
+      var(--video-item-height);
+  }
 }
 
 .list {

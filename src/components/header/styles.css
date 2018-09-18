@@ -6,8 +6,17 @@
   align-items: center;
   background: var(--header-bg);
   padding: 0 20px;
+
+  @media (max-width: 1023px) {
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 10px;
+  }
 }
 
 .logo {
-  height: 34px;
+  height: 20px;
+  @media (min-width: 1024px) {
+    height: 34px;
+  }
 }
