@@ -14,6 +14,7 @@
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
   "dependencies": {
+    "@reach/menu-button": "0.1.7",
     "@simonlc/youtube-player": "4.0.2",
     "compression": "1.7.2",
     "dotenv": "6.0.0",

@@ -119,7 +119,6 @@ app.use((req, res) => {
 <link rel="stylesheet" href="/main.client.css">
 <body>
 <div id="root" class="app"></div>
-<div id="modal"></div>
 <script src="/main.client.js"></script>
 `);
   }

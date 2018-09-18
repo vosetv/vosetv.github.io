@@ -1,13 +1,10 @@
 .dropdown {
-  position: fixed;
-  list-style: none;
-  margin: 0;
-  padding: 0;
   background: var(--dropdown-background);
   border-radius: 4px;
   padding: 10px 0;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
-  z-index: 11;
+  margin-top: 20px;
+  position: relative;
   &:after {
     content: '';
     position: absolute;
@@ -19,17 +16,18 @@
     border-width: 0 8px 8px 8px;
     border-color: transparent transparent var(--dropdown-background) transparent;
   }
-  li {
+  div {
     padding: 5px 20px;
     cursor: pointer;
     color: var(--dropdown-color);
-    &:hover {
+    &:focus {
       color: var(--dropdown-hover-color);
       background: var(--dropdown-hover-background);
+      outline: 0;
     }
-    &.dropdown__active {
-      color: var(--dropdown-active-color);
-      background: var(--dropdown-active-background);
+    &.dropdown__current {
+      color: var(--dropdown-current-color);
+      background: var(--dropdown-current-background);
       cursor: default;
     }
   }
@@ -58,6 +56,7 @@
   &:hover {
     background-color: var(--header-bg-hover);
     color: var(--link-hover);
+    outline: 0;
   }
   &:active {
     background-color: var(--header-bg-active);
@@ -75,4 +74,13 @@
     border-width: 5px 4px 0 4px;
     border-color: currentColor transparent transparent transparent;
   }
+
+  &[aria-expanded="true"] {
+    background-color: var(--header-bg-active);
+    color: var(--link-active);
+  }
+}
+
+[data-reach-menu] {
+  position: absolute;
 }

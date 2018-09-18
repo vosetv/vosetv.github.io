@@ -44,6 +44,7 @@ VideoItem.propTypes = {
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   isWatched: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default VideoItem;

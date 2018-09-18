@@ -38,7 +38,6 @@ const VideoList = () => (
           ) : (
             <div className="message">
               <p>No videos to show...</p>
-              <button>Clear all filters</button>
             </div>
           )
         ) : (

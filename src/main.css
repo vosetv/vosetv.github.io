@@ -9,7 +9,7 @@
 
 :root {
   --body-bg: #262c31;
-  --body-fg: #818990;
+  --body-fg: #8b939a;
 
   --header-bg: #20262b;
   --header-bg-hover: #2a3138;
@@ -37,8 +37,8 @@
   --dropdown-background: white;
   --dropdown-hover-color: black;
   --dropdown-hover-background: #eee;
-  --dropdown-active-color: white;
-  --dropdown-active-background: var(--highlight-color);
+  --dropdown-current-color: white;
+  --dropdown-current-background: var(--highlight-color);
 
   --video-item-background: #30373e;
   --video-item-color: #adadad;
@@ -73,8 +73,8 @@
   --dropdown-background: white;
   --dropdown-hover-color: black;
   --dropdown-hover-background: #eee;
-  --dropdown-active-color: white;
-  --dropdown-active-background: var(--highlight-color);
+  --dropdown-current-color: white;
+  --dropdown-current-background: var(--highlight-color);
 
   --video-item-background: #f7f7f7;
   --video-item-color: #666;

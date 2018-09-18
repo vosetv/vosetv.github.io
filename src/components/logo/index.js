@@ -15,7 +15,6 @@ const Logo = ({ color }) => (
 );
 
 Logo.propTypes = {
-  className: PropTypes.string,
   color: PropTypes.string,
 };
 

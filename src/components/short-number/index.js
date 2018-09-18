@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function shortNumber(number) {
   return number >= 1e3
@@ -7,5 +8,9 @@ function shortNumber(number) {
 }
 
 const ShortNumber = ({ children }) => shortNumber(children);
+
+ShortNumber.PropTypes = {
+  children: PropTypes.any.isRequired,
+};
 
 export default ShortNumber;

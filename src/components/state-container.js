@@ -96,7 +96,12 @@ class StateContainer extends Container {
   };
 
   handleKeydown = event => {
-    event.preventDefault();
+    if ([37, 39].includes(event.keyCode)) {
+      // Allow scroll into view to work with arrow keys
+      // TODO only prevent default if no modifier key is held
+      event.preventDefault();
+    }
+
     if ([37, 75].includes(event.keyCode)) {
       this.changeVideo(Math.max(this.state.currentVideoIndex - 1, 0));
     }
@@ -128,7 +133,7 @@ class StateContainer extends Container {
     );
   };
 
-  sort = async ({ subreddit, sort, timeRange }) => {
+  sort = ({ subreddit, sort, timeRange }) => {
     if (subreddit) {
       this.pushState(`/r/${subreddit}`);
     } else if (sort) {
@@ -142,7 +147,7 @@ class StateContainer extends Container {
   };
 
   replaceState(url) {
-    history.pushState({}, '', url);
+    history.replaceState({}, '', url);
     console.log(url);
   }
 

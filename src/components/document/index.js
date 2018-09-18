@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'unstated';
 import { Subscribe } from 'unstated';
@@ -10,9 +9,9 @@ import Player from '../player';
 import Message from '../message';
 
 // TODO Extract error element into component.
-let Document = () => (
+const Document = () => (
   <React.StrictMode>
-    <Provider inject={['dropdownContainer']}>
+    <Provider>
       <Header />
       <Subscribe to={[StateContainer]}>
         {({ state }) =>
