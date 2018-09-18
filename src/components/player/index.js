@@ -36,7 +36,6 @@ const Player = () => (
                   {state.currentVideo.title}
                 </a>
               </h1>
-              {/* TODO Null operator here */}
               {state.currentVideo.flair && (
                 <div className="player-flair">{state.currentVideo.flair}</div>
               )}

@@ -8,13 +8,11 @@ import Header from '../header';
 import VideoList from '../video-list';
 import Player from '../player';
 import Message from '../message';
-// TODO Check if needed
-import dropdownContainer from '../dropdown/container';
 
 // TODO Extract error element into component.
 let Document = () => (
   <React.StrictMode>
-    <Provider inject={[dropdownContainer]}>
+    <Provider inject={['dropdownContainer']}>
       <Header />
       <Subscribe to={[StateContainer]}>
         {({ state }) =>

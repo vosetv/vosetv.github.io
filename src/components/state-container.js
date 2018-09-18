@@ -59,8 +59,6 @@ class StateContainer extends Container {
     let timeRange = searchParams.get('t');
     let [subreddit, sort = 'hot'] = segments;
 
-    console.log(subreddit);
-
     if (subreddit === undefined) {
       subreddit = 'videos';
       this.replaceState(`/r/${subreddit}`);
@@ -82,7 +80,7 @@ class StateContainer extends Container {
       timeRange: timeRange ? timeRange : 'day',
     });
 
-    document.title = `/r/${subreddit} - vose.tv`;
+    document && (document.title = `/r/${subreddit} - vose.tv`);
 
     // Create session to avoid race condition
     const currentSession = {};
@@ -118,7 +116,6 @@ class StateContainer extends Container {
         currentVideo: this.state.videos[index],
         watchedVideos: {
           ...prevState.watchedVideos,
-          // TODO Maybe put a expire date here instead of true
           ...{ [this.state.videos[index].id]: true },
         },
       }),
@@ -130,7 +127,6 @@ class StateContainer extends Container {
     );
   };
 
-  // TODO Tons of non dry boilerplate, maybe we can clean this up
   sort = async ({ subreddit, sort, timeRange }) => {
     if (subreddit) {
       this.pushState(`/r/${subreddit}`);

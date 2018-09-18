@@ -19,7 +19,6 @@ class Dropdown extends Component {
 
   handleClickOut = event => {
     if (['dropdown', 'button button--dropdown'].includes(event.target.className)) return;
-    // TODO Test if DropdownContainer would work now
     dropdownContainer.toggle(null);
   };
 

@@ -14,7 +14,6 @@ class VideoItem extends React.Component {
     this.scrollIntoViewIfNeeded();
   }
 
-  // TODO Put this in prop
   scrollIntoViewIfNeeded() {
     if (this.props.isSelected) {
       this.myRef.current.scrollIntoView({
