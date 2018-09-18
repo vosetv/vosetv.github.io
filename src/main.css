@@ -12,9 +12,13 @@
   --body-fg: #818990;
 
   --header-bg: #20262b;
+  --header-bg-hover: #2a3138;
+  --header-bg-active: #313d4a;
 
-  /* todo Link color */
-  --header-fg: #64b5f6;
+  --link-color: #64b5f6;
+  --link-hover: #95d0ff;
+  --link-active: white;
+  --header-fg: var(--link-color);
   --header-separator: #444b54;
   --header-height: 50px;
 
@@ -25,7 +29,6 @@
   --videos-width: 197px;
 
   --player-title-color: var(--body-fg);
-  /* --flair-color: #dee5ea; */
   --flair-color: var(--bright-color);
   --flair-background: #656e75;
   --flair-border: #7d8a94;
@@ -111,7 +114,7 @@ h1 {
 }
 
 a {
-  color: var(--header-fg);
+  color: var(--link-color);
   text-decoration: none;
 }
 

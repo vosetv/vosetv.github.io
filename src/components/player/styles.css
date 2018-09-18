@@ -50,8 +50,10 @@
     color: var(--body-fg);
     font-weight: 400;
     text-decoration: none;
+    transition: color 0.15s ease-out;
     &:hover {
-      color: var(--body-fg);
+      color: var(--link-color);
+      transition: color 0.15s ease-in;
     }
   }
 }

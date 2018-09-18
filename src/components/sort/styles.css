@@ -13,6 +13,7 @@
   margin-top: 0.26em;
   text-transform: uppercase;
   padding-left: 20px;
+  margin-right: 7px;
 
   /* "Hack" to vertically align text node. */
   display: flex;
