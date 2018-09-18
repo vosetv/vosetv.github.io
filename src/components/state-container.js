@@ -96,10 +96,11 @@ class StateContainer extends Container {
   };
 
   handleKeydown = event => {
-    if (event.keyCode === 37) {
+    event.preventDefault();
+    if ([37, 75].includes(event.keyCode)) {
       this.changeVideo(Math.max(this.state.currentVideoIndex - 1, 0));
     }
-    if (event.keyCode === 39) {
+    if ([39, 74].includes(event.keyCode)) {
       this.changeVideo(
         Math.min(
           this.state.currentVideoIndex + 1,
@@ -111,12 +112,12 @@ class StateContainer extends Container {
 
   changeVideo = index => {
     this.setState(
-      prevState => ({
+      state => ({
         currentVideoIndex: index,
-        currentVideo: this.state.videos[index],
+        currentVideo: state.videos[index],
         watchedVideos: {
-          ...prevState.watchedVideos,
-          ...{ [this.state.videos[index].id]: true },
+          ...state.watchedVideos,
+          ...{ [state.videos[index].id]: true },
         },
       }),
       () =>

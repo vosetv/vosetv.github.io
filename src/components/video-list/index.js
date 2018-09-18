@@ -4,7 +4,6 @@ import objstr from 'obj-str';
 import { Subscribe } from 'unstated';
 import StateContainer from '../state-container';
 import VideoItem from '../video-item';
-import Link from '../link';
 import './styles.css';
 
 // States:
@@ -12,7 +11,7 @@ import './styles.css';
 //  - No filtered videos
 //  - Empty
 //  - Loading
-const VideoList = ({ videos, currentVideoIndex, changeVideo }) => (
+const VideoList = () => (
   <Subscribe to={[StateContainer]}>
     {({ state, changeVideo }) => (
       <div

@@ -4,24 +4,23 @@ import objstr from 'obj-str';
 import './styles.css';
 
 class VideoItem extends React.Component {
-  myRef = React.createRef();
+  ref = React.createRef();
 
-  componentDidMount() {
-    this.scrollIntoViewIfNeeded();
-  }
-
-  componentDidUpdate() {
-    this.scrollIntoViewIfNeeded();
-  }
-
-  scrollIntoViewIfNeeded() {
-    if (this.props.isSelected) {
-      this.myRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest',
-      });
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.isSelected &&
+      prevProps.isSelected !== this.props.isSelected
+    ) {
+      this.scrollIntoView();
     }
+  }
+
+  scrollIntoView() {
+    this.ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
   }
 
   render() {
@@ -32,7 +31,7 @@ class VideoItem extends React.Component {
       'video-item--watched': isWatched,
     });
     return (
-      <li ref={this.myRef} className={classes} onClick={onClick}>
+      <li ref={this.ref} className={classes} onClick={onClick}>
         <img className="video-item__thumb" src={thumbnail} alt="" />
         <div className="video-item__title">{title}</div>
       </li>
