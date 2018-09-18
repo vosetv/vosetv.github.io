@@ -31,6 +31,8 @@ const Player = () => (
               <h1 className="player-title">
                 <a
                   href={`https://reddit.com${state.currentVideo.url}`}
+                  rel="noopener"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   {state.currentVideo.title}
@@ -44,6 +46,8 @@ const Player = () => (
               <a
                 className="player-comments"
                 href={`https://reddit.com${state.currentVideo.url}`}
+                rel="noopener"
+                rel="noreferrer"
                 target="_blank"
               >
                 <ShortNumber>{state.currentVideo.comments}</ShortNumber>{' '}
