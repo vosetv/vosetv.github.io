@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Subscribe } from 'unstated';
 import StateContainer from './state-container';

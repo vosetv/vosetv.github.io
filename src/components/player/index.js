@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import YouTube from '../youtube';
 import { Subscribe } from 'unstated';
 import StateContainer from '../state-container';
@@ -31,8 +30,7 @@ const Player = () => (
               <h1 className="player-title">
                 <a
                   href={`https://reddit.com${state.currentVideo.url}`}
-                  rel="noopener"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   {state.currentVideo.title}
@@ -46,8 +44,7 @@ const Player = () => (
               <a
                 className="player-comments"
                 href={`https://reddit.com${state.currentVideo.url}`}
-                rel="noopener"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 <ShortNumber>{state.currentVideo.comments}</ShortNumber>{' '}

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import { Subscribe } from 'unstated';
 import StateContainer from '../state-container';

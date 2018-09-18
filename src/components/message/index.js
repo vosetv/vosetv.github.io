@@ -10,7 +10,7 @@ const Message = () => (
     </div>
     <div className="message__content">
       <p>
-        <b>We couldn't find any videos for you...</b>
+        <b>We couldn’t find any videos for you...</b>
       </p>
       <p>Try a different sorting, or some of our favorite subreddits:</p>
       <ul>

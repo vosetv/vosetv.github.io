@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import youTubePlayer from '@simonlc/youtube-player';
 
 /**
@@ -29,9 +29,7 @@ function shouldUpdateVideo(prevProps, props) {
  * @param {Object} props
  */
 function shouldUpdatePlayer(prevProps, props) {
-  return (
-     prevProps.id === props.id || prevProps.className === props.className
-  );
+  return prevProps.id === props.id || prevProps.className === props.className;
 }
 
 class YouTube extends Component {
@@ -75,7 +73,7 @@ class YouTube extends Component {
     onPlaybackQualityChange: () => {},
   };
 
- /**
+  /**
    * Expose PlayerState constants for convenience. These constants can also be
    * accessed through the global YT object after the YouTube IFrame API is instantiated.
    * https://developers.google.com/youtube/iframe_api_reference#onStateChange
@@ -111,12 +109,12 @@ class YouTube extends Component {
   }
 
   componentWillUnmount() {
-     /**
-      * Note: The `youtube-player` package that is used promisifies all Youtube
-      * Player API calls, which introduces a delay of a tick before it actually
-      * gets destroyed. Since React attempts to remove the element instantly
-      * this method isn't quick enough to reset the container element.
-      */
+    /**
+     * Note: The `youtube-player` package that is used promisifies all Youtube
+     * Player API calls, which introduces a delay of a tick before it actually
+     * gets destroyed. Since React attempts to remove the element instantly
+     * this method isn't quick enough to reset the container element.
+     */
     this.internalPlayer.destroy();
   }
 
@@ -144,10 +142,9 @@ class YouTube extends Component {
    *   @param {Integer} data  - status change type
    *   @param {Object} target - actual YT player
    */
-  onPlayerStateChange = (event) => {
+  onPlayerStateChange = event => {
     this.props.onStateChange(event);
     switch (event.data) {
-
       case YouTube.PlayerState.ENDED:
         this.props.onEnd(event);
         break;
@@ -181,7 +178,8 @@ class YouTube extends Component {
    *   @param {String} data   - playback quality
    *   @param {Object} target - actual YT player
    */
-  onPlayerPlaybackQualityChange = event => this.props.onPlaybackQualityChange(event);
+  onPlayerPlaybackQualityChange = event =>
+    this.props.onPlaybackQualityChange(event);
 
   /**
    * Initialize the Youtube Player API on the container and attach event handlers
@@ -200,8 +198,14 @@ class YouTube extends Component {
     this.internalPlayer.on('ready', this.onPlayerReady);
     this.internalPlayer.on('error', this.onPlayerError);
     this.internalPlayer.on('stateChange', this.onPlayerStateChange);
-    this.internalPlayer.on('playbackRateChange', this.onPlayerPlaybackRateChange);
-    this.internalPlayer.on('playbackQualityChange', this.onPlayerPlaybackQualityChange);
+    this.internalPlayer.on(
+      'playbackRateChange',
+      this.onPlayerPlaybackRateChange,
+    );
+    this.internalPlayer.on(
+      'playbackQualityChange',
+      this.onPlayerPlaybackQualityChange,
+    );
   };
 
   /**
@@ -210,7 +214,7 @@ class YouTube extends Component {
    * replaced the DIV that is mounted by React we need to do this manually.
    */
   updatePlayer = () => {
-    this.internalPlayer.getIframe().then((iframe) => {
+    this.internalPlayer.getIframe().then(iframe => {
       this.props.id
         ? iframe.setAttribute('id', this.props.id)
         : iframe.removeAttribute('id');
@@ -226,7 +230,10 @@ class YouTube extends Component {
    * Youtube Player API methods to update the video.
    */
   updateVideo = () => {
-    if (typeof this.props.videoId === 'undefined' || this.props.videoId === null) {
+    if (
+      typeof this.props.videoId === 'undefined' ||
+      this.props.videoId === null
+    ) {
       this.internalPlayer.stopVideo();
       return;
     }
@@ -255,14 +262,18 @@ class YouTube extends Component {
     this.internalPlayer.cueVideoById(opts);
   };
 
-  refContainer = (container) => {
+  refContainer = container => {
     this.container = container;
   };
 
   render() {
     return (
       <span className={this.props.containerClassName}>
-        <div id={this.props.id} className={this.props.className} ref={this.refContainer} />
+        <div
+          id={this.props.id}
+          className={this.props.className}
+          ref={this.refContainer}
+        />
       </span>
     );
   }

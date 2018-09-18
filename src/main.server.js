@@ -1,3 +1,4 @@
+import React from 'react';
 import path from 'path';
 import express from 'express';
 import compression from 'compression';
@@ -20,9 +21,11 @@ const port = process.env.PORT;
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
-  app.use(compression({
-    threshold: false,
-  }));
+  app.use(
+    compression({
+      threshold: false,
+    }),
+  );
   app.use(nodalytics(process.env.GA_CODE_SERVER));
 } else {
   app.use(express.static(path.join(__dirname, '../.public')));
@@ -69,7 +72,6 @@ app.use((req, res) => {
   }
 
   if (process.env.NODE_ENV === 'production') {
-
     const script = '/main.client.js';
     // TODO Map preload resources?
     res.write(`
@@ -78,7 +80,7 @@ app.use((req, res) => {
 <link rel="preload" href="${script}" as="script">
     `);
     res.write(`<div id='content'>`);
-    const reactStream = ReactDOMServe.renderToNodeStream(<MyPage/>);
+    const reactStream = ReactDOMServer.renderToNodeStream(<Document />);
     reactStream.pipe(res, { end: false });
     reactStream.on('end', () => {
       // TODO write script with manifest
@@ -87,26 +89,26 @@ app.use((req, res) => {
       `);
       res.end();
     });
-// <meta name="viewport" content="width=device-width, initial-scale=1">
-// <meta name="description" content="Watch the top videos on vose.tv">
-// <meta id="theme-color" name="theme-color" content="#20262b">
-// <link rel="stylesheet" href="/main.css">
+    // <meta name="viewport" content="width=device-width, initial-scale=1">
+    // <meta name="description" content="Watch the top videos on vose.tv">
+    // <meta id="theme-color" name="theme-color" content="#20262b">
+    // <link rel="stylesheet" href="/main.css">
 
-// <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
-// <meta name="twitter:card" content="summary">
-// <meta name="twitter:site" content="@simonmlaroche">
-// <meta name="twitter:creator" content="@simonmlaroche">
-// <meta property="og:url" content="https://vose.tv">
-// <meta property="og:title" content="vose.tv">
-// <meta property="og:description" content="Watch the top videos on vose.tv">
-// <meta property="og:image" content="https://vose.tv/vose-card.png">
-// <meta property="og:type" content="website">
-// <meta property="fb:app_id" content="1725542221039137">
+    // <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+    // <meta name="twitter:card" content="summary">
+    // <meta name="twitter:site" content="@simonmlaroche">
+    // <meta name="twitter:creator" content="@simonmlaroche">
+    // <meta property="og:url" content="https://vose.tv">
+    // <meta property="og:title" content="vose.tv">
+    // <meta property="og:description" content="Watch the top videos on vose.tv">
+    // <meta property="og:image" content="https://vose.tv/vose-card.png">
+    // <meta property="og:type" content="website">
+    // <meta property="fb:app_id" content="1725542221039137">
 
-// <meta name="apple-mobile-web-app-capable" content="yes">
-// <meta name="apple-mobile-web-app-status-bar-style" content="black">
-// <meta name="apple-mobile-web-app-title" content="vose.tv">
-// <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" href="/img/startup-retina.png"> -->
+    // <meta name="apple-mobile-web-app-capable" content="yes">
+    // <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    // <meta name="apple-mobile-web-app-title" content="vose.tv">
+    // <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" href="/img/startup-retina.png"> -->
   } else {
     res.status(200).send(`
 <!doctype html>

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Subscribe } from 'unstated';
 import Dropdown from '../dropdown';
 import StateContainer from '../state-container';
