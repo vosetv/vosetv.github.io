@@ -33,17 +33,15 @@
 }
 
 .player-header {
-  margin: 20px 0;
-  @media (max-width: 1023px) {
-    padding: 0 10px;
-    h1 {
-      font-size: 1.4em;
-    }
+  padding: 0 10px;
+  @media (min-width: 1024px) {
+    margin: 20px 0;
   }
 }
 
 .player-title {
   line-height: 1.2;
+  margin: 0.67em 0 0;
   margin: 20px 0;
   display: inline;
   vertical-align: middle;
@@ -58,8 +56,12 @@
       transition: color 0.15s ease-in;
     }
   }
+  /* Add margin next to title only if flair is displayed */
   &:first-child:not(:last-child) a {
     margin-right: 20px;
+  }
+  @media (max-width: 1023px) {
+    font-size: 1.4em;
   }
 }
 

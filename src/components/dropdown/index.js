@@ -6,7 +6,7 @@ import './styles.css';
 
 const Dropdown = ({ id, items, onChange, currentItem }) => (
   <Menu>
-    <MenuButton className="button button--dropdown">{currentItem}</MenuButton>
+    <MenuButton className="button">{currentItem}</MenuButton>
     <MenuList className="dropdown">
       {items.map(item => (
         <MenuItem

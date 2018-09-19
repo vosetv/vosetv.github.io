@@ -1,7 +1,6 @@
 import React from 'react';
 import path from 'path';
 import express from 'express';
-import compression from 'compression';
 import nodalytics from 'nodalytics';
 import ReactDOMServer from 'react-dom/server';
 
@@ -21,11 +20,6 @@ const port = process.env.PORT;
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy');
-  app.use(
-    compression({
-      threshold: false,
-    }),
-  );
   app.use(nodalytics(process.env.GA_CODE_SERVER));
 } else {
   app.use(express.static(path.join(__dirname, '../.public')));
