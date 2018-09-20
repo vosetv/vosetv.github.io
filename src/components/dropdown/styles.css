@@ -34,7 +34,6 @@
     &.dropdown__current {
       color: var(--dropdown-current-color);
       background: var(--dropdown-current-background);
-      cursor: default;
     }
   }
 }
