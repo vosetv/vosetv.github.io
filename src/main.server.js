@@ -110,8 +110,15 @@ app.use((req, res) => {
 <title>/r/${subreddit} - vose.tv</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Watch Reddit's top videos on vose.tv">
-<meta id="theme-color" name="theme-color" content="#20262b">
+
 <link rel="stylesheet" href="/main.client.development.css">
+
+<meta id="theme-color" name="theme-color" content="#20262b">
+<link rel="icon" sizes="192x192" href="/icon.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 <body>
 <div id="root" class="app"></div>
 <script src="/main.client.development.js"></script>
