@@ -11,7 +11,6 @@
     "lint": "eslint '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "staticPath": "./src/assets",
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
   "dependencies": {
@@ -46,11 +45,11 @@
     "parcel-bundler": "1.10.0-beta.1",
     "parcel-plugin-bundle-visualiser": "1.2.0",
     "parcel-plugin-eslint": "1.0.4",
-    "parcel-plugin-static-files-copy": "1.2.0",
+    "parcel-plugin-static-files-copy": "1.2.1",
     "postcss-nested": "4.1.0",
     "postcss-normalize": "7.0.1",
     "postcss-reporter": "6.0.0",
-    "prettier": "1.14.2",
+    "prettier": "1.14.3",
     "prop-types": "15.6.2",
     "react-hot-loader": "4.3.8"
   }

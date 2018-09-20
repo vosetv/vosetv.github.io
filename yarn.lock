@@ -932,10 +932,6 @@ babel-eslint@9.0.0:
     eslint-scope "3.7.1"
     eslint-visitor-keys "^1.0.0"
 
-babel-plugin-remove-imports@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-remove-imports/-/babel-plugin-remove-imports-0.0.2.tgz#4cee24a1fc89c7181fd021cf82380096b2f462da"
-
 babel-plugin-transform-react-remove-prop-types@0.4.15:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.15.tgz#7ba830e77276a0e788cd58ea527b5f70396e12a7"
@@ -4008,9 +4004,9 @@ parcel-plugin-eslint@1.0.4:
     eslint-friendly-formatter "^3.0.0"
     jsonfile "^4.0.0"
 
-parcel-plugin-static-files-copy@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/parcel-plugin-static-files-copy/-/parcel-plugin-static-files-copy-1.2.0.tgz#f7e6c74edf155dfe2336e1e29ebd7ef6fca62ca7"
+parcel-plugin-static-files-copy@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/parcel-plugin-static-files-copy/-/parcel-plugin-static-files-copy-1.2.1.tgz#bdbf48f6908e282be0c0af7b4f620718d894240a"
   dependencies:
     file-system "2.2.2"
     path "0.12.7"
@@ -4656,9 +4652,9 @@ prepend-http@^1.0.0, prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
-prettier@1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
+prettier@1.14.3:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
 
 private@^0.1.6:
   version "0.1.8"
