@@ -110,10 +110,10 @@ app.use((req, res) => {
 <title>/r/${subreddit} - vose.tv</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta id="theme-color" name="theme-color" content="#20262b">
-<link rel="stylesheet" href="/main.client.css">
+<link rel="stylesheet" href="/main.client.development.css">
 <body>
 <div id="root" class="app"></div>
-<script src="/main.client.js"></script>
+<script src="/main.client.development.js"></script>
 `);
   }
 });
