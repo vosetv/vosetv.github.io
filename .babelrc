@@ -1,45 +1,15 @@
 {
-  "env": {
-    "development": {
-      "plugins": [
-        "react-hot-loader/babel",
-        ["transform-class-properties", { "spec": true }],
-        "transform-object-rest-spread"
-      ],
-      "presets": [
-        ["env", {
-          "targets": {
-            "browsers": [
-              "last 1 Chrome versions"
-            ]
-          }
-        }]
-      ]
-    },
-    "production": {
-      "plugins": [
-        ["transform-react-remove-prop-types", {
-          "classNameMatchers": ["Component"],
-          "removeImport": true
-        }],
-        ["transform-class-properties", { "spec": true }],
-        "transform-object-rest-spread"
-      ],
-      "presets": [
-        ["env", {
-          "targets": {
-            "browsers": [
-              "last 2 Chrome versions",
-              "last 2 ChromeAndroid versions",
-              "last 2 Firefox versions",
-              "> 1% in my stats",
-              "last 1 iOS version",
-              "last 2 Edge versions",
-              "last 2 Safari versions"
-            ]
-          }
-        }]
-      ]
-    }
-  }
+  "plugins": [
+    ["transform-react-remove-prop-types", {
+      "classNameMatchers": ["Component"],
+      "removeImport": true
+    }],
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    ["@babel/env", {
+      "shippedProposals": true
+    }],
+    "@babel/react"
+  ]
 }

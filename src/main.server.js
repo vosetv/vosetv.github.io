@@ -13,8 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // // // Init express app
-require('dotenv').config();
-
 const app = express();
 const port = process.env.PORT;
 

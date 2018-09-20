@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import './styles.css';
 
-class VideoItem extends React.Component {
+class VideoItem extends Component {
   ref = React.createRef();
 
   componentDidUpdate(prevProps) {

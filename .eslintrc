@@ -12,6 +12,14 @@
     "plugin:prettier/recommended",
     "plugin:react/recommended"
   ],
+    "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "16.5.2"
+    },
+    "propWrapperFunctions": [ "forbidExtraProps" ]
+  },
   "env": {
     "browser": true,
     "es6": true,

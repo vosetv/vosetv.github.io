@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
-import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
+import { Menu, MenuList, MenuButton, MenuItem } from '@simonlc/menu-button';
 import './styles.css';
 
 const Dropdown = ({ id, items, onChange, currentItem }) => (

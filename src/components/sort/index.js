@@ -1,5 +1,5 @@
 import React from 'react';
-import { Subscribe } from 'unstated';
+import { Subscribe } from '@simonlc/unstated';
 import Dropdown from '../dropdown';
 import StateContainer from '../state-container';
 import './styles.css';

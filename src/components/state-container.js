@@ -1,4 +1,4 @@
-import { Container } from 'unstated';
+import { Container } from '@simonlc/unstated';
 import subreddits from '../data/subreddits';
 
 class StateContainer extends Container {

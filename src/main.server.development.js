@@ -1,8 +1,6 @@
-// require = require('esm')(module /*, options*/);
+require = require('esm')(module /*, options*/);
 require('ignore-styles');
-require('babel-register')({
-  presets: ['react'],
-  plugins: ['transform-es2015-modules-commonjs'],
+require('@babel/register')({
+  presets: ['@babel/preset-react'],
 });
-// module.exports = require('./main.js');
 require('./main.server.js');

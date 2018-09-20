@@ -1,7 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
-import { Provider } from 'unstated';
-import { Subscribe } from 'unstated';
+import { Provider, Subscribe } from '@simonlc/unstated';
 import StateContainer from '../state-container';
 import Header from '../header';
 import VideoList from '../video-list';
@@ -29,4 +27,4 @@ const Document = () => (
   </React.StrictMode>
 );
 
-export default hot(module)(Document);
+export default Document;

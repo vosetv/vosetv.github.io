@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Subscribe } from 'unstated';
+import { Subscribe } from '@simonlc/unstated';
 import StateContainer from './state-container';
 
 const Link = ({ to, children }) => (

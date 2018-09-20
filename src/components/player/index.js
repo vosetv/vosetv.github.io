@@ -1,6 +1,6 @@
 import React from 'react';
 import YouTube from '../youtube';
-import { Subscribe } from 'unstated';
+import { Subscribe } from '@simonlc/unstated';
 import StateContainer from '../state-container';
 import ShortNumber from '../short-number';
 import './styles.css';

@@ -8,7 +8,7 @@ function shortNumber(number) {
 
 const ShortNumber = ({ children }) => shortNumber(children);
 
-ShortNumber.PropTypes = {
+ShortNumber.propTypes = {
   children: PropTypes.any.isRequired,
 };
 

@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    "@babel/env",
+    "@babel/react"
+  ]
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import objstr from 'obj-str';
-import { Subscribe } from 'unstated';
+import { Subscribe } from '@simonlc/unstated';
 import StateContainer from '../state-container';
 import VideoItem from '../video-item';
 import './styles.css';
