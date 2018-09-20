@@ -73,7 +73,10 @@ app.use((req, res) => {
     `);
     res.write(`<div id='content'>`);
     const reactStream = ReactDOMServer.renderToNodeStream(<Document />);
-    reactStream.pipe(res, { end: false });
+    reactStream.pipe(
+      res,
+      { end: false },
+    );
     reactStream.on('end', () => {
       // TODO write script with manifest
       res.write(`</div>

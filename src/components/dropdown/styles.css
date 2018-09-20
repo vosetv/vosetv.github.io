@@ -61,7 +61,7 @@
     outline: 0;
   }
   &:active,
-  &[aria-expanded="true"] {
+  &[aria-expanded='true'] {
     background-color: var(--header-bg-active);
     color: var(--link-active);
   }

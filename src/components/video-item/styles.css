@@ -71,8 +71,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  line-height: 16px;     /* fallback */
-  max-height: 22px;      /* fallback */
+  line-height: 16px; /* fallback */
+  max-height: 22px; /* fallback */
   -webkit-line-clamp: 2; /* number of lines to show */
   line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -87,7 +87,14 @@
     }
   }
   .video-item__thumb {
-    background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
+    background-image: linear-gradient(
+      114deg,
+      #464b50,
+      #40454a,
+      #464b50,
+      #40454a,
+      #464b50
+    );
     background-size: 300% 300%;
     animation: preview 1.2s linear infinite;
   }
@@ -96,7 +103,14 @@
     margin: 10px;
     height: 20px;
     border-radius: 2px;
-    background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
+    background-image: linear-gradient(
+      114deg,
+      #464b50,
+      #40454a,
+      #464b50,
+      #40454a,
+      #464b50
+    );
     background-size: 300% 300%;
     animation: preview 1.2s linear infinite;
   }

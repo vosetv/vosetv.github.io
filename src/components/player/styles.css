@@ -69,7 +69,14 @@
   height: 37px;
   margin: 20px 0;
   border-radius: 2px;
-  background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
+  background-image: linear-gradient(
+    114deg,
+    #464b50,
+    #40454a,
+    #464b50,
+    #40454a,
+    #464b50
+  );
   background-size: 300% 300%;
   animation: preview 1.2s linear infinite;
 }
@@ -127,7 +134,14 @@
   width: 200px;
   display: inline-block;
   vertical-align: middle;
-  background-image: linear-gradient(114deg, #464b50, #40454a, #464b50, #40454a, #464b50);
+  background-image: linear-gradient(
+    114deg,
+    #464b50,
+    #40454a,
+    #464b50,
+    #40454a,
+    #464b50
+  );
   background-size: 300% 300%;
   animation: preview 1.2s linear infinite;
 }

@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r esm -r dotenv/config src/main.server.development.js & parcel watch src/main.client.development.js -d .public",
-    "production": "yarn update-stats; rm -r .public; NODE_ENV=production parcel build src/index.html --experimental-scope-hoisting --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
+    "production": "rm -r .public; NODE_ENV=production parcel build src/index.html --experimental-scope-hoisting --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
     "update-stats": "npx browserslist-ga",
     "lint": "eslint '**/*.js'",
-    "deploy": "NODE_ENV=production yarn production && rsync -avzrt --update .server/ vose:/home/vose/app && rsync -avzrt --update .public/ vultr:/var/www/vose.tv/html"
+    "deploy": "yarn update-stats; NODE_ENV=production yarn production && rsync -avzrt --update .server/ vose:/home/vose/app && rsync -avzrt --update .public/ vultr:/var/www/vose.tv/html"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
