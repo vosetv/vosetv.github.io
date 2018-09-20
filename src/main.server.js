@@ -114,7 +114,8 @@ app.use((req, res) => {
 <link rel="stylesheet" href="/main.client.development.css">
 
 <meta id="theme-color" name="theme-color" content="#20262b">
-<link rel="icon" sizes="192x192" href="/icon.png">
+<link rel="icon" href="favicon.ico">
+<link rel="icon" sizes="192x192" href="icon.png">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">

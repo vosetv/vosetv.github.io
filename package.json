@@ -9,7 +9,7 @@
     "production": "yarn update-stats; rm -r .public; NODE_ENV=production parcel build src/index.html --experimental-scope-hoisting --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
     "update-stats": "npx browserslist-ga",
     "lint": "eslint '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "NODE_ENV=production yarn production && rsync -avzrt --update .server/ vose:/home/vose/app && rsync -avzrt --update .public/ vultr:/var/www/vose.tv/html"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
