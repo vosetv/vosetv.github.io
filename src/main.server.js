@@ -109,6 +109,7 @@ app.use((req, res) => {
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>/r/${subreddit} - vose.tv</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Watch Reddit's top videos on vose.tv">
 <meta id="theme-color" name="theme-color" content="#20262b">
 <link rel="stylesheet" href="/main.client.development.css">
 <body>
