@@ -2,7 +2,6 @@
 .server/
 .env
 .cache/
-report.html
 
 # Logs
 logs
