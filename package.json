@@ -19,6 +19,7 @@
     "@simonlc/youtube-player": "6.0.0",
     "dotenv": "6.0.0",
     "express": "4.16.3",
+    "intersection-observer": "0.5.0",
     "isomorphic-fetch": "2.2.1",
     "nodalytics": "1.1.0",
     "obj-str": "1.0.1",

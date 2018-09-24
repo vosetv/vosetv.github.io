@@ -47,8 +47,7 @@
 
 .video-item__thumb {
   width: var(--thumb-width);
-  /* TODO Make this a function of our width. */
-  height: 56px;
+  height: calc(var(--thumb-width) * 0.5625);
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -72,6 +71,19 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   box-orient: vertical;
+}
+
+.video-item__thumb--preview {
+  background-image: linear-gradient(
+    114deg,
+    #464b50,
+    #40454a,
+    #464b50,
+    #40454a,
+    #464b50
+  );
+  background-size: 300% 300%;
+  animation: preview 1.2s linear infinite;
 }
 
 .video-list--preview {

@@ -2,22 +2,35 @@ import React, { Component } from 'react';
 import Observer from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
-export default class Image extends Component {
+// Image name conflicts with browser Image constructor
+export default class ImageComponent extends Component {
   static propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string,
   };
-  // state = {
-  //   src: null,
-  // };
-  // loadImage = () => {
-  //   this.setState({ src: this.props.src });
-  // };
+  state = {
+    loaded: false,
+  };
+  loadImage = inView => {
+    if (!inView || this.state.loaded) return;
+    console.log('load image');
+    const image = new Image();
+    image.onload = () => this.setState({ loaded: true });
+    image.src = this.props.src;
+  };
   render() {
-    const { src, ...props } = this.props;
     return (
-      <Observer>
-        {({ inView, ref }) => <img ref={ref} src={inView ? src : undefined} {...props} />}
+      <Observer onChange={this.loadImage} rootMargin="0px 0px 500px 0px">
+        {({ ref }) =>
+          this.state.loaded ? (
+            <img ref={ref} {...this.props} />
+          ) : (
+            <div
+              ref={ref}
+              className="video-item__thumb video-item__thumb--preview"
+            />
+          )
+        }
       </Observer>
     );
   }
