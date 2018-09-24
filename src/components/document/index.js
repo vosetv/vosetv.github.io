@@ -1,30 +1,36 @@
 import React from 'react';
-import { Provider, Subscribe } from '@simonlc/unstated';
-import StateContainer from '../state-container';
+import VideoProvider from '../video-provider';
 import Header from '../header';
 import VideoList from '../video-list';
 import Player from '../player';
 import Message from '../message';
 
 // TODO Extract error element into component.
-const Document = () => (
-  <React.StrictMode>
-    <Provider>
-      <Header />
-      <Subscribe to={[StateContainer]}>
-        {({ state }) =>
-          state.videos && state.videos.length === 0 ? (
-            <Message />
-          ) : (
-            <React.Fragment>
-              <Player />
-              <VideoList />
-            </React.Fragment>
-          )
-        }
-      </Subscribe>
-    </Provider>
-  </React.StrictMode>
+const Document = ({ preloadedState }) => (
+  <VideoProvider preloadedState={preloadedState}>
+    {({
+      videos,
+      getVideoListProps,
+      getPlayerProps,
+      // TODO Sort might not rerender
+      getSortProps,
+      // url,
+      // handleLocationChange,
+    }) => (
+      <>
+        {/*<Location onChange={handleLocationChange}>{url}</Location>*/}
+        <Header getSortProps={getSortProps} />
+        {videos?.length === 0 ? (
+          <Message />
+        ) : (
+          <>
+            <Player {...getPlayerProps()} />
+            <VideoList {...getVideoListProps()} />
+          </>
+        )}
+      </>
+    )}
+  </VideoProvider>
 );
 
 export default Document;

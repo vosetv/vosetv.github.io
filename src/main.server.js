@@ -1,133 +1,108 @@
 import React from 'react';
 import path from 'path';
 import express from 'express';
-import nodalytics from 'nodalytics';
-import ReactDOMServer from 'react-dom/server';
+// import nodalytics from 'nodalytics';
+import { renderToNodeStream } from 'react-dom/server';
 
 import Document from './components/document';
-import subreddits from './data/subreddits';
-import fetchSubreddit from './services/fetch-subreddit.js';
+import fetchSubreddit from './services/fetch-subreddit';
+import { hotVideos } from './services/caching';
 
-if (process.env.NODE_ENV === 'production') {
-  require('../.public/parcel-manifest.json')['main.client.js'];
-}
+const script =
+  process.env.NODE_ENV === 'production'
+    ? require('../.public/parcel-manifest.json')['main.client.js']
+    : '/main.client.development.js';
+const styles =
+  process.env.NODE_ENV === 'production'
+    ? require('../.public/parcel-manifest.json')['styles.css']
+    : '/main.client.development.css';
 
 // // // Init express app
 const app = express();
 const port = process.env.PORT;
 
-if (process.env.NODE_ENV === 'production') {
-  app.set('trust proxy');
-  app.use(nodalytics(process.env.GA_CODE_SERVER));
-} else {
-  app.use(express.static(path.join(__dirname, '../.public')));
-}
-
-// // // Caching
-// TODO Put in another module
-const hotVideos = {};
-const fiveMinutes = 300000;
-function refreshVids() {
-  for (const subreddit of subreddits) {
-    fetchSubreddit(subreddit, 'hot')
-      .then(videos => {
-        hotVideos[subreddit.toLowerCase()] = videos;
-      })
-      .catch(err => console.log(err));
-  }
-  setTimeout(refreshVids, fiveMinutes);
-}
-refreshVids();
+app.use(express.static(path.join(__dirname, '../.public/')));
+// if (process.env.NODE_ENV === 'production') {
+//   app.set('trust proxy');
+//   app.use(nodalytics(process.env.GA_CODE_SERVER));
+// } else {
+//   app.use(express.static(path.join(__dirname, '../.public')));
+// }
 
 // // // Endpoints
-app.get('/api/videos/:subreddit/:sort/:timeRange', (req, res) => {
+app.get('/api/videos/:subreddit/:sorting/:timeRange', async (req, res) => {
   const subreddit = req.params.subreddit.toLowerCase();
-  const sort = req.params.sort.toLowerCase();
+  const sorting = req.params.sorting.toLowerCase();
   const timeRange = req.params.timeRange.toLowerCase();
-  if (subreddit in hotVideos && sort === 'hot') {
-    res.json(hotVideos[subreddit]);
+  if (subreddit in hotVideos && sorting === 'hot') {
+    return res.json(hotVideos[subreddit]);
   } else {
-    fetchSubreddit(subreddit, sort, timeRange)
-      .then(videos => res.json(videos))
-      .catch(err => console.log(err));
+    try {
+      const videos = await fetchSubreddit(subreddit, sorting, timeRange);
+      return await res.json(videos);
+    } catch (error) {
+      console.log(error);
+      return res.sendStatus(404);
+    }
   }
 });
 
-app.use((req, res) => {
-  let subreddit = req.path
+app.use(async (req, res) => {
+  const [subreddit = 'videos', sorting = 'hot'] = req.path
     .replace(/\/{2,}/g, '/')
     .replace(/^\/|\/$/g, '')
-    .split('/')[1];
+    .split('/')
+    .slice(1); // Remove "r"
+  const timeRange = req.query.t;
 
-  if (subreddit === undefined) {
-    subreddit = 'videos';
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    const script = '/main.client.js';
-    // TODO Map preload resources?
-    res.write(`
-<!doctype html><html lang="en"><meta charset="utf-8">
+  res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
 <title>/r/${subreddit} - vose.tv</title>
-<link rel="preload" href="${script}" as="script">
-    `);
-    res.write(`<div id='content'>`);
-    const reactStream = ReactDOMServer.renderToNodeStream(<Document />);
-    reactStream.pipe(
-      res,
-      { end: false },
-    );
-    reactStream.on('end', () => {
-      // TODO write script with manifest
-      res.write(`</div>
-        <script src="${script}"></script>
-      `);
-      res.end();
-    });
-    // <meta name="viewport" content="width=device-width, initial-scale=1">
-    // <meta name="description" content="Watch the top videos on vose.tv">
-    // <meta id="theme-color" name="theme-color" content="#20262b">
-    // <link rel="stylesheet" href="/main.css">
-
-    // <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
-    // <meta name="twitter:card" content="summary">
-    // <meta name="twitter:site" content="@simonmlaroche">
-    // <meta name="twitter:creator" content="@simonmlaroche">
-    // <meta property="og:url" content="https://vose.tv">
-    // <meta property="og:title" content="vose.tv">
-    // <meta property="og:description" content="Watch the top videos on vose.tv">
-    // <meta property="og:image" content="https://vose.tv/vose-card.png">
-    // <meta property="og:type" content="website">
-    // <meta property="fb:app_id" content="1725542221039137">
-
-    // <meta name="apple-mobile-web-app-capable" content="yes">
-    // <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    // <meta name="apple-mobile-web-app-title" content="vose.tv">
-    // <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" href="/img/startup-retina.png"> -->
-  } else {
-    res.status(200).send(`
-<!doctype html>
-<html lang="en">
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>/r/${subreddit} - vose.tv</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="${script}" as="script">`);
+  // <link rel="icon" href="favicon.ico">
+  // <link rel="icon" sizes="192x192" href="icon.png">
+  res.write(`<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${styles}">
 <meta name="description" content="Watch Reddit's top videos on vose.tv">
-
-<link rel="stylesheet" href="/main.client.development.css">
-
 <meta id="theme-color" name="theme-color" content="#20262b">
-<link rel="icon" href="favicon.ico">
-<link rel="icon" sizes="192x192" href="icon.png">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@simonmlaroche">
+<meta name="twitter:creator" content="@simonmlaroche">
+<meta property="og:url" content="https://vose.tv">
+<meta property="og:title" content="vose.tv">
+<meta property="og:description" content="Watch Reddit's top videos on vose.tv">
+<meta property="og:image" content="https://vose.tv/vose-card.png">
+<meta property="og:type" content="website">
+<meta property="fb:app_id" content="1725542221039137">
+<body><div id="root" class="app">`);
 
-<body>
-<div id="root" class="app"></div>
-<script src="/main.client.development.js"></script>
-`);
-  }
+  const videos = await fetchSubreddit(subreddit, sorting, timeRange);
+  const preloadedState = {
+    videos,
+    subreddit,
+    sorting,
+    timeRange,
+    currentVideo: videos[0],
+  };
+  const reactStream = renderToNodeStream(
+    <Document preloadedState={preloadedState} />,
+  );
+
+  reactStream.pipe(
+    res,
+    { end: false },
+  );
+
+  reactStream.on('end', () => {
+    res.write(`</div>
+<script>window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+      /</g,
+      '\\u003c',
+    )}</script>
+<script src="${script}"></script>`);
+    res.end();
+  });
 });
 
 /**

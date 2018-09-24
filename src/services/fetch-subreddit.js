@@ -29,17 +29,19 @@ function normalizeVideos(videos) {
     } else if (video.data.secure_media.oembed.thumbnail_url) {
       id = video.data.secure_media.oembed.thumbnail_url.split('/')[4];
     }
+    const timestamp = getTimestamp(video.data.url);
     return {
       id,
-      url: video.data.permalink,
-      thumbnail: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+      url: video.data.permalink
+        .split('/')
+        .slice(0, -2)
+        .join('/'),
       title: video.data.title,
-      timestamp: getTimestamp(video.data.url),
-      subreddit: video.data.subreddit.display_name,
-      date: video.data.created,
-      flair: video.data.link_flair_text,
+      // subreddit: video.data.subreddit_name_prefixed,
       comments: video.data.num_comments,
       score: video.data.score,
+      ...(video.data.link_flair_text && { flair: video.data.link_flair_text }),
+      ...(timestamp > 0 && { timestamp }),
     };
   });
 }

@@ -8,7 +8,7 @@ const Dropdown = ({ id, items, onChange, currentItem }) => (
   <Menu>
     <MenuButton className="button">{currentItem}</MenuButton>
     <MenuList className="dropdown">
-      {items.map(item => (
+      {items?.map(item => (
         <MenuItem
           key={item}
           className={objstr({

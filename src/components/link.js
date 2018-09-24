@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Subscribe } from '@simonlc/unstated';
-import StateContainer from './state-container';
 
 const Link = ({ to, children }) => (
-  <Subscribe to={[StateContainer]}>
-    {({ historyUpdate }) => (
-      <a
-        onClick={event => {
-          event.preventDefault();
-          history.pushState({}, '', to);
-          historyUpdate();
-        }}
-        href={to}
-      >
-        {children}
-      </a>
-    )}
-  </Subscribe>
+  <a
+    onClick={event => {
+      event.preventDefault();
+      history.pushState({}, '', to);
+    }}
+    href={to}
+  >
+    {children}
+  </a>
 );
 
 Link.propTypes = {

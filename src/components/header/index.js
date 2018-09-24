@@ -3,10 +3,10 @@ import Sort from '../sort';
 import Logo from '../logo';
 import './styles.css';
 
-const Header = () => (
+const Header = ({ getSortProps }) => (
   <header className="header">
     <Logo />
-    <Sort />
+    <Sort {...getSortProps()} />
   </header>
 );
 

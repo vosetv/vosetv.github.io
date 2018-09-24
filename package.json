@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r esm -r dotenv/config src/main.server.development.js & parcel watch src/main.client.development.js -d .public",
-    "production": "rm -r .public; NODE_ENV=production parcel build src/index.html --experimental-scope-hoisting --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
+    "production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
+    "test:production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server && NODE_ENV=development node -r dotenv/config ./.server/main.server.js",
     "update-stats": "npx browserslist-ga",
     "lint": "eslint '**/*.js'",
     "deploy": "yarn update-stats; NODE_ENV=production yarn production && rsync -avzrt --update .server/ vose:/home/vose/app && rsync -avzrt --update .public/ vultr:/var/www/vose.tv/html"
@@ -15,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "@simonlc/menu-button": "0.1.9",
-    "@simonlc/unstated": "2.1.3",
     "@simonlc/youtube-player": "6.0.0",
     "dotenv": "6.0.0",
     "express": "4.16.3",
@@ -23,11 +23,13 @@
     "nodalytics": "1.1.0",
     "obj-str": "1.0.1",
     "react": "16.5.2",
-    "react-dom": "16.5.2"
+    "react-dom": "16.5.2",
+    "react-intersection-observer": "6.2.3"
   },
   "devDependencies": {
     "@babel/core": "7.1.0",
     "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-optional-chaining": "7.0.0",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "@babel/register": "7.0.0",

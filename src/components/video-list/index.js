@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import objstr from 'obj-str';
-import { Subscribe } from '@simonlc/unstated';
-import StateContainer from '../state-container';
 import VideoItem from '../video-item';
 import './styles.css';
 
@@ -10,48 +9,51 @@ import './styles.css';
 //  - No filtered videos
 //  - Empty
 //  - Loading
-const VideoList = () => (
-  <Subscribe to={[StateContainer]}>
-    {({ state, changeVideo }) => (
-      <div
-        className={objstr({
-          'video-list': true,
-          'video-list--preview': !state.videos,
-        })}
-      >
-        {state.videos ? (
-          state.videos.length ? (
-            <ul className="list">
-              {state.videos.map((video, i) => (
-                <VideoItem
-                  title={video.title}
-                  thumbnail={video.thumbnail}
-                  isSelected={state.currentVideoIndex === i}
-                  isWatched={!!state.watchedVideos[video.id]}
-                  onClick={() => changeVideo(i)}
-                  key={video.id}
-                  index={i}
-                />
-              ))}
-            </ul>
-          ) : (
-            <div className="message">
-              <p>No videos to show...</p>
-            </div>
-          )
-        ) : (
-          <ul className="list">
-            {[...Array(32)].map((_, i) => (
-              <li className="video-item" key={i}>
-                <div className="video-item__thumb" />
-                <div className="video-item__title" />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+const VideoList = ({ videos, watchedVideos, currentVideoIndex, setVideo }) => (
+  <div
+    className={objstr({
+      'video-list': true,
+      'video-list--preview': !videos,
+    })}
+  >
+    {videos ? (
+      videos.length ? (
+        <ul className="list">
+          {videos.map((video, i) => (
+            <VideoItem
+              key={video.id}
+              index={i}
+              id={video.id}
+              title={video.title}
+              isSelected={currentVideoIndex === i}
+              isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
+              onClick={() => setVideo(i)}
+            />
+          ))}
+        </ul>
+      ) : (
+        <div className="message">
+          <p>No videos to show...</p>
+        </div>
+      )
+    ) : (
+      <ul className="list">
+        {[...Array(32)].map((_, i) => (
+          <li className="video-item" key={i}>
+            <div className="video-item__thumb" />
+            <div className="video-item__title" />
+          </li>
+        ))}
+      </ul>
     )}
-  </Subscribe>
+  </div>
 );
+
+VideoList.propTypes = {
+  videos: PropTypes.array,
+  watchedVideos: PropTypes.objectOf(PropTypes.string),
+  currentVideoIndex: PropTypes.number,
+  setVideo: PropTypes.func.isRequired,
+};
 
 export default VideoList;

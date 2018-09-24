@@ -52,6 +52,7 @@
   /* TODO Make this a function of our width. */
   height: 56px;
   float: left;
+  object-fit: cover;
 }
 
 .video-item__title {
