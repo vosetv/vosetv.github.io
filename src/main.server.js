@@ -57,7 +57,9 @@ app.use(async (req, res) => {
 
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
 <title>/r/${subreddit} - vose.tv</title>
-<link rel="preload" href="${script}" as="script">`);
+<link rel="preload" href="${script}" as="script">
+<link rel="preload" href="https://www.youtube.com/iframe_api" as="script">`);
+  // TODO preload youtube script
   // <link rel="icon" href="favicon.ico">
   // <link rel="icon" sizes="192x192" href="icon.png">
   res.write(`<meta name="viewport" content="width=device-width, initial-scale=1">
