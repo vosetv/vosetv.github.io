@@ -13,7 +13,7 @@ const Sort = ({ subreddits, sortOptions, timeRangeOptions, state, sort }) => (
       onChange={sort}
     />
     <Dropdown
-      id="sort"
+      id="sorting"
       items={sortOptions}
       currentItem={state.sorting}
       onChange={sort}
