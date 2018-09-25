@@ -105,6 +105,8 @@ export default class VideoProvider extends Component {
 
   handleKeydown = event => {
     if (event.repeat) return;
+    if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
+      return;
     if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
       // Allow scroll into view to work with arrow keys
       // TODO only prevent default if no modifier key is held
