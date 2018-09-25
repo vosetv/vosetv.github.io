@@ -33,9 +33,9 @@
 }
 
 .player-header {
-  padding: 0 10px;
-  @media (min-width: 1024px) {
-    margin: 20px 0;
+  margin: 20px 0;
+  @media (max-width: 1023px) {
+    padding: 0 10px;
   }
 }
 
