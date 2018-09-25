@@ -35,7 +35,7 @@ class VideoItem extends Component {
       <li ref={this.ref} className={classes} onClick={onClick}>
         <Image
           className="video-item__thumb"
-          src={`https://i.ytimg.com/vi/${id}/mqdefault.jpg`}
+          src={`https://i.ytimg.com/vi/${id}/default.jpg`}
           alt=""
         />
         <div className="video-item__title">{title}</div>
