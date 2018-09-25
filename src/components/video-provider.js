@@ -109,7 +109,6 @@ export default class VideoProvider extends Component {
       return;
     if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
       // Allow scroll into view to work with arrow keys
-      // TODO only prevent default if no modifier key is held
       event.preventDefault();
     }
 
@@ -171,7 +170,7 @@ export default class VideoProvider extends Component {
 
     return typeof children === 'function'
       ? children({
-          videos: this.state.videos,
+          isEmpty: this.state.videos?.length === 0,
           getVideoListProps: this.getVideoListProps,
           getPlayerProps: this.getPlayerProps,
           getSortProps: this.getSortProps,
