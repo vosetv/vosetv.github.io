@@ -51,8 +51,6 @@ export default class VideoProvider extends Component {
   timeRangeOptions = ['hour', 'day', 'week', 'month', 'year', 'all'];
 
   componentDidMount() {
-    // TODO fetch
-    // await this.fetchVideos();
     window.addEventListener('keydown', this.handleKeydown);
   }
 
@@ -105,6 +103,22 @@ export default class VideoProvider extends Component {
     setVideo: this.setVideo,
   });
 
+  handleKeydown = event => {
+    if (event.repeat) return;
+    if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      // Allow scroll into view to work with arrow keys
+      // TODO only prevent default if no modifier key is held
+      event.preventDefault();
+    }
+
+    if (['ArrowLeft', 'j'].includes(event.key)) {
+      this.prev();
+    }
+    if (['ArrowRight', 'k'].includes(event.key)) {
+      this.next();
+    }
+  };
+
   prev = () => {
     this.setVideo(Math.max(this.state.currentVideoIndex - 1, 0));
   };
@@ -154,6 +168,7 @@ export default class VideoProvider extends Component {
 
     return typeof children === 'function'
       ? children({
+          videos: this.state.videos,
           getVideoListProps: this.getVideoListProps,
           getPlayerProps: this.getPlayerProps,
           getSortProps: this.getSortProps,
