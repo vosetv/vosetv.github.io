@@ -40,7 +40,7 @@ export default class VideoProvider extends Component {
       // Sorting
       subreddit: 'videos',
       sorting: 'hot',
-      timeRange: null,
+      timeRange: 'day',
       ...props.preloadedState,
     };
   }
@@ -150,19 +150,20 @@ export default class VideoProvider extends Component {
   };
 
   sort = ({ subreddit, sorting, timeRange }) => {
-    try {
-      if (subreddit) {
-        history.pushState(null, null, `/r/${subreddit}`);
-      } else if (sorting) {
-        history.pushState(null, null, `/r/${this.state.subreddit}/${sorting}`);
-      } else {
-        history.pushState(
-          null,
-          null,
-          `/r/${this.state.subreddit}/${this.state.sorting}/?t=${timeRange}`,
-        );
-      }
-    } catch (error) {}
+    if (subreddit) {
+      this.setState({ subreddit, sorting: 'hot' }, this.fetchVideos);
+      history.pushState({}, null, `/r/${subreddit}`);
+    } else if (sorting) {
+      this.setState({ sorting }, this.fetchVideos);
+      history.pushState({}, null, `/r/${this.state.subreddit}/${sorting}`);
+    } else {
+      this.setState({ timeRange }, this.fetchVideos);
+      history.pushState(
+        {},
+        null,
+        `/r/${this.state.subreddit}/${this.state.sorting}/?t=${timeRange}`,
+      );
+    }
   };
 
   render() {
