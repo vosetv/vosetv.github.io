@@ -13,7 +13,7 @@ export default class ImageComponent extends Component {
   };
   loadImage = inView => {
     if (!inView || this.state.loaded) return;
-    console.log('load image');
+    // console.log('load image');
     // TODO Handle 404s
     const image = new Image();
     image.onload = () => this.setState({ loaded: true });
