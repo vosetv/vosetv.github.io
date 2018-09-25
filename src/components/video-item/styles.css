@@ -9,6 +9,7 @@
     background: var(--video-item-background-hover);
   }
   @media (max-width: 1023px) {
+    width: 300px;
     border: none;
     border-right: 1px solid var(--video-item-separator);
     flex-shrink: 0;
