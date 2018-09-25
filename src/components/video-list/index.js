@@ -51,7 +51,7 @@ const VideoList = ({ videos, watchedVideos, currentVideoIndex, setVideo }) => (
 
 VideoList.propTypes = {
   videos: PropTypes.array,
-  watchedVideos: PropTypes.objectOf(PropTypes.string),
+  watchedVideos: PropTypes.objectOf(PropTypes.bool),
   currentVideoIndex: PropTypes.number,
   setVideo: PropTypes.func.isRequired,
 };

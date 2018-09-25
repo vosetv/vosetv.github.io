@@ -1,3 +1,4 @@
+import 'intersection-observer';
 import React, { StrictMode } from 'react';
 import { hydrate, render } from 'react-dom';
 import Document from './components/document/hot';

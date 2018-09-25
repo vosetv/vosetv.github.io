@@ -21,7 +21,7 @@ export default class ImageComponent extends Component {
   };
   render() {
     return (
-      <Observer onChange={this.loadImage} rootMargin="0px 0px 500px 0px">
+      <Observer onChange={this.loadImage} rootMargin="0px 0px 500px">
         {({ ref }) =>
           this.state.loaded ? (
             <img ref={ref} {...this.props} />

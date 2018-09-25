@@ -47,7 +47,6 @@
     "nodemon": "1.18.4",
     "parcel-bundler": "1.10.0-beta.1",
     "parcel-plugin-bundle-visualiser": "1.2.0",
-    "parcel-plugin-eslint": "1.0.4",
     "parcel-plugin-static-files-copy": "1.2.1",
     "postcss-nested": "4.1.0",
     "postcss-normalize": "7.0.1",
