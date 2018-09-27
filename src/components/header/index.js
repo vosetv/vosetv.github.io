@@ -3,10 +3,10 @@ import Sort from '../sort';
 import Logo from '../logo';
 import './styles.css';
 
-const Header = ({ getSortProps }) => (
+const Header = ({ sort, getSortProps }) => (
   <header className="header">
-    <Logo />
-    <Sort {...getSortProps()} />
+    <Logo onClick={() => sort({ subreddit: 'videos' })} />
+    <Sort sort={sort} {...getSortProps()} />
   </header>
 );
 

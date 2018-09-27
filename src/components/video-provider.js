@@ -87,8 +87,6 @@ export default class VideoProvider extends Component {
       sorting: this.state.sorting,
       timeRange: this.state.timeRange,
     },
-
-    sort: this.sort,
   });
 
   getPlayerProps = () => ({
@@ -101,10 +99,6 @@ export default class VideoProvider extends Component {
     watchedVideos: this.state.watchedVideos,
     currentVideoIndex: this.state.currentVideoIndex,
     setVideo: this.setVideo,
-  });
-
-  getLinkProps = () => ({
-    sort: this.sort,
   });
 
   handleKeydown = event => {
@@ -179,7 +173,7 @@ export default class VideoProvider extends Component {
           getVideoListProps: this.getVideoListProps,
           getPlayerProps: this.getPlayerProps,
           getSortProps: this.getSortProps,
-          getLinkProps: this.getLinkProps,
+          sort: this.sort,
         })
       : children || null;
   }

@@ -12,15 +12,15 @@ const Document = ({ preloadedState }) => (
       getVideoListProps,
       getPlayerProps,
       getSortProps,
-      getLinkProps,
+      sort,
       // url,
       // handleLocationChange,
     }) => (
       <>
         {/*<Location onChange={handleLocationChange}>{url}</Location>*/}
-        <Header getSortProps={getSortProps} />
+        <Header sort={sort} getSortProps={getSortProps} />
         {isEmpty ? (
-          <Message getLinkProps={getLinkProps} />
+          <Message sort={sort} />
         ) : (
           <>
             <Player {...getPlayerProps()} />
