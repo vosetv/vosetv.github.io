@@ -52,11 +52,78 @@ export default class VideoProvider extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeydown);
+    window.addEventListener('popstate', this.handlePopState);
+    const { subreddit, sorting, timeRange } = this.state;
+    const timeRangeQuery =
+      ['top', 'controversial'].includes(sorting) && timeRange !== 'day'
+        ? `/?t=${timeRange}`
+        : '';
+    const lastSegment = sorting === 'hot' ? '' : `/${sorting}${timeRangeQuery}`;
+
+    history.replaceState({}, null, `/r/${subreddit}${lastSegment}`);
   }
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeydown);
+    window.removeEventListener('popstate', this.handlePopState);
   }
+
+  getSubAndSort = pathname => {
+    const [subreddit = 'videos', sorting = 'hot'] = pathname
+      // Remove multiple consecutive slashes from url
+      .replace(/\/{2,}/g, '/')
+      // Remove starting and trailing slashes
+      .replace(/^\/|\/$/g, '')
+      // get segemnts
+      .split('/')
+      // Remove "r" segment
+      .slice(1);
+    return [subreddit, sorting];
+  };
+
+  getTimeRange = query => {
+    const searchParams = new URLSearchParams(query);
+    const timeRange = searchParams.get('t') || 'day';
+    return timeRange;
+  };
+
+  handlePopState = event => {
+    const [subreddit, sorting] = this.getSubAndSort(location.pathname);
+    const timeRange = this.getTimeRange(location.search);
+
+    console.log('getsubandsort', subreddit, sorting, timeRange);
+
+    this.setState(
+      {
+        // TODO isLoading
+        currentVideoIndex: 0,
+        currentVideo: null,
+        videos: null,
+
+        subreddit,
+        sorting,
+        timeRange,
+      },
+      this.fetchVideos,
+    );
+  };
+
+  handleKeydown = event => {
+    if (event.repeat) return;
+    if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
+      return;
+    if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      // Allow scroll into view to work with arrow keys
+      event.preventDefault();
+    }
+
+    if (['ArrowLeft', 'j'].includes(event.key)) {
+      this.prev();
+    }
+    if (['ArrowRight', 'k'].includes(event.key)) {
+      this.next();
+    }
+  };
 
   fetchVideos = async () => {
     // Create session to avoid race condition
@@ -75,47 +142,6 @@ export default class VideoProvider extends Component {
       videos,
       currentVideo: videos[0],
     });
-  };
-
-  getSortProps = () => ({
-    subreddits: this.subreddits,
-    sortOptions: this.sortOptions,
-    timeRangeOptions: this.timeRangeOptions,
-
-    state: {
-      subreddit: this.state.subreddit,
-      sorting: this.state.sorting,
-      timeRange: this.state.timeRange,
-    },
-  });
-
-  getPlayerProps = () => ({
-    currentVideo: this.state.currentVideo,
-    next: this.next,
-  });
-
-  getVideoListProps = () => ({
-    videos: this.state.videos,
-    watchedVideos: this.state.watchedVideos,
-    currentVideoIndex: this.state.currentVideoIndex,
-    setVideo: this.setVideo,
-  });
-
-  handleKeydown = event => {
-    if (event.repeat) return;
-    if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
-      return;
-    if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
-      // Allow scroll into view to work with arrow keys
-      event.preventDefault();
-    }
-
-    if (['ArrowLeft', 'j'].includes(event.key)) {
-      this.prev();
-    }
-    if (['ArrowRight', 'k'].includes(event.key)) {
-      this.next();
-    }
   };
 
   prev = () => {
@@ -163,6 +189,30 @@ export default class VideoProvider extends Component {
       );
     }
   };
+
+  getSortProps = () => ({
+    subreddits: this.subreddits,
+    sortOptions: this.sortOptions,
+    timeRangeOptions: this.timeRangeOptions,
+
+    state: {
+      subreddit: this.state.subreddit,
+      sorting: this.state.sorting,
+      timeRange: this.state.timeRange,
+    },
+  });
+
+  getPlayerProps = () => ({
+    currentVideo: this.state.currentVideo,
+    next: this.next,
+  });
+
+  getVideoListProps = () => ({
+    videos: this.state.videos,
+    watchedVideos: this.state.watchedVideos,
+    currentVideoIndex: this.state.currentVideoIndex,
+    setVideo: this.setVideo,
+  });
 
   render() {
     const { children } = this.props;

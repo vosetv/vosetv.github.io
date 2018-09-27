@@ -50,12 +50,14 @@ app.get('/api/videos/:subreddit/:sorting/:timeRange', async (req, res) => {
 });
 
 app.use(async (req, res) => {
-  const [subreddit = 'videos', sorting = 'hot'] = req.path
+  let [subreddit = 'videos', sorting = 'hot'] = req.path
     .replace(/\/{2,}/g, '/')
     .replace(/^\/|\/$/g, '')
     .split('/')
     .slice(1); // Remove "r"
-  const timeRange = req.query.t;
+  let timeRange = req.query.t;
+  sorting = ['hot', 'new', 'controversial', 'top', 'rising'].includes(sorting) ? sorting : 'hot';
+  timeRange = ['hour', 'day', 'week', 'month', 'year', 'all'].includes(timeRange) ? timeRange : 'day';
 
   res.type('html');
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">

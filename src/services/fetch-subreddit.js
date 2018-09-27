@@ -46,19 +46,19 @@ function normalizeVideos(videos) {
   });
 }
 
-export default function fetchSubreddit(subreddit, sort, timeRange) {
+export default function fetchSubreddit(subreddit, sorting, timeRange) {
   const videoLimit = 50;
   const count = 0;
   let videos = [];
-  const timeRangeQuery = ['top', 'controversial'].includes(sort)
+  const timeRangeQuery = ['top', 'controversial'].includes(sorting)
     ? `t=${timeRange ? timeRange : 'day'}&`
     : '';
 
   function recursiveGet(depth, after) {
     const url = after
-      ? `https://reddit.com/r/${subreddit}/${sort}.json?${timeRangeQuery}raw_json=1&count=${count *
+      ? `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1&count=${count *
           100}&after=${after}`
-      : `https://reddit.com/r/${subreddit}/${sort}.json?${timeRangeQuery}raw_json=1`;
+      : `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1`;
     return fetch(url)
       .then(response => response.json())
       .then(posts => {
