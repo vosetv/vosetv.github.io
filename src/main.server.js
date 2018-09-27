@@ -21,7 +21,9 @@ const styles =
 const app = express();
 const port = process.env.PORT;
 
-app.use(express.static(path.join(__dirname, '../.public/')));
+if (process.env.NODE_ENV === 'development') {
+  app.use(express.static(path.join(__dirname, '../.public/')));
+}
 // if (process.env.NODE_ENV === 'production') {
 //   app.set('trust proxy');
 //   app.use(nodalytics(process.env.GA_CODE_SERVER));
@@ -55,9 +57,12 @@ app.use(async (req, res) => {
     .slice(1); // Remove "r"
   const timeRange = req.query.t;
 
+  res.type('html');
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
 <title>/r/${subreddit} - vose.tv</title>
-<link rel="preload" href="${script}" as="script">`);
+<link rel="preload" href="${script}" as="script">
+<link rel="preconnect" href="https://s.ytimg.com">
+<link rel="preconnect" href="https://www.youtube.com">`);
   // TODO preload youtube script
   // TODO preload 10-15 images
   // <link rel="preload" href="https://www.youtube.com/iframe_api" as="script">`);

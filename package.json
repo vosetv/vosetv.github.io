@@ -6,16 +6,15 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r esm -r dotenv/config src/main.server.development.js & parcel watch src/main.client.development.js -d .public",
-    "production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
+    "production": "rm -r .public .server; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
     "test:production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server && NODE_ENV=production node -r dotenv/config ./.server/main.server.js",
     "update-stats": "npx browserslist-ga",
     "lint": "eslint '**/*.js'",
-    "deploy": "NODE_ENV=production yarn production && rsync -avzrt --update .server/ vose:/home/vose/app && rsync -avzrt --update .public/ vose:/var/www/vose.tv/html"
+    "deploy": "NODE_ENV=production yarn production && mv .public/parcel-manifest.json .server/ && rm .public/*.html && cp package.json .server/ && cp ecosystem.config.js .server/ && rsync -avzrt --update --delete .server/ vose:/home/vose/app && rsync -avzrt --update --delete .public/ vose:/var/www/vose.tv/html && ssh vose 'cd ~/app && yarn --production && pm2 restart vose.tv'"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "7.0.0",
     "@simonlc/menu-button": "0.1.9",
     "@simonlc/youtube-player": "6.0.0",
     "dotenv": "6.0.0",
