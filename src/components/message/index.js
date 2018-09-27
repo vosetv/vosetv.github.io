@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
 import './styles.css';
 
-const Message = () => (
+const Message = ({ getLinkProps }) => (
   <div className="message">
     <div className="message__icon">
       <canvas id="static" width="80" height="60" />
@@ -17,14 +18,20 @@ const Message = () => (
         {favorites
           .sort(() => 0.5 - Math.random())
           .slice(0, 3)
-          .map(link => (
-            <li key={link}>
-              <Link to={link}>{link}</Link>
+          .map(subreddit => (
+            <li key={subreddit}>
+              <Link to={subreddit} {...getLinkProps()}>
+                {`/r/${subreddit}`}
+              </Link>
             </li>
           ))}
       </ul>
     </div>
   </div>
 );
+
+Message.propTypes = {
+  getLinkProps: PropTypes.func,
+};
 
 export default Message;

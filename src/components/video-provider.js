@@ -103,6 +103,10 @@ export default class VideoProvider extends Component {
     setVideo: this.setVideo,
   });
 
+  getLinkProps = () => ({
+    sort: this.sort,
+  });
+
   handleKeydown = event => {
     if (event.repeat) return;
     if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
@@ -149,6 +153,7 @@ export default class VideoProvider extends Component {
   };
 
   sort = ({ subreddit, sorting, timeRange }) => {
+    this.setState({ currentVideo: null, videos: null });
     if (subreddit) {
       this.setState({ subreddit, sorting: 'hot' }, this.fetchVideos);
       history.pushState({}, null, `/r/${subreddit}`);
@@ -170,10 +175,11 @@ export default class VideoProvider extends Component {
 
     return typeof children === 'function'
       ? children({
-          isEmpty: this.state.videos?.length === 0,
+          isEmpty: this.state.videos && this.state.videos.length === 0,
           getVideoListProps: this.getVideoListProps,
           getPlayerProps: this.getPlayerProps,
           getSortProps: this.getSortProps,
+          getLinkProps: this.getLinkProps,
         })
       : children || null;
   }

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // TODO Just do onClick={sort({subreddit: to})}
-const Link = ({ to, children }) => (
+const Link = ({ sort, to, children }) => (
   <a
     onClick={event => {
       event.preventDefault();
-      history.pushState({}, '', to);
+      sort({ subreddit: to });
     }}
     href={to}
   >

@@ -8,12 +8,11 @@
   padding: 0 0 20px;
 
   @media (min-width: 1024px) {
-    width: calc((100vh - var(--videos-width)) / 0.5625);
-    max-width: calc(100vw - 376px);
+    /* TODO videos width isn't important, this is just a magic number to give a little margin on the bottom */
+    max-width: calc((100vh - var(--videos-width)) / 0.5625);
     margin-right: -30px;
     padding: 20px;
     padding-right: 50px;
-    height: calc(100vh - 40px - 50px);
     overflow-y: overlay;
     overflow-x: hidden;
   }

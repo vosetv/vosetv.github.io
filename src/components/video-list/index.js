@@ -33,6 +33,7 @@ const VideoList = ({ videos, watchedVideos, currentVideoIndex, setVideo }) => (
         </ul>
       ) : (
         <div className="message">
+          {/* TODO Is it even ever possible to get here? */}
           <p>No videos to show...</p>
         </div>
       )
