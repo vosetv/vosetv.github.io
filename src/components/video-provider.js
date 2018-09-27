@@ -153,7 +153,7 @@ export default class VideoProvider extends Component {
   };
 
   sort = ({ subreddit, sorting, timeRange }) => {
-    this.setState({ currentVideo: null, videos: null });
+    this.setState({ currentVideoIndex: 0, currentVideo: null, videos: null });
     if (subreddit) {
       this.setState({ subreddit, sorting: 'hot' }, this.fetchVideos);
       history.pushState({}, null, `/r/${subreddit}`);
