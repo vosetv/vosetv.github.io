@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Observer from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
 // Image name conflicts with browser Image constructor
-export default class ImageComponent extends Component {
+export default class ImageComponent extends PureComponent {
   static propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string,

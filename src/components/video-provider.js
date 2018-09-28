@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import subreddits from '../data/subreddits';
 
@@ -7,7 +7,7 @@ const baseUrl =
     ? 'http://localhost:4004'
     : 'https://vose.tv';
 
-export default class VideoProvider extends Component {
+export default class VideoProvider extends PureComponent {
   static propTypes = {
     preloadedState: PropTypes.shape({
       videos: PropTypes.array,

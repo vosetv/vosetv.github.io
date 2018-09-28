@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import Image from '../image';
 import './styles.css';
 
-class VideoItem extends Component {
+class VideoItem extends PureComponent {
   ref = React.createRef();
 
   componentDidUpdate(prevProps) {
