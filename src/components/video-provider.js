@@ -28,17 +28,26 @@ export default class VideoProvider extends PureComponent {
 
   constructor(props) {
     super(props);
+
+    let watchedVideos;
+    try {
+      watchedVideos =
+        localStorage.getItem('watchedVideos') === null
+          ? {}
+          : JSON.parse(localStorage.getItem('watchedVideos'));
+    } catch {
+      watchedVideos = {};
+    }
+
     this.state = {
       // App state
       currentVideoIndex: 0,
       currentVideo: null,
 
-      // Fetched data
-      videos: null,
-      watchedVideos:
-        localStorage.getItem('watchedVideos') === null
-          ? {}
-          : JSON.parse(localStorage.getItem('watchedVideos')),
+      watchedVideos: {
+        ...watchedVideos,
+        ...{ [props.preloadedState.videos[0].id]: true },
+      },
 
       // Sorting
       subreddit: 'videos',
@@ -94,8 +103,6 @@ export default class VideoProvider extends PureComponent {
     const [subreddit, sorting] = this.getSubAndSort(location.pathname);
     const timeRange = this.getTimeRange(location.search);
 
-    console.log('getsubandsort', subreddit, sorting, timeRange);
-
     this.setState(
       {
         // TODO isLoading
@@ -141,10 +148,14 @@ export default class VideoProvider extends PureComponent {
 
     const videos = await res.json();
     if (this.lastSession !== currentSession) return;
-    this.setState({
+    this.setState(state => ({
       videos,
       currentVideo: videos[0],
-    });
+      watchedVideos: {
+        ...state.watchedVideos,
+        ...{ [videos[0].id]: true },
+      },
+    }));
   };
 
   prev = () => {
@@ -154,6 +165,13 @@ export default class VideoProvider extends PureComponent {
   next = () => {
     this.setVideo(
       Math.min(this.state.currentVideoIndex + 1, this.state.videos.length - 1),
+    );
+  };
+
+  setWatchedVideos = () => {
+    localStorage.setItem(
+      'watchedVideos',
+      JSON.stringify(this.state.watchedVideos),
     );
   };
 
@@ -167,24 +185,27 @@ export default class VideoProvider extends PureComponent {
           ...{ [state.videos[index].id]: true },
         },
       }),
-      () =>
-        localStorage.setItem(
-          'watchedVideos',
-          JSON.stringify(this.state.watchedVideos),
-        ),
+      this.setWatchedVideos,
     );
   };
 
   sort = ({ subreddit, sorting, timeRange }) => {
-    this.setState({ currentVideoIndex: 0, currentVideo: null, videos: null });
+    const loadingState = {
+      currentVideoIndex: 0,
+      currentVideo: null,
+      videos: null,
+    };
     if (subreddit) {
-      this.setState({ subreddit, sorting: 'hot' }, this.fetchVideos);
+      this.setState(
+        { ...loadingState, subreddit, sorting: 'hot' },
+        this.fetchVideos,
+      );
       history.pushState({}, null, `/r/${subreddit}`);
     } else if (sorting) {
-      this.setState({ sorting }, this.fetchVideos);
+      this.setState({ ...loadingState, sorting }, this.fetchVideos);
       history.pushState({}, null, `/r/${this.state.subreddit}/${sorting}`);
     } else {
-      this.setState({ timeRange }, this.fetchVideos);
+      this.setState({ ...loadingState, timeRange }, this.fetchVideos);
       history.pushState(
         {},
         null,
