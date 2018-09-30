@@ -16,6 +16,7 @@
   --header-bg: #20262b;
   --header-bg-hover: #2a3138;
   --header-bg-active: #313d4a;
+  --logo-color: white;
 
   --link-color: #64b5f6;
   --link-hover: #95d0ff;
@@ -55,14 +56,17 @@
 
   --message-color: var(--bright-color);
 
-  /* test
 
+  /* test
   --body-bg: white;
   --body-fg: #333;
 
   --header-bg: #f1f1f1;
+  --header-bg-hover: #ddd;
+  --header-bg-active: #ccc;
   --header-fg: #64b5f6;
   --header-separator: #e0e0e0;
+  --logo-color: black;
 
   --bright-color: black;
   --highlight-color: #2196f3;
@@ -89,7 +93,7 @@
   --footer-background: var(--video-item-background);
 
   --message-color: var(--bright-color);
- */
+  */
 }
 
 ::selection {

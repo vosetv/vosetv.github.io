@@ -35,7 +35,10 @@ export default class VideoProvider extends PureComponent {
 
       // Fetched data
       videos: null,
-      watchedVideos: null,
+      watchedVideos:
+        localStorage.getItem('watchedVideos') === null
+          ? {}
+          : JSON.parse(localStorage.getItem('watchedVideos')),
 
       // Sorting
       subreddit: 'videos',

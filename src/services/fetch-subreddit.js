@@ -32,10 +32,7 @@ function normalizeVideos(videos) {
     const timestamp = getTimestamp(video.data.url);
     return {
       id,
-      url: video.data.permalink
-        .split('/')
-        .slice(0, -2)
-        .join('/'),
+      url: video.data.id,
       title: video.data.title,
       // subreddit: video.data.subreddit_name_prefixed,
       comments: video.data.num_comments,

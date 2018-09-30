@@ -26,7 +26,7 @@ const Player = ({ currentVideo, next }) => (
         <header className="player-header">
           <h1 className="player-title">
             <a
-              href={`https://reddit.com${currentVideo.url}`}
+              href={`https://redd.it/${currentVideo.url}`}
               rel="noopener noreferrer"
               target="_blank"
             >
@@ -40,7 +40,7 @@ const Player = ({ currentVideo, next }) => (
         <footer className="player-footer">
           <a
             className="player-comments"
-            href={`https://reddit.com${currentVideo.url}`}
+            href={`https://redd.it/${currentVideo.url}`}
             rel="noopener noreferrer"
             target="_blank"
           >

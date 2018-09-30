@@ -17,6 +17,7 @@
 .logo {
   height: 20px;
   cursor: pointer;
+  fill: var(--logo-color);
   @media (min-width: 1024px) {
     height: 34px;
   }
