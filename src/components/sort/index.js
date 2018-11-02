@@ -3,31 +3,39 @@ import PropTypes from 'prop-types';
 import Dropdown from '../dropdown';
 import './styles.css';
 
-const Sort = ({ subreddits, sortOptions, timeRangeOptions, state, sort }) => (
-  <div className="sort">
-    <div className="sort__title">Sort</div>
-    <Dropdown
-      id="subreddit"
-      items={subreddits}
-      currentItem={state.subreddit}
-      onChange={sort}
-    />
-    <Dropdown
-      id="sorting"
-      items={sortOptions}
-      currentItem={state.sorting}
-      onChange={sort}
-    />
-    {['top', 'controversial'].includes(state.sorting) && (
+export default function Sort({
+  subreddits,
+  sortOptions,
+  timeRangeOptions,
+  state,
+  sort,
+}) {
+  return (
+    <div className="sort">
+      <div className="sort__title">Sort</div>
       <Dropdown
-        id="timeRange"
-        items={timeRangeOptions}
-        currentItem={state.timeRange}
+        id="subreddit"
+        items={subreddits}
+        currentItem={state.subreddit}
         onChange={sort}
       />
-    )}
-  </div>
-);
+      <Dropdown
+        id="sorting"
+        items={sortOptions}
+        currentItem={state.sorting}
+        onChange={sort}
+      />
+      {['top', 'controversial'].includes(state.sorting) && (
+        <Dropdown
+          id="timeRange"
+          items={timeRangeOptions}
+          currentItem={state.timeRange}
+          onChange={sort}
+        />
+      )}
+    </div>
+  );
+}
 
 Sort.propTypes = {
   subreddits: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -42,5 +50,3 @@ Sort.propTypes = {
 
   sort: PropTypes.func.isRequired,
 };
-
-export default Sort;

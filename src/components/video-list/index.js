@@ -9,46 +9,53 @@ import './styles.css';
 //  - No filtered videos
 //  - Empty
 //  - Loading
-const VideoList = ({ videos, watchedVideos, currentVideoIndex, setVideo }) => (
-  <div
-    className={objstr({
-      'video-list': true,
-      'video-list--preview': !videos,
-    })}
-  >
-    {videos ? (
-      videos.length ? (
+export default function VideoList({
+  videos,
+  watchedVideos,
+  currentVideoIndex,
+  setVideo,
+}) {
+  return (
+    <div
+      className={objstr({
+        'video-list': true,
+        'video-list--preview': !videos,
+      })}
+    >
+      {videos ? (
+        videos.length ? (
+          <ul className="list">
+            {videos.map((video, i) => (
+              <VideoItem
+                key={video.id}
+                index={i}
+                id={video.id}
+                title={video.title}
+                isSelected={currentVideoIndex === i}
+                isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
+                onClick={() => setVideo(i)}
+              />
+            ))}
+          </ul>
+        ) : (
+          <div className="message">
+            {/* TODO Is it even ever possible to get here? */}
+            <p>No videos to show...</p>
+          </div>
+        )
+      ) : (
         <ul className="list">
-          {videos.map((video, i) => (
-            <VideoItem
-              key={video.id}
-              index={i}
-              id={video.id}
-              title={video.title}
-              isSelected={currentVideoIndex === i}
-              isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
-              onClick={() => setVideo(i)}
-            />
+          {[...Array(32)].map((_, i) => (
+            <li className="video-item" key={i}>
+              <div className="video-item__thumb" />
+              <div className="video-item__title" />
+            </li>
           ))}
         </ul>
-      ) : (
-        <div className="message">
-          {/* TODO Is it even ever possible to get here? */}
-          <p>No videos to show...</p>
-        </div>
-      )
-    ) : (
-      <ul className="list">
-        {[...Array(32)].map((_, i) => (
-          <li className="video-item" key={i}>
-            <div className="video-item__thumb" />
-            <div className="video-item__title" />
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
+}
 
 VideoList.propTypes = {
   videos: PropTypes.array,
@@ -56,5 +63,3 @@ VideoList.propTypes = {
   currentVideoIndex: PropTypes.number,
   setVideo: PropTypes.func.isRequired,
 };
-
-export default VideoList;

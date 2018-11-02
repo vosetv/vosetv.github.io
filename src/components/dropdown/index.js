@@ -4,24 +4,26 @@ import objstr from 'obj-str';
 import { Menu, MenuList, MenuButton, MenuItem } from '@simonlc/menu-button';
 import './styles.css';
 
-const Dropdown = ({ id, items, onChange, currentItem }) => (
-  <Menu>
-    <MenuButton className="button">{currentItem}</MenuButton>
-    <MenuList className="dropdown">
-      {items?.map(item => (
-        <MenuItem
-          key={item}
-          className={objstr({
-            dropdown__current: item === currentItem,
-          })}
-          onSelect={() => onChange({ [id]: item })}
-        >
-          {item}
-        </MenuItem>
-      ))}
-    </MenuList>
-  </Menu>
-);
+export default function Dropdown({ id, items, onChange, currentItem }) {
+  return (
+    <Menu>
+      <MenuButton className="button">{currentItem}</MenuButton>
+      <MenuList className="dropdown">
+        {items?.map(item => (
+          <MenuItem
+            key={item}
+            className={objstr({
+              dropdown__current: item === currentItem,
+            })}
+            onSelect={() => onChange({ [id]: item })}
+          >
+            {item}
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
+}
 
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,
@@ -29,5 +31,3 @@ Dropdown.propTypes = {
   onChange: PropTypes.func,
   currentItem: PropTypes.string,
 };
-
-export default Dropdown;

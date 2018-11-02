@@ -4,7 +4,7 @@ import objstr from 'obj-str';
 import Image from '../image';
 import './styles.css';
 
-class VideoItem extends PureComponent {
+export default class VideoItem extends PureComponent {
   ref = React.createRef();
 
   componentDidUpdate(prevProps) {
@@ -51,5 +51,3 @@ VideoItem.propTypes = {
   isWatched: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
-
-export default VideoItem;
