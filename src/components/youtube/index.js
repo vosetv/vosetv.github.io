@@ -32,7 +32,7 @@ function shouldUpdatePlayer(prevProps, props) {
   return prevProps.id === props.id || prevProps.className === props.className;
 }
 
-class YouTube extends Component {
+export default class YouTube extends Component {
   static propTypes = {
     videoId: PropTypes.string,
 
@@ -278,5 +278,3 @@ class YouTube extends Component {
     );
   }
 }
-
-export default YouTube;
