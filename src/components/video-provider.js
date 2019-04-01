@@ -4,7 +4,7 @@ import subreddits from '../data/subreddits';
 
 const baseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:4004'
+    ? `http://localhost:${process.env.PORT}`
     : 'https://vose.tv';
 
 export default class VideoProvider extends PureComponent {
