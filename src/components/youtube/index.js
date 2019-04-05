@@ -230,6 +230,9 @@ export default class YouTube extends Component {
    * Youtube Player API methods to update the video.
    */
   updateVideo = () => {
+
+    this.internalPlayer.destroy();
+    this.createPlayer();
     // if (this.props.videoId == null) {
     //   this.internalPlayer.stopVideo();
     //   return;
@@ -237,25 +240,25 @@ export default class YouTube extends Component {
 
     // set queueing options
     // let autoplay = false;
-    const opts = {
-      videoId: this.props.videoId,
-    };
-    if ('playerVars' in this.props.opts) {
-      // autoplay = this.props.opts.playerVars.autoplay === 1;
-      if ('start' in this.props.opts.playerVars) {
-        opts.startSeconds = this.props.opts.playerVars.start;
-      }
-      if ('end' in this.props.opts.playerVars) {
-        opts.endSeconds = this.props.opts.playerVars.end;
-      }
-    }
+    // const opts = {
+    //   videoId: this.props.videoId,
+    // };
+    // if ('playerVars' in this.props.opts) {
+    //   // autoplay = this.props.opts.playerVars.autoplay === 1;
+    //   if ('start' in this.props.opts.playerVars) {
+    //     opts.startSeconds = this.props.opts.playerVars.start;
+    //   }
+    //   if ('end' in this.props.opts.playerVars) {
+    //     opts.endSeconds = this.props.opts.playerVars.end;
+    //   }
+    // }
 
-    // if autoplay is enabled loadVideoById
-    // if (autoplay) {
-    // this.internalPlayer.loadVideoById(opts);
-    this.internalPlayer.loadVideoById({
-      videoId: this.props.videoId
-    });
+    // // if autoplay is enabled loadVideoById
+    // // if (autoplay) {
+    // // this.internalPlayer.loadVideoById(opts);
+    // this.internalPlayer.loadVideoById({
+    //   videoId: this.props.videoId
+    // });
     // return;
     // }
     // // default behaviour just cues the video
