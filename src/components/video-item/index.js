@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import Image from '../image';
@@ -11,13 +11,24 @@ export default function VideoItem({
   isWatched,
   onClick,
 }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (isSelected === true) {
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [isSelected]);
+
   const classes = objstr({
     'video-item': true,
     'video-item--selected': isSelected,
     'video-item--watched': isWatched,
   });
   return (
-    <li className={classes} onClick={onClick}>
+    <li ref={ref} className={classes} onClick={onClick}>
       <Image
         className="video-item__thumb"
         src={`https://i.ytimg.com/vi/${id}/default.jpg`}

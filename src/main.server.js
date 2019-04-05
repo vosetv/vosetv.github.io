@@ -1,7 +1,6 @@
 import React from 'react';
 import path from 'path';
 import express from 'express';
-// import nodalytics from 'nodalytics';
 import { renderToNodeStream } from 'react-dom/server';
 
 import Document from './components/document';
@@ -24,12 +23,6 @@ const port = process.env.PORT;
 if (process.env.NODE_ENV === 'development') {
   app.use(express.static(path.join(__dirname, '../.public/')));
 }
-// if (process.env.NODE_ENV === 'production') {
-//   app.set('trust proxy');
-//   app.use(nodalytics(process.env.GA_CODE_SERVER));
-// } else {
-//   app.use(express.static(path.join(__dirname, '../.public')));
-// }
 
 // // // Endpoints
 app.get('/api/videos/:subreddit/:sorting/:timeRange', async (req, res) => {

@@ -14,11 +14,8 @@ export default function Document({ preloadedState }) {
         getPlayerProps,
         getSortProps,
         sort,
-        // url,
-        // handleLocationChange,
       }) => (
         <>
-          {/*<Location onChange={handleLocationChange}>{url}</Location>*/}
           <Header sort={sort} getSortProps={getSortProps} />
           {isEmpty ? (
             <Message sort={sort} />

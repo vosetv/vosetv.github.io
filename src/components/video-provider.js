@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { useReducer, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import subreddits from '../data/subreddits';
 
@@ -7,65 +7,108 @@ const baseUrl =
     ? `http://localhost:${process.env.PORT}`
     : 'https://vose.tv';
 
-export default class VideoProvider extends PureComponent {
-  static propTypes = {
-    preloadedState: PropTypes.shape({
-      videos: PropTypes.array,
-      currentVideo: PropTypes.shape({
-        title: PropTypes.string,
-        flair: PropTypes.string,
-        url: PropTypes.string,
-        id: PropTypes.string,
-        timestamp: PropTypes.number,
-        score: PropTypes.number,
-        comments: PropTypes.number,
-      }),
-      subreddit: PropTypes.string,
-      sorting: PropTypes.string,
-      timeRange: PropTypes.string,
-    }),
-  };
+// Dropdown options
+const sortOptions = ['hot', 'new', 'controversial', 'top', 'rising'];
+const timeRangeOptions = ['hour', 'day', 'week', 'month', 'year', 'all'];
 
-  constructor(props) {
-    super(props);
-
-    let watchedVideos;
-    try {
-      watchedVideos =
-        localStorage.getItem('watchedVideos') === null
-          ? {}
-          : JSON.parse(localStorage.getItem('watchedVideos'));
-    } catch {
-      watchedVideos = {};
-    }
-
-    this.state = {
-      // App state
-      currentVideoIndex: 0,
-      currentVideo: null,
-
-      watchedVideos: {
-        ...watchedVideos,
-        ...{ [props.preloadedState.videos[0].id]: true },
-      },
-
-      // Sorting
-      subreddit: 'videos',
-      sorting: 'hot',
-      timeRange: 'day',
-      ...props.preloadedState,
-    };
+function getWatchedVideos() {
+  let watchedVideos;
+  try {
+    watchedVideos =
+      localStorage.getItem('watchedVideos') === null
+        ? {}
+        : JSON.parse(localStorage.getItem('watchedVideos'));
+  } catch {
+    watchedVideos = {};
   }
+  return watchedVideos;
+}
 
-  // Dropdown options
-  subreddits = subreddits;
-  sortOptions = ['hot', 'new', 'controversial', 'top', 'rising'];
-  timeRangeOptions = ['hour', 'day', 'week', 'month', 'year', 'all'];
+function reducer(state, action) {
+  switch (action.type) {
+    case 'loading':
+      // TODO fetchVideos useEffect when videos is null
+      const {
+        subreddit = state.subreddit,
+        sorting = state.sorting,
+        timeRange = state.timeRange,
+      } = action.payload;
+      return {
+        ...state,
+        // TODO isLoading
+        currentVideoIndex: 0,
+        currentVideo: null,
+        videos: null,
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeydown);
-    window.addEventListener('popstate', this.handlePopState);
-    const { subreddit, sorting, timeRange } = this.state;
+        subreddit,
+        sorting,
+        timeRange,
+        // TODO merge old state in here
+      };
+    case 'videos loaded':
+      const { videos } = action.payload;
+      return {
+        ...state,
+        videos,
+        currentVideo: videos[0],
+        watchedVideos: {
+          ...state.watchedVideos,
+          ...{ [videos[0].id]: true },
+        },
+      };
+    case 'next':
+    case 'prev':
+    case 'video change':
+      let currentVideoIndex;
+      if (action.type === 'next') {
+        currentVideoIndex = Math.min(
+          state.currentVideoIndex + 1,
+          state.videos.length - 1,
+        );
+        // TODO currentVideoIndex = Math.min(Math.max(currentVideoIndex, 0), state.videos.length)
+      } else if (action.type === 'prev') {
+        currentVideoIndex = Math.max(state.currentVideoIndex - 1, 0);
+      } else {
+        currentVideoIndex = action.payload.currentVideoIndex;
+      }
+      return {
+        ...state,
+        currentVideoIndex,
+        currentVideo: state.videos[currentVideoIndex],
+        watchedVideos: {
+          ...state.watchedVideos,
+          ...{ [state.videos[currentVideoIndex].id]: true },
+        },
+      };
+    default:
+      throw new Error();
+  }
+}
+
+export default function VideoProvider({ preloadedState, children }) {
+  const lastSessionRef = useRef();
+
+  const [state, dispatch] = useReducer(reducer, {
+    // App state
+    currentVideoIndex: 0,
+    currentVideo: null,
+
+    watchedVideos: {
+      ...getWatchedVideos(),
+      ...{ [preloadedState.videos[0].id]: true },
+    },
+
+    // Sorting
+    subreddit: 'videos',
+    sorting: 'hot',
+    timeRange: 'day',
+    ...preloadedState,
+  });
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener('popstate', handlePopState);
+    const { subreddit, sorting, timeRange } = state;
     const timeRangeQuery =
       ['top', 'controversial'].includes(sorting) && timeRange !== 'day'
         ? `/?t=${timeRange}`
@@ -73,14 +116,42 @@ export default class VideoProvider extends PureComponent {
     const lastSegment = sorting === 'hot' ? '' : `/${sorting}${timeRangeQuery}`;
 
     history.replaceState({}, null, `/r/${subreddit}${lastSegment}`);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchVideos();
+  }, [state.subreddit, state.sorting, state.timeRange]);
+
+  useEffect(() => {
+    localStorage.setItem('watchedVideos', JSON.stringify(state.watchedVideos));
+  }, [state.watchedVideos]);
+
+  async function fetchVideos() {
+    // Create session to avoid race condition
+    const currentSession = {};
+    lastSessionRef.current = currentSession;
+
+    const { subreddit, sorting, timeRange } = state;
+
+    const res = await fetch(
+      `${baseUrl}/api/videos/${subreddit}/${sorting}/${timeRange}`,
+    );
+
+    const videos = await res.json();
+    if (lastSessionRef.current !== currentSession) return;
+    dispatch({
+      type: 'videos loaded',
+      payload: {
+        videos,
+      },
+    });
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeydown);
-    window.removeEventListener('popstate', this.handlePopState);
-  }
-
-  getSubAndSort = pathname => {
+  function getSubAndSort(pathname) {
     const [subreddit = 'videos', sorting = 'hot'] = pathname
       // Remove multiple consecutive slashes from url
       .replace(/\/{2,}/g, '/')
@@ -91,34 +162,29 @@ export default class VideoProvider extends PureComponent {
       // Remove "r" segment
       .slice(1);
     return [subreddit, sorting];
-  };
+  }
 
-  getTimeRange = query => {
+  function getTimeRange(query) {
     const searchParams = new URLSearchParams(query);
     const timeRange = searchParams.get('t') || 'day';
     return timeRange;
-  };
+  }
 
-  handlePopState = event => {
-    const [subreddit, sorting] = this.getSubAndSort(location.pathname);
-    const timeRange = this.getTimeRange(location.search);
+  function handlePopState(event) {
+    const [subreddit, sorting] = getSubAndSort(location.pathname);
+    const timeRange = getTimeRange(location.search);
 
-    this.setState(
-      {
-        // TODO isLoading
-        currentVideoIndex: 0,
-        currentVideo: null,
-        videos: null,
-
+    dispatch({
+      type: 'loading',
+      payload: {
         subreddit,
-        sorting,
         timeRange,
+        sorting,
       },
-      this.fetchVideos,
-    );
-  };
+    });
+  }
 
-  handleKeydown = event => {
+  function handleKeydown(event) {
     if (event.repeat) return;
     if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
       return;
@@ -128,127 +194,89 @@ export default class VideoProvider extends PureComponent {
     }
 
     if (['ArrowLeft', 'j'].includes(event.key)) {
-      this.prev();
+      dispatch({ type: 'prev' });
     }
     if (['ArrowRight', 'k'].includes(event.key)) {
-      this.next();
+      dispatch({ type: 'next' });
     }
-  };
+  }
 
-  fetchVideos = async () => {
-    // Create session to avoid race condition
-    const currentSession = {};
-    this.lastSession = currentSession;
-
-    const { subreddit, sorting, timeRange } = this.state;
-
-    const res = await fetch(
-      `${baseUrl}/api/videos/${subreddit}/${sorting}/${timeRange}`,
-    );
-
-    const videos = await res.json();
-    if (this.lastSession !== currentSession) return;
-    this.setState(state => ({
-      videos,
-      currentVideo: videos[0],
-      watchedVideos: {
-        ...state.watchedVideos,
-        ...{ [videos[0].id]: true },
+  // NOTE Used to change video on VideoItem click
+  function setVideo(currentVideoIndex) {
+    dispatch({
+      type: 'video change',
+      payload: {
+        currentVideoIndex,
       },
-    }));
-  };
+    });
+  }
 
-  prev = () => {
-    this.setVideo(Math.max(this.state.currentVideoIndex - 1, 0));
-  };
-
-  next = () => {
-    this.setVideo(
-      Math.min(this.state.currentVideoIndex + 1, this.state.videos.length - 1),
-    );
-  };
-
-  setWatchedVideos = () => {
-    localStorage.setItem(
-      'watchedVideos',
-      JSON.stringify(this.state.watchedVideos),
-    );
-  };
-
-  setVideo = index => {
-    this.setState(
-      state => ({
-        currentVideoIndex: index,
-        currentVideo: state.videos[index],
-        watchedVideos: {
-          ...state.watchedVideos,
-          ...{ [state.videos[index].id]: true },
-        },
-      }),
-      this.setWatchedVideos,
-    );
-  };
-
-  sort = ({ subreddit, sorting, timeRange }) => {
-    const loadingState = {
-      currentVideoIndex: 0,
-      currentVideo: null,
-      videos: null,
-    };
+  function sort({ subreddit, sorting, timeRange }) {
     if (subreddit) {
-      this.setState(
-        { ...loadingState, subreddit, sorting: 'hot' },
-        this.fetchVideos,
-      );
+      dispatch({ type: 'loading', payload: { subreddit, sorting: 'hot' } });
       history.pushState({}, null, `/r/${subreddit}`);
     } else if (sorting) {
-      this.setState({ ...loadingState, sorting }, this.fetchVideos);
-      history.pushState({}, null, `/r/${this.state.subreddit}/${sorting}`);
+      dispatch({ type: 'loading', payload: { sorting } });
+      history.pushState({}, null, `/r/${state.subreddit}/${sorting}`);
     } else {
-      this.setState({ ...loadingState, timeRange }, this.fetchVideos);
+      dispatch({ type: 'loading', payload: { timeRange } });
       history.pushState(
         {},
         null,
-        `/r/${this.state.subreddit}/${this.state.sorting}/?t=${timeRange}`,
+        `/r/${state.subreddit}/${state.sorting}/?t=${timeRange}`,
       );
     }
-  };
+  }
 
-  getSortProps = () => ({
-    subreddits: this.subreddits,
-    sortOptions: this.sortOptions,
-    timeRangeOptions: this.timeRangeOptions,
+  const getSortProps = () => ({
+    subreddits,
+    sortOptions,
+    timeRangeOptions,
 
     state: {
-      subreddit: this.state.subreddit,
-      sorting: this.state.sorting,
-      timeRange: this.state.timeRange,
+      subreddit: state.subreddit,
+      sorting: state.sorting,
+      timeRange: state.timeRange,
     },
   });
 
-  getPlayerProps = () => ({
-    currentVideo: this.state.currentVideo,
-    next: this.next,
+  const getPlayerProps = () => ({
+    currentVideo: state.currentVideo,
+    next: () => dispatch({ type: 'next' }),
   });
 
-  getVideoListProps = () => ({
-    videos: this.state.videos,
-    watchedVideos: this.state.watchedVideos,
-    currentVideoIndex: this.state.currentVideoIndex,
-    setVideo: this.setVideo,
+  const getVideoListProps = () => ({
+    videos: state.videos,
+    watchedVideos: state.watchedVideos,
+    currentVideoIndex: state.currentVideoIndex,
+    setVideo,
   });
 
-  render() {
-    const { children } = this.props;
-
-    return typeof children === 'function'
-      ? children({
-          isEmpty: this.state.videos && this.state.videos.length === 0,
-          getVideoListProps: this.getVideoListProps,
-          getPlayerProps: this.getPlayerProps,
-          getSortProps: this.getSortProps,
-          sort: this.sort,
-        })
-      : children || null;
-  }
+  return typeof children === 'function'
+    ? children({
+        isEmpty: state.videos && state.videos.length === 0,
+        getVideoListProps,
+        getPlayerProps,
+        getSortProps,
+        sort,
+      })
+    : children || null;
 }
+
+VideoProvider.propTypes = {
+  preloadedState: PropTypes.shape({
+    videos: PropTypes.array,
+    currentVideo: PropTypes.shape({
+      title: PropTypes.string,
+      flair: PropTypes.string,
+      url: PropTypes.string,
+      id: PropTypes.string,
+      timestamp: PropTypes.number,
+      score: PropTypes.number,
+      comments: PropTypes.number,
+    }),
+    subreddit: PropTypes.string,
+    sorting: PropTypes.string,
+    timeRange: PropTypes.string,
+  }),
+};

@@ -5,7 +5,6 @@ export default function Logo(props) {
   return (
     <svg
       className="logo"
-      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 150 34"
       {...props}
     >

@@ -230,21 +230,18 @@ export default class YouTube extends Component {
    * Youtube Player API methods to update the video.
    */
   updateVideo = () => {
-    if (
-      typeof this.props.videoId === 'undefined' ||
-      this.props.videoId === null
-    ) {
-      this.internalPlayer.stopVideo();
-      return;
-    }
+    // if (this.props.videoId == null) {
+    //   this.internalPlayer.stopVideo();
+    //   return;
+    // }
 
     // set queueing options
-    let autoplay = false;
+    // let autoplay = false;
     const opts = {
       videoId: this.props.videoId,
     };
     if ('playerVars' in this.props.opts) {
-      autoplay = this.props.opts.playerVars.autoplay === 1;
+      // autoplay = this.props.opts.playerVars.autoplay === 1;
       if ('start' in this.props.opts.playerVars) {
         opts.startSeconds = this.props.opts.playerVars.start;
       }
@@ -254,12 +251,15 @@ export default class YouTube extends Component {
     }
 
     // if autoplay is enabled loadVideoById
-    if (autoplay) {
-      this.internalPlayer.loadVideoById(opts);
-      return;
-    }
-    // default behaviour just cues the video
-    this.internalPlayer.cueVideoById(opts);
+    // if (autoplay) {
+    // this.internalPlayer.loadVideoById(opts);
+    this.internalPlayer.loadVideoById({
+      videoId: this.props.videoId
+    });
+    // return;
+    // }
+    // // default behaviour just cues the video
+    // this.internalPlayer.cueVideoById(opts);
   };
 
   refContainer = container => {
