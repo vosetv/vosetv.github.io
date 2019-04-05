@@ -53,7 +53,7 @@ function reducer(state, action) {
         currentVideo: videos[0],
         watchedVideos: {
           ...state.watchedVideos,
-          ...{ [videos[0].id]: true },
+          ...(videos.length && { [videos[0].id]: true }),
         },
       };
     case 'next':
@@ -95,7 +95,9 @@ export default function VideoProvider({ preloadedState, children }) {
 
     watchedVideos: {
       ...getWatchedVideos(),
-      ...{ [preloadedState.videos[0].id]: true },
+      ...(preloadedState.videos.length && {
+        [preloadedState.videos[0].id]: true,
+      }),
     },
 
     // Sorting

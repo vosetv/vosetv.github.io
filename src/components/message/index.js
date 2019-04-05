@@ -4,7 +4,7 @@ import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
 import './styles.css';
 
-export default function Message({ getLinkProps }) {
+export default function Message({ sort }) {
   return (
     <div className="message">
       <div className="message__icon">
@@ -21,7 +21,7 @@ export default function Message({ getLinkProps }) {
             .slice(0, 3)
             .map(subreddit => (
               <li key={subreddit}>
-                <Link to={subreddit} {...getLinkProps()}>
+                <Link to={subreddit} sort={sort}>
                   {`/r/${subreddit}`}
                 </Link>
               </li>

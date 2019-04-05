@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// TODO Just do onClick={sort({subreddit: to})}
 export default function Link({ sort, to, children }) {
   return (
     <a
