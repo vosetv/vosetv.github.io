@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import Image from '../image';
@@ -12,9 +13,17 @@ export default function VideoItem({
   onClick,
 }) {
   const ref = useRef(null);
+  const [inViewRef, inView, entry] = useInView({
+    threshold: 1,
+  });
+
+  function handleRef(node) {
+    ref.current = node;
+    inViewRef(node);
+  }
 
   useEffect(() => {
-    if (isSelected === true) {
+    if (isSelected && !inView) {
       ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
@@ -28,7 +37,7 @@ export default function VideoItem({
     'video-item--watched': isWatched,
   });
   return (
-    <li ref={ref} className={classes} onClick={onClick}>
+    <li ref={handleRef} className={classes} onClick={onClick}>
       <Image
         className="video-item__thumb"
         src={`https://i.ytimg.com/vi/${id}/default.jpg`}
