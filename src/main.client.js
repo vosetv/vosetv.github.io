@@ -1,4 +1,3 @@
-import 'intersection-observer';
 import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import Document from './components/document';

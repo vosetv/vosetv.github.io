@@ -19,7 +19,6 @@
     "@simonlc/youtube-player": "6.0.0",
     "dotenv": "7.0.0",
     "express": "4.16.4",
-    "intersection-observer": "0.5.1",
     "isomorphic-fetch": "2.2.1",
     "obj-str": "1.0.3",
     "react": "16.8.6",
