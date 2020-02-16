@@ -32,32 +32,28 @@ function shouldUpdatePlayer(prevProps, props) {
   return prevProps.id === props.id || prevProps.className === props.className;
 }
 
-export default class YouTube extends Component {
-  static propTypes = {
-    videoId: PropTypes.string,
+interface YouTubeProps {
+  videoId?: string;
+  // custom ID for player element
+  id?: string;
+  // custom class name for player element
+  className?: string;
+  // custom class name for player container element
+  containerClassName?: string;
+  // https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
+  opts?: object;
+  // event subscriptions
+  onReady?: (event: object) => void;
+  onError?: (event: object) => void;
+  onPlay?: (event: object) => void;
+  onPause?: (event: object) => void;
+  onEnd?: (event: object) => void;
+  onStateChange?: (event: object) => void;
+  onPlaybackRateChange?: (event: object) => void;
+  onPlaybackQualityChange?: (event: object) => void;
+}
 
-    // custom ID for player element
-    id: PropTypes.string,
-
-    // custom class name for player element
-    className: PropTypes.string,
-    // custom class name for player container element
-    containerClassName: PropTypes.string,
-
-    // https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
-    opts: PropTypes.object,
-
-    // event subscriptions
-    onReady: PropTypes.func,
-    onError: PropTypes.func,
-    onPlay: PropTypes.func,
-    onPause: PropTypes.func,
-    onEnd: PropTypes.func,
-    onStateChange: PropTypes.func,
-    onPlaybackRateChange: PropTypes.func,
-    onPlaybackQualityChange: PropTypes.func,
-  };
-
+export default class YouTube extends Component<YouTubeProps, {}> {
   static defaultProps = {
     id: null,
     className: null,
@@ -87,12 +83,11 @@ export default class YouTube extends Component {
     CUED: 5,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.container = null;
-    this.internalPlayer = null;
-  }
+  container = null;
+  internalPlayer = null;
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     this.createPlayer();
@@ -230,7 +225,6 @@ export default class YouTube extends Component {
    * Youtube Player API methods to update the video.
    */
   updateVideo = () => {
-
     this.internalPlayer.destroy();
     this.createPlayer();
     // if (this.props.videoId == null) {

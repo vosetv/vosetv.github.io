@@ -14,10 +14,7 @@ const timeRangeOptions = ['hour', 'day', 'week', 'month', 'year', 'all'];
 function getWatchedVideos() {
   let watchedVideos;
   try {
-    watchedVideos =
-      localStorage.getItem('watchedVideos') === null
-        ? {}
-        : JSON.parse(localStorage.getItem('watchedVideos'));
+    watchedVideos = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
   } catch {
     watchedVideos = {};
   }
@@ -86,7 +83,7 @@ function reducer(state, action) {
 }
 
 export default function VideoProvider({ preloadedState, children }) {
-  const lastSessionRef = useRef();
+  const lastSessionRef = useRef({});
 
   const [state, dispatch] = useReducer(reducer, {
     // App state
@@ -117,7 +114,7 @@ export default function VideoProvider({ preloadedState, children }) {
         : '';
     const lastSegment = sorting === 'hot' ? '' : `/${sorting}${timeRangeQuery}`;
 
-    history.replaceState({}, null, `/r/${subreddit}${lastSegment}`);
+    history.replaceState({}, '', `/r/${subreddit}${lastSegment}`);
     return () => {
       window.removeEventListener('keydown', handleKeydown);
       window.removeEventListener('popstate', handlePopState);
@@ -216,15 +213,15 @@ export default function VideoProvider({ preloadedState, children }) {
   function sort({ subreddit, sorting, timeRange }) {
     if (subreddit) {
       dispatch({ type: 'loading', payload: { subreddit, sorting: 'hot' } });
-      history.pushState({}, null, `/r/${subreddit}`);
+      history.pushState({}, '', `/r/${subreddit}`);
     } else if (sorting) {
       dispatch({ type: 'loading', payload: { sorting } });
-      history.pushState({}, null, `/r/${state.subreddit}/${sorting}`);
+      history.pushState({}, '', `/r/${state.subreddit}/${sorting}`);
     } else {
       dispatch({ type: 'loading', payload: { timeRange } });
       history.pushState(
         {},
-        null,
+        '',
         `/r/${state.subreddit}/${state.sorting}/?t=${timeRange}`,
       );
     }

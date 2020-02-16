@@ -1,13 +1,18 @@
 import React, { StrictMode } from 'react';
-import { hydrate, render } from 'react-dom';
-import Document from './components/document/hot';
+import { render } from 'react-dom';
+import Document from './components/document';
 import './main.css';
+
+declare global {
+  interface Window {
+    __PRELOADED_STATE__: string;
+  }
+}
 
 const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 
-const renderMethod = !!module.hot ? render : hydrate;
-renderMethod(
+render(
   <StrictMode>
     <Document preloadedState={preloadedState} />
   </StrictMode>,

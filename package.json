@@ -5,11 +5,11 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r esm -r dotenv/config src/main.server.development.js & parcel watch src/main.client.development.js -d .public",
-    "production": "rm -r .public .server; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server",
-    "test:production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.js --no-source-maps --target node -d .server && NODE_ENV=production node -r dotenv/config ./.server/main.server.js",
+    "start": "nodemon -r esm -r dotenv/config src/main.server.development.ts & parcel watch src/main.client.development.tsx -d .public",
+    "production": "rm -r .public .server; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.tsx --no-source-maps --target node -d .server",
+    "test:production": "rm -r .public; NODE_ENV=production parcel build src/main.html --no-source-maps -d .public && NODE_ENV=production parcel build src/main.server.tsx --no-source-maps --target node -d .server && NODE_ENV=production node -r dotenv/config ./.server/main.server.js",
     "update-stats": "npx browserslist-ga",
-    "lint": "eslint '**/*.js'",
+    "lint": "tsc --noEmit '**/*.js'",
     "deploy": "NODE_ENV=production yarn production && mv .public/parcel-manifest.json .server/ && rm .public/*.html && cp package.json .server/ && cp ecosystem.config.js .server/ && rsync -avzrt --update --delete .server/ vose:/home/vose/app && rsync -avzrt --update --delete .public/ vose:/var/www/vose.tv/html && ssh vose 'cd ~/app && yarn --production && pm2 restart vose.tv'"
   },
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
@@ -17,13 +17,17 @@
   "dependencies": {
     "@simonlc/menu-button": "0.1.9",
     "@simonlc/youtube-player": "6.0.0",
+    "@types/node": "13.7.1",
+    "@types/react-dom": "16.9.5",
     "dotenv": "7.0.0",
     "express": "4.16.4",
+    "global": "4.4.0",
     "isomorphic-fetch": "2.2.1",
     "obj-str": "1.0.3",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-intersection-observer": "8.22.5"
+    "react-intersection-observer": "8.22.5",
+    "typescript": "3.7.5"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
@@ -31,8 +35,10 @@
     "@babel/plugin-proposal-optional-chaining": "7.2.0",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.8.3",
     "@babel/register": "7.4.0",
     "@simonlc/parcel-plugin-bundle-manifest": "0.1.3",
+    "@types/react": "16.9.19",
     "autoprefixer": "9.5.0",
     "babel-eslint": "10.0.1",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",

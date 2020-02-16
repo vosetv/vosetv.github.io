@@ -28,7 +28,6 @@ export default function VideoList({
             {videos.map((video, i) => (
               <VideoItem
                 key={video.id}
-                index={i}
                 id={video.id}
                 title={video.title}
                 isSelected={currentVideoIndex === i}

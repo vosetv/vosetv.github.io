@@ -14,8 +14,8 @@ function getTimestamp(url) {
 
 function unique(a) {
   const seen = {};
-  return a.filter(
-    video => (seen[video.id] === true ? false : (seen[video.id] = true)),
+  return a.filter(video =>
+    seen[video.id] === true ? false : (seen[video.id] = true),
   );
 }
 
@@ -43,7 +43,7 @@ function normalizeVideos(videos) {
   });
 }
 
-export default function fetchSubreddit(subreddit, sorting, timeRange) {
+export default function fetchSubreddit(subreddit, sorting, timeRange?) {
   const videoLimit = 50;
   const count = 0;
   let videos = [];
@@ -51,7 +51,7 @@ export default function fetchSubreddit(subreddit, sorting, timeRange) {
     ? `t=${timeRange ? timeRange : 'day'}&`
     : '';
 
-  function recursiveGet(depth, after) {
+  function recursiveGet(depth, after?: string) {
     const url = after
       ? `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1&count=${count *
           100}&after=${after}`

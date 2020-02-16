@@ -1,4 +1,4 @@
-const canvas = document.getElementById('static');
+const canvas = document.getElementById('static') as HTMLCanvasElement;
 const context = canvas.getContext('2d');
 const tvHeight = canvas.offsetHeight;
 const tvWidth = canvas.offsetWidth;
