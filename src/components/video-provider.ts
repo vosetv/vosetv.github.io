@@ -1,6 +1,7 @@
 import { useReducer, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import subreddits from '../data/subreddits';
+import { NormalizedVideoItem, Dictionary } from '../services/fetch-subreddit';
 
 const baseUrl =
   process.env.NODE_ENV === 'development'
@@ -20,8 +21,46 @@ function getWatchedVideos() {
   }
   return watchedVideos;
 }
+interface SortOptions {
+  subreddit?: string;
+  sorting?: string;
+  timeRange?: string;
+}
+export interface SortProps {
+  subreddits: string[];
+  sortOptions: string[];
+  timeRangeOptions: string[];
+  state: SortOptions;
+}
+export interface Sort {
+  sort: (options: State) => void;
+}
+interface Action {
+  type: string;
+  payload?: State;
+}
+interface State extends SortOptions {
+  currentVideo?: NormalizedVideoItem | null;
+  currentVideoIndex?: number;
+  videos?: NormalizedVideoItem[] | null;
+  watchedVideos?: Dictionary<boolean>;
+}
+export interface VideoListProps extends State {
+  setVideo: (index: number) => void;
+}
+interface PlayerProps {
+  currentVideo: NormalizedVideoItem | null;
+  next: () => void;
+}
+interface PropGetters {
+  isEmpty: boolean;
+  getVideoListProps: () => VideoListProps;
+  getPlayerProps: () => PlayerProps;
+  getSortProps: () => SortProps;
+  sort: (options: State) => void;
+}
 
-function reducer(state, action) {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'loading':
       // TODO fetchVideos useEffect when videos is null
@@ -82,7 +121,13 @@ function reducer(state, action) {
   }
 }
 
-export default function VideoProvider({ preloadedState, children }) {
+export default function VideoProvider({
+  preloadedState,
+  children,
+}: {
+  preloadedState: State;
+  children: (props: PropGetters) => JSX.Element;
+}) {
   const lastSessionRef = useRef({});
 
   const [state, dispatch] = useReducer(reducer, {
@@ -150,7 +195,7 @@ export default function VideoProvider({ preloadedState, children }) {
     });
   }
 
-  function getSubAndSort(pathname) {
+  function getSubAndSort(pathname: string) {
     const [subreddit = 'videos', sorting = 'hot'] = pathname
       // Remove multiple consecutive slashes from url
       .replace(/\/{2,}/g, '/')
@@ -163,13 +208,13 @@ export default function VideoProvider({ preloadedState, children }) {
     return [subreddit, sorting];
   }
 
-  function getTimeRange(query) {
+  function getTimeRange(query: string) {
     const searchParams = new URLSearchParams(query);
     const timeRange = searchParams.get('t') || 'day';
     return timeRange;
   }
 
-  function handlePopState(event) {
+  function handlePopState(event: PopStateEvent) {
     const [subreddit, sorting] = getSubAndSort(location.pathname);
     const timeRange = getTimeRange(location.search);
 
@@ -183,7 +228,7 @@ export default function VideoProvider({ preloadedState, children }) {
     });
   }
 
-  function handleKeydown(event) {
+  function handleKeydown(event: KeyboardEvent) {
     if (event.repeat) return;
     if (event.ctrlKey || event.altKey || event.metaKey || event.shiftKey)
       return;
@@ -201,7 +246,7 @@ export default function VideoProvider({ preloadedState, children }) {
   }
 
   // NOTE Used to change video on VideoItem click
-  function setVideo(currentVideoIndex) {
+  function setVideo(currentVideoIndex: number) {
     dispatch({
       type: 'video change',
       payload: {
@@ -210,7 +255,7 @@ export default function VideoProvider({ preloadedState, children }) {
     });
   }
 
-  function sort({ subreddit, sorting, timeRange }) {
+  function sort({ subreddit, sorting, timeRange }: SortOptions) {
     if (subreddit) {
       dispatch({ type: 'loading', payload: { subreddit, sorting: 'hot' } });
       history.pushState({}, '', `/r/${subreddit}`);
@@ -251,6 +296,7 @@ export default function VideoProvider({ preloadedState, children }) {
     setVideo,
   });
 
+  // Prop getters: https://kentcdodds.com/blog/how-to-give-rendering-control-to-users-with-prop-getters
   return typeof children === 'function'
     ? children({
         isEmpty: state.videos && state.videos.length === 0,

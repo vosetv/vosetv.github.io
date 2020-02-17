@@ -1,7 +1,8 @@
 import fetchSubreddit from './fetch-subreddit';
 import subreddits from '../data/subreddits';
+import { NormalizedVideoItem, Dictionary } from './fetch-subreddit';
 
-export const hotVideos = {};
+export const hotVideos: Dictionary<NormalizedVideoItem[]> = {};
 
 const fiveMinutes = 300000;
 function refreshVids() {

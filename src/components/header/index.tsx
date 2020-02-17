@@ -3,7 +3,13 @@ import Sort from '../sort';
 import Logo from '../logo';
 import './styles.css';
 
-export default function Header({ sort, getSortProps }) {
+import { SortProps, Sort as SortType } from '../video-provider';
+
+interface HeaderProps extends SortType {
+  getSortProps: () => SortProps;
+}
+
+export default function Header({ sort, getSortProps }: HeaderProps) {
   return (
     <header className="header">
       <Logo onClick={() => sort({ subreddit: 'videos' })} />

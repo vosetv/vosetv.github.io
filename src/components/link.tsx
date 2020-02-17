@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Link({ sort, to, children }) {
+import { Sort } from './video-provider';
+
+export default function Link({
+  sort,
+  to,
+  children,
+}: Sort & { to: string; children: React.ReactNode }) {
   return (
     <a
       onClick={event => {

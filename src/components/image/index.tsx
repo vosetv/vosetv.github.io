@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
-export default function ImageComponent({ src, ...props }) {
+export default function ImageComponent({
+  src,
+  ...props
+}: {
+  src: string;
+  className: string;
+  alt: string;
+}) {
   const [loaded, setLoaded] = useState(false);
   const [ref, inView, entry] = useInView({
     rootMargin: '0px 0px 500px',

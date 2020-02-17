@@ -4,7 +4,15 @@ import YouTube from '../youtube';
 import shortNumber from '../short-number';
 import './styles.css';
 
-export default function Player({ currentVideo, next }) {
+import { NormalizedVideoItem } from '../../services/fetch-subreddit';
+
+export default function Player({
+  currentVideo,
+  next,
+}: {
+  currentVideo: NormalizedVideoItem;
+  next: () => void;
+}) {
   return (
     <div className="player">
       <div className="player-embed" id="player-embed">

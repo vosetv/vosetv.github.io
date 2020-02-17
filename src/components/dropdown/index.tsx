@@ -4,12 +4,24 @@ import objstr from 'obj-str';
 import { Menu, MenuList, MenuButton, MenuItem } from '@simonlc/menu-button';
 import './styles.css';
 
-export default function Dropdown({ id, items, onChange, currentItem }) {
+type DropdownProps = {
+  id: string,
+  items: string[],
+  onChange: (action: { [key: string]: string }) => void,
+  currentItem: string,
+};
+
+export default function Dropdown({
+  id,
+  items,
+  onChange,
+  currentItem,
+}: DropdownProps) {
   return (
     <Menu>
       <MenuButton className="button">{currentItem}</MenuButton>
       <MenuList className="dropdown">
-        {items?.map(item => (
+        {items?.map((item: string) => (
           <MenuItem
             key={item}
             className={objstr({

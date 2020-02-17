@@ -4,6 +4,8 @@ import objstr from 'obj-str';
 import VideoItem from '../video-item';
 import './styles.css';
 
+import { VideoListProps } from '../video-provider';
+
 // States:
 //  - With videos
 //  - No filtered videos
@@ -14,7 +16,7 @@ export default function VideoList({
   watchedVideos,
   currentVideoIndex,
   setVideo,
-}) {
+}: VideoListProps) {
   return (
     <div
       className={objstr({

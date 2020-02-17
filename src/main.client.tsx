@@ -3,9 +3,19 @@ import { render } from 'react-dom';
 import Document from './components/document';
 import './main.css';
 
+import { NormalizedVideoItem } from './services/fetch-subreddit';
+
+export type PreloadedState = {
+  videos: NormalizedVideoItem[];
+  subreddit: string;
+  sorting: string;
+  timeRange: string;
+  currentVideo: NormalizedVideoItem;
+};
+
 declare global {
   interface Window {
-    __PRELOADED_STATE__: string;
+    __PRELOADED_STATE__: PreloadedState;
   }
 }
 

@@ -5,19 +5,27 @@ import objstr from 'obj-str';
 import Image from '../image';
 import './styles.css';
 
+interface Props {
+  id: string;
+  title: string;
+  isSelected: boolean;
+  isWatched: boolean;
+  onClick: (event: MouseEventInit) => void;
+}
+
 export default function VideoItem({
   id,
   title,
   isSelected,
   isWatched,
   onClick,
-}) {
+}: Props) {
   const ref = useRef(null);
   const [inViewRef, inView, entry] = useInView({
     threshold: 1,
   });
 
-  function handleRef(node) {
+  function handleRef(node: HTMLLIElement) {
     ref.current = node;
     inViewRef(node);
   }

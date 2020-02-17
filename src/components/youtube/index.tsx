@@ -8,7 +8,7 @@ import youTubePlayer from '@simonlc/youtube-player';
  * @param {Object} prevProps
  * @param {Object} props
  */
-function shouldUpdateVideo(prevProps, props) {
+function shouldUpdateVideo(prevProps: YouTubeProps, props: YouTubeProps) {
   // A changing video should always trigger an update
   if (prevProps.videoId !== props.videoId) {
     return true;
@@ -28,7 +28,7 @@ function shouldUpdateVideo(prevProps, props) {
  * @param {Object} prevProps
  * @param {Object} props
  */
-function shouldUpdatePlayer(prevProps, props) {
+function shouldUpdatePlayer(prevProps: YouTubeProps, props: YouTubeProps) {
   return prevProps.id === props.id || prevProps.className === props.className;
 }
 
@@ -41,7 +41,7 @@ interface YouTubeProps {
   // custom class name for player container element
   containerClassName?: string;
   // https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
-  opts?: object;
+  opts?: YT.PlayerOptions;
   // event subscriptions
   onReady?: (event: object) => void;
   onError?: (event: object) => void;
@@ -55,8 +55,6 @@ interface YouTubeProps {
 
 export default class YouTube extends Component<YouTubeProps, {}> {
   static defaultProps = {
-    id: null,
-    className: null,
     opts: {},
     containerClassName: '',
     onReady: () => {},
@@ -83,8 +81,8 @@ export default class YouTube extends Component<YouTubeProps, {}> {
     CUED: 5,
   };
 
-  container = null;
-  internalPlayer = null;
+  container: HTMLElement = null;
+  internalPlayer: YT.Player = null;
   // constructor(props) {
   //   super(props);
   // }
@@ -93,7 +91,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
     this.createPlayer();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: YouTubeProps) {
     if (shouldUpdatePlayer(prevProps, this.props)) {
       this.updatePlayer();
     }
@@ -119,7 +117,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    * @param {Object} event
    *   @param {Object} target - player object
    */
-  onPlayerReady = event => this.props.onReady(event);
+  onPlayerReady = (event: YT.PlayerEvent) => this.props.onReady(event);
 
   /**
    * https://developers.google.com/youtube/iframe_api_reference#onError
@@ -128,7 +126,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    *   @param {Integer} data  - error type
    *   @param {Object} target - player object
    */
-  onPlayerError = event => this.props.onError(event);
+  onPlayerError = (event: YT.OnErrorEvent) => this.props.onError(event);
 
   /**
    * https://developers.google.com/youtube/iframe_api_reference#onStateChange
@@ -137,7 +135,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    *   @param {Integer} data  - status change type
    *   @param {Object} target - actual YT player
    */
-  onPlayerStateChange = event => {
+  onPlayerStateChange = (event: YT.OnStateChangeEvent) => {
     this.props.onStateChange(event);
     switch (event.data) {
       case YouTube.PlayerState.ENDED:
@@ -164,7 +162,8 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    *   @param {Float} data    - playback rate
    *   @param {Object} target - actual YT player
    */
-  onPlayerPlaybackRateChange = event => this.props.onPlaybackRateChange(event);
+  onPlayerPlaybackRateChange = (event: YT.OnPlaybackRateChangeEvent) =>
+    this.props.onPlaybackRateChange(event);
 
   /**
    * https://developers.google.com/youtube/iframe_api_reference#onPlaybackQualityChange
@@ -173,7 +172,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    *   @param {String} data   - playback quality
    *   @param {Object} target - actual YT player
    */
-  onPlayerPlaybackQualityChange = event =>
+  onPlayerPlaybackQualityChange = (event: YT.OnPlaybackQualityChangeEvent) =>
     this.props.onPlaybackQualityChange(event);
 
   /**
@@ -209,7 +208,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
    * replaced the DIV that is mounted by React we need to do this manually.
    */
   updatePlayer = () => {
-    this.internalPlayer.getIframe().then(iframe => {
+    this.internalPlayer.getIframe().then((iframe: HTMLIFrameElement) => {
       this.props.id
         ? iframe.setAttribute('id', this.props.id)
         : iframe.removeAttribute('id');
@@ -259,7 +258,7 @@ export default class YouTube extends Component<YouTubeProps, {}> {
     // this.internalPlayer.cueVideoById(opts);
   };
 
-  refContainer = container => {
+  refContainer = (container: HTMLElement) => {
     this.container = container;
   };
 

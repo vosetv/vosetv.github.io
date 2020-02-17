@@ -5,16 +5,16 @@ import VideoList from '../video-list';
 import Player from '../player';
 import Message from '../message';
 
-export default function Document({ preloadedState }) {
+import { PreloadedState } from '../../main.client';
+
+export default function Document({
+  preloadedState,
+}: {
+  preloadedState: PreloadedState;
+}) {
   return (
     <VideoProvider preloadedState={preloadedState}>
-      {({
-        isEmpty,
-        getVideoListProps,
-        getPlayerProps,
-        getSortProps,
-        sort,
-      }) => (
+      {({ isEmpty, getVideoListProps, getPlayerProps, getSortProps, sort }) => (
         <>
           <Header sort={sort} getSortProps={getSortProps} />
           {isEmpty ? (

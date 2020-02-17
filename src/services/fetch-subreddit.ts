@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-function getTimestamp(url) {
+function getTimestamp(url: string) {
   const match = url.match(/(?:#|&|\?)t=(\d+h)?(\d+m)?(\d+(?:s|$))?/);
 
   if (match === null) return 0;
@@ -12,14 +12,50 @@ function getTimestamp(url) {
   return hours + minutes + seconds;
 }
 
-function unique(a) {
-  const seen = {};
-  return a.filter(video =>
-    seen[video.id] === true ? false : (seen[video.id] = true),
+interface Oembed {
+  url: string;
+  thumbnail_url: string;
+}
+interface SecureMedia {
+  oembed: Oembed;
+  type: string;
+}
+interface VideoItemData {
+  secure_media: SecureMedia;
+  id: string;
+  url: string;
+  title: string;
+  num_comments: number;
+  score: number;
+  link_flair_text: number;
+}
+interface VideoItem {
+  data: VideoItemData;
+}
+
+export interface NormalizedVideoItem {
+  id: string;
+  title: string;
+  url: string;
+  comments: number;
+  score: number;
+  timestamp?: number;
+  flair?: number;
+}
+
+export interface Dictionary<T> {
+  [key: string]: T;
+}
+
+function unique(a: NormalizedVideoItem[]) {
+  const seen: Dictionary<boolean> = {};
+  return a.filter(
+    (video: NormalizedVideoItem): boolean =>
+      seen[video.id] === true ? false : (seen[video.id] = true),
   );
 }
 
-function normalizeVideos(videos) {
+function normalizeVideos(videos: VideoItem[]) {
   return videos.map(video => {
     let id;
     if (video.data.secure_media.oembed.url) {
@@ -43,15 +79,27 @@ function normalizeVideos(videos) {
   });
 }
 
-export default function fetchSubreddit(subreddit, sorting, timeRange?) {
+interface RecursiveError extends PromiseRejectionEvent {
+  msg: string;
+  after: string;
+}
+
+export default function fetchSubreddit(
+  subreddit: string,
+  sorting: string,
+  timeRange?: string,
+) {
   const videoLimit = 50;
   const count = 0;
-  let videos = [];
+  let videos: VideoItem[] = [];
   const timeRangeQuery = ['top', 'controversial'].includes(sorting)
     ? `t=${timeRange ? timeRange : 'day'}&`
     : '';
 
-  function recursiveGet(depth, after?: string) {
+  function recursiveGet(
+    depth: number,
+    after?: string,
+  ): Promise<NormalizedVideoItem[]> {
     const url = after
       ? `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1&count=${count *
           100}&after=${after}`
@@ -61,7 +109,7 @@ export default function fetchSubreddit(subreddit, sorting, timeRange?) {
       .then(posts => {
         videos = videos.concat(
           posts.data.children.filter(
-            item =>
+            (item: VideoItem) =>
               item.data.secure_media &&
               item.data.secure_media.type === 'youtube.com',
           ),
@@ -71,11 +119,11 @@ export default function fetchSubreddit(subreddit, sorting, timeRange?) {
         }
         return Promise.reject({ msg: 'next', after: posts.data.after });
       })
-      .catch(err => {
+      .catch((err: RecursiveError) => {
         if (err.msg === 'next') {
           return recursiveGet(depth + 1, err.after);
         }
-        return console.error('Recursive Videos Error', err);
+        console.error('Recursive Videos Error', err);
       });
   }
   return recursiveGet(count);

@@ -4,7 +4,9 @@ import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
 import './styles.css';
 
-export default function Message({ sort }) {
+import { Sort } from '../video-provider';
+
+export default function Message({ sort }: Sort) {
   return (
     <div className="message">
       <div className="message__icon">

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Dropdown from '../dropdown';
 import './styles.css';
 
+import { SortProps, Sort } from '../video-provider';
+
 export default function Sort({
   subreddits,
   sortOptions,
   timeRangeOptions,
   state,
   sort,
-}) {
+}: SortProps & Sort) {
   return (
     <div className="sort">
       <div className="sort__title">Sort</div>
