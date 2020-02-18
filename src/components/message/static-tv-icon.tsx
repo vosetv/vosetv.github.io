@@ -1,5 +1,5 @@
 const canvas = document.getElementById('static') as HTMLCanvasElement;
-const context = canvas.getContext('2d');
+const context = canvas.getContext('2d')!;
 const tvHeight = canvas.offsetHeight;
 const tvWidth = canvas.offsetWidth;
 const smallestPixel = 1;

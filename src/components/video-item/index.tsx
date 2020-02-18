@@ -20,7 +20,7 @@ export default function VideoItem({
   isWatched,
   onClick,
 }: Props) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null!);
   const [inViewRef, inView, entry] = useInView({
     threshold: 1,
   });

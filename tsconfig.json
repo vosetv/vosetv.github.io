@@ -9,7 +9,7 @@
     "removeComments": true,
     "sourceMap": true,
     "allowJs": true,
-    "noImplicitAny": true,
+    "strict": true,
     "target": "ES6",
     "baseUrl": "./src",
     "paths": {

@@ -4,18 +4,11 @@ import Document from './components/document';
 import './main.css';
 
 import { NormalizedVideoItem } from './services/fetch-subreddit';
-
-export type PreloadedState = {
-  videos: NormalizedVideoItem[];
-  subreddit: string;
-  sorting: string;
-  timeRange: string;
-  currentVideo: NormalizedVideoItem;
-};
+import { State } from './components/video-provider';
 
 declare global {
   interface Window {
-    __PRELOADED_STATE__: PreloadedState;
+    __PRELOADED_STATE__: State;
   }
 }
 

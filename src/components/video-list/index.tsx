@@ -25,25 +25,18 @@ export default function VideoList({
       })}
     >
       {videos ? (
-        videos.length ? (
-          <ul className="list">
-            {videos.map((video, i) => (
-              <VideoItem
-                key={video.id}
-                id={video.id}
-                title={video.title}
-                isSelected={currentVideoIndex === i}
-                isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
-                onClick={() => setVideo(i)}
-              />
-            ))}
-          </ul>
-        ) : (
-          <div className="message">
-            {/* TODO Is it even ever possible to get here? */}
-            <p>No videos to show...</p>
-          </div>
-        )
+        <ul className="list">
+          {videos.map((video, i) => (
+            <VideoItem
+              key={video.id}
+              id={video.id}
+              title={video.title}
+              isSelected={currentVideoIndex === i}
+              isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
+              onClick={() => setVideo(i)}
+            />
+          ))}
+        </ul>
       ) : (
         <ul className="list">
           {[...Array(32)].map((_, i) => (

@@ -10,7 +10,7 @@ export default function Player({
   currentVideo,
   next,
 }: {
-  currentVideo: NormalizedVideoItem;
+  currentVideo: NormalizedVideoItem | null;
   next: () => void;
 }) {
   return (

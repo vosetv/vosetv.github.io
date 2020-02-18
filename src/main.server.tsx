@@ -7,6 +7,8 @@ import Document from './components/document';
 import fetchSubreddit from './services/fetch-subreddit';
 import { hotVideos } from './services/caching';
 
+import { SortingOption, StateType } from './components/video-provider';
+
 const script =
   process.env.NODE_ENV === 'production'
     ? require('../.public/parcel-manifest.json')['main.client.js']
@@ -43,14 +45,25 @@ app.get('/api/videos/:subreddit/:sorting/:timeRange', async (req, res) => {
 });
 
 app.use(async (req, res) => {
-  let [subreddit = 'videos', sorting = 'hot'] = req.path
+  let pathParts = req.path
     .replace(/\/{2,}/g, '/')
     .replace(/^\/|\/$/g, '')
     .split('/')
     .slice(1); // Remove "r"
+  let subreddit = pathParts[0] || 'videos';
   let timeRange = req.query.t;
-  sorting = ['hot', 'new', 'controversial', 'top', 'rising'].includes(sorting) ? sorting : 'hot';
-  timeRange = ['hour', 'day', 'week', 'month', 'year', 'all'].includes(timeRange) ? timeRange : 'day';
+  // TODO_TS Find out how to write this better
+  let sorting1 = ['hot', 'new', 'controversial', 'top', 'rising'].includes(
+    pathParts[1],
+  )
+    ? pathParts[1]
+    : 'hot';
+  let sorting = sorting1 as SortingOption;
+  timeRange = ['hour', 'day', 'week', 'month', 'year', 'all'].includes(
+    timeRange,
+  )
+    ? timeRange
+    : 'day';
 
   res.type('html');
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
@@ -81,21 +94,21 @@ app.use(async (req, res) => {
 <body><div id="root" class="app">`);
 
   const videos = await fetchSubreddit(subreddit, sorting, timeRange);
-  const preloadedState = {
+
+  const preloadedState: StateType = {
     videos,
     subreddit,
     sorting,
     timeRange,
     currentVideo: videos[0],
+    currentVideoIndex: 0,
+    watchedVideos: {},
   };
   const reactStream = renderToNodeStream(
     <Document preloadedState={preloadedState} />,
   );
 
-  reactStream.pipe(
-    res,
-    { end: false },
-  );
+  reactStream.pipe(res, { end: false });
 
   reactStream.on('end', () => {
     res.write(`</div>

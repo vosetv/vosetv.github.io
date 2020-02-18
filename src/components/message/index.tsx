@@ -18,6 +18,7 @@ export default function Message({ sort }: Sort) {
         </p>
         <p>Try a different sorting, or some of our favorite subreddits:</p>
         <ul>
+          {/* TODO Make this work with serverside rendering */}
           {favorites
             .sort(() => 0.5 - Math.random())
             .slice(0, 3)

@@ -5,12 +5,12 @@ import VideoList from '../video-list';
 import Player from '../player';
 import Message from '../message';
 
-import { PreloadedState } from '../../main.client';
+import { State } from '../video-provider';
 
 export default function Document({
   preloadedState,
 }: {
-  preloadedState: PreloadedState;
+  preloadedState: State;
 }) {
   return (
     <VideoProvider preloadedState={preloadedState}>

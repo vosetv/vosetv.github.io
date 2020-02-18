@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Dropdown from '../dropdown';
 import './styles.css';
 
-import { SortProps, Sort } from '../video-provider';
+import { SortProps, Sort as SortType } from '../video-provider';
 
 export default function Sort({
   subreddits,
@@ -11,27 +11,27 @@ export default function Sort({
   timeRangeOptions,
   state,
   sort,
-}: SortProps & Sort) {
+}: SortProps & SortType) {
   return (
     <div className="sort">
       <div className="sort__title">Sort</div>
       <Dropdown
         id="subreddit"
         items={subreddits}
-        currentItem={state.subreddit}
+        currentItem={state.subreddit!}
         onChange={sort}
       />
       <Dropdown
         id="sorting"
         items={sortOptions}
-        currentItem={state.sorting}
+        currentItem={state.sorting!}
         onChange={sort}
       />
-      {['top', 'controversial'].includes(state.sorting) && (
+      {['top', 'controversial'].includes(state.sorting!) && (
         <Dropdown
           id="timeRange"
           items={timeRangeOptions}
-          currentItem={state.timeRange}
+          currentItem={state.timeRange!}
           onChange={sort}
         />
       )}
