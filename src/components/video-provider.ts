@@ -210,7 +210,7 @@ export default function VideoProvider({
 
   function getTimeRange(query: string) {
     const searchParams = new URLSearchParams(query);
-    const timeRange = searchParams.get('t') || 'day';
+    const timeRange = searchParams.get('t') ?? 'day';
     return timeRange;
   }
 
@@ -305,7 +305,7 @@ export default function VideoProvider({
         getSortProps,
         sort,
       })
-    : children || null;
+    : children ?? null;
 }
 
 VideoProvider.propTypes = {
