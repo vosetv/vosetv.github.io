@@ -166,7 +166,6 @@ export default function VideoProvider({
 }) {
   const lastSessionRef = useRef({});
 
-  console.log(preloadedState);
   const [state, dispatch] = useReducer(reducer, {
     // App state
     currentVideoIndex: 0,
@@ -190,7 +189,6 @@ export default function VideoProvider({
     window.addEventListener('keydown', handleKeydown);
     window.addEventListener('popstate', handlePopState);
     const { subreddit, sorting, timeRange } = state;
-    console.log(sortOptions.includes('hot'));
     const timeRangeQuery =
       ['top', 'controversial'].includes(sorting!) && timeRange !== 'day'
         ? `/?t=${timeRange}`

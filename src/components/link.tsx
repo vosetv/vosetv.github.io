@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Sort } from './video-provider';
 
 export default function Link({

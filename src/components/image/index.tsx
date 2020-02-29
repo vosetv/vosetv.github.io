@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
+enum State {
+  Empty,
+  Loading,
+  Ready,
+  Error,
+}
+
 export default function ImageComponent({
   src,
   ...props
@@ -10,19 +17,20 @@ export default function ImageComponent({
   className: string;
   alt: string;
 }) {
-  const [loaded, setLoaded] = useState(false);
+  const [state, setLoaded] = useState<State>(State.Empty);
   const [ref, inView, entry] = useInView({
     rootMargin: '0px 0px 500px',
   });
 
-  if (inView && !loaded) {
-    // TODO Handle 404s
+  if (inView && state === State.Empty) {
+    // TODO Handle 404s and errors
+    setLoaded(State.Loading);
     const image = new Image();
-    image.onload = () => setLoaded(true);
+    image.onload = () => setLoaded(State.Ready);
     image.src = src;
   }
 
-  return loaded ? (
+  return state === State.Ready ? (
     <img ref={ref} src={src} {...props} />
   ) : (
     <div ref={ref} className="video-item__thumb video-item__thumb--preview" />

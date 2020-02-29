@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import youTubePlayer from '@simonlc/youtube-player';
 
-/**
- * Check whether a `props` change should result in the video being updated.
- *
- * @param {Object} prevProps
- * @param {Object} props
- */
 function shouldUpdateVideo(prevProps: YouTubeProps, props: YouTubeProps) {
   // A changing video should always trigger an update
   if (prevProps.videoId !== props.videoId) {
@@ -22,12 +16,6 @@ function shouldUpdateVideo(prevProps: YouTubeProps, props: YouTubeProps) {
   return prevVars.start !== vars.start || prevVars.end !== vars.end;
 }
 
-/**
- * Check whether a props change should result in an id or className update.
- *
- * @param {Object} prevProps
- * @param {Object} props
- */
 function shouldUpdatePlayer(prevProps: YouTubeProps, props: YouTubeProps) {
   return prevProps.id === props.id || prevProps.className === props.className;
 }

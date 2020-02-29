@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import VideoItem from '../video-item';
-import './styles.css';
-
 import { VideoListProps } from '../video-provider';
+import './styles.css';
 
 // States:
 //  - With videos

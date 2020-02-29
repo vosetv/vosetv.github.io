@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
-import './styles.css';
-
 import { Sort } from '../video-provider';
+import './styles.css';
 
 export default function Message({ sort }: Sort) {
   return (

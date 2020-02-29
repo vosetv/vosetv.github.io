@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import YouTube from '../youtube';
 import shortNumber from '../short-number';
-import './styles.css';
-
 import { NormalizedVideoItem } from '../../services/fetch-subreddit';
+import './styles.css';
 
 export default function Player({
   currentVideo,
@@ -33,7 +32,7 @@ export default function Player({
       {currentVideo ? (
         <>
           <header className="player-header">
-            <h1 className="player-title">
+            <h1 data-testid="player-title" className="player-title">
               <a
                 href={`https://redd.it/${currentVideo.url}`}
                 rel="noopener noreferrer"

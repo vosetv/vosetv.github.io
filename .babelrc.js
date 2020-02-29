@@ -1,5 +1,8 @@
+const isTest = String(process.env.NODE_ENV) === 'test';
+const isDev = String(process.env.NODE_ENV) === 'development';
+
 module.exports =
-  process.env.BABEL_ENV === 'development'
+   (isTest || isDev)
     ? {
         plugins: [
           'react-hot-loader/babel',

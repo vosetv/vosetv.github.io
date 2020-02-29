@@ -16,7 +16,7 @@ export default function Document({
     <VideoProvider preloadedState={preloadedState}>
       {({ isEmpty, getVideoListProps, getPlayerProps, getSortProps, sort }) => (
         <>
-          <Header sort={sort} getSortProps={getSortProps} />
+          <Header sort={sort} {...getSortProps()} />
           {isEmpty ? (
             <Message sort={sort} />
           ) : (
