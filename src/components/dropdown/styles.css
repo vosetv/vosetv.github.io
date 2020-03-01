@@ -1,5 +1,5 @@
 /* Help reach menu button be in the right place */
-:global [data-reach-menu] {
+[data-reach-menu] {
   position: absolute;
 }
 

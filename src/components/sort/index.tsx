@@ -1,13 +1,21 @@
 import React from 'react';
+import Dropdown from '../dropdown';
 import styles from './styles.css';
 
-type SortProps = { children: Dropdown[] };
-export default function Sort({ children }: SortProps) {
+export default function Sort({ filters, setFilter }) {
   return (
-    children?.filter(Boolean).length > 0 && (
+    filters?.length > 0 && (
       <div className={styles.container}>
         <div className={styles.title}>Sort</div>
-        {children}
+        {filters.map((filter, index) => (
+          <Dropdown
+            key={filter.title}
+            id={filter.title}
+            items={filter.items}
+            currentItem={filter.currentItem}
+            onChange={setFilter}
+          />
+        ))}
       </div>
     )
   );

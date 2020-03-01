@@ -6,7 +6,7 @@ import styles from './styles.css';
 
 type DropdownProps = {
   id: string;
-  items: TimeRangeTuple | SortTuple | string[];
+  items: string[];
   onChange: (action: { [key: string]: string }) => void;
   currentItem: string;
 };
@@ -21,7 +21,7 @@ export default function Dropdown({
     <Menu>
       <MenuButton className={styles.button}>{currentItem}</MenuButton>
       <MenuList className={styles.dropdown}>
-        {(items as string[])?.map((item: string) => (
+        {items.map(item => (
           <MenuItem
             key={item}
             className={objstr({
