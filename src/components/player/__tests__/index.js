@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Player from '../';
 
+test.todo('should change to next video on video end');
 test.todo('should render skeleton components during loading');
 
 test.skip('should be able to change videos with keyboard', () => {

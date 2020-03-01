@@ -2,6 +2,7 @@
   display: flex;
   height: 100%;
   align-items: stretch;
+  margin-right: auto;
   & > :not(:last-child):not(:first-child) {
     border-right: 1px solid var(--header-separator);
   }

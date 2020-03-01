@@ -1,50 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import objstr from 'obj-str';
-import VideoItem from '../video-item';
-import { VideoListProps } from '../video-provider';
-import './styles.css';
+import VideoItem, { Preview } from '../video-item';
+import useLocalStorage from '../../hooks/useLocalStorage.ts';
+import styles from './styles.css';
 
 // States:
 //  - With videos
 //  - No filtered videos
 //  - Empty
 //  - Loading
-export default function VideoList({
-  videos,
-  watchedVideos,
-  currentVideoIndex,
-  setVideo,
-}: VideoListProps) {
+export default function VideoList({ videos, currentVideo, setCurrentVideo }) {
+  // TODO Move down to VideoItem?
+  const [watchedVideos, setWatchedVideos] = useLocalStorage({});
+
+  // TODO Need useEffect here? Maybe use layoutEffect?
+  useEffect(() => {
+    setWatchedVideos({ ...watchedVideos, [videos[currentVideo].id]: true });
+  }, [currentVideo]);
+
   return (
     <div
       className={objstr({
-        'video-list': true,
-        'video-list--preview': !videos,
+        [styles.list]: true,
+        [styles.preview]: !videos,
       })}
     >
-      {videos ? (
-        <ul className="list">
-          {videos.map((video, i) => (
-            <VideoItem
-              key={video.id}
-              id={video.id}
-              title={video.title}
-              isSelected={currentVideoIndex === i}
-              isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
-              onClick={() => setVideo(i)}
-            />
-          ))}
-        </ul>
-      ) : (
-        <ul className="list">
-          {[...Array(32)].map((_, i) => (
-            <li className="video-item" key={i}>
-              <div className="video-item__thumb" />
-              <div className="video-item__title" />
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {videos?.length > 0
+          ? videos.map((video, i) => (
+              <VideoItem
+                key={video.id}
+                id={video.id}
+                title={video.title}
+                isSelected={currentVideo === i}
+                isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
+                onClick={() => setCurrentVideo(i)}
+              />
+            ))
+          : [...Array(32)].map((_, i) => <Preview key={i} />)}
+      </ul>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import styles from '../video-item/styles.css';
 
 enum State {
   Empty,
@@ -17,7 +18,7 @@ export default function ImageComponent({
   alt: string;
 }) {
   const [state, setLoaded] = useState<State>(State.Empty);
-  const [ref, inView, entry] = useInView({
+  const [ref, inView, enter] = useInView({
     rootMargin: '0px 0px 500px',
   });
 
@@ -32,6 +33,6 @@ export default function ImageComponent({
   return state === State.Ready ? (
     <img ref={ref} src={src} {...props} />
   ) : (
-    <div ref={ref} className="video-item__thumb video-item__thumb--preview" />
+    <div ref={ref} className={styles.thumbPlaceholder} />
   );
 }

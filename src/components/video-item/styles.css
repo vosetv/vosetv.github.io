@@ -1,4 +1,4 @@
-.video-item {
+.item {
   background: var(--video-item-background);
   padding: 8px;
   border-bottom: 1px solid var(--video-item-separator);
@@ -16,7 +16,7 @@
   }
 }
 
-.video-item--watched:after {
+.watched:after {
   content: 'Watched';
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -29,9 +29,9 @@
   background: rgba(0, 0, 0, 0.7);
 }
 
-.video-item--selected {
+.selected {
   background: var(--video-item-background-selected);
-  .video-item__title {
+  .title {
     color: var(--video-item-color-selected);
   }
   &:after {
@@ -46,21 +46,20 @@
   }
 }
 
-.video-item__thumb {
+.thumb {
   width: var(--thumb-width);
   height: calc(var(--thumb-width) * 0.5625);
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.video-item__title {
+.title {
   padding: 10px;
   /* Overwrite inherited value. */
   /* white-space: normal; */
 
   font-size: 12px;
   color: var(--video-item-color);
-  letter-spacing: 0.02em;
 
   /* Limit text to two lines */
   overflow: hidden;
@@ -69,12 +68,14 @@
   line-height: 16px; /* fallback */
   max-height: 22px; /* fallback */
   -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   box-orient: vertical;
 }
 
-.video-item__thumb--preview {
+.thumbPlaceholder {
+  composes: thumb;
   background-image: linear-gradient(
     114deg,
     #464b50,
@@ -84,42 +85,15 @@
     #464b50
   );
   background-size: 300% 300%;
-  animation: preview 1.2s linear infinite;
+  :global {
+    animation: preview 1.2s linear infinite;
+  }
 }
 
-.video-list--preview {
-  .video-item {
-    &:hover {
-      cursor: default;
-      background: var(--video-item-background);
-    }
-  }
-  .video-item__thumb {
-    background-image: linear-gradient(
-      114deg,
-      #464b50,
-      #40454a,
-      #464b50,
-      #40454a,
-      #464b50
-    );
-    background-size: 300% 300%;
-    animation: preview 1.2s linear infinite;
-  }
-  .video-item__title {
-    padding: 0;
-    margin: 10px;
-    height: 20px;
-    border-radius: 2px;
-    background-image: linear-gradient(
-      114deg,
-      #464b50,
-      #40454a,
-      #464b50,
-      #40454a,
-      #464b50
-    );
-    background-size: 300% 300%;
-    animation: preview 1.2s linear infinite;
+.placeholder {
+  composes: item;
+  &:hover {
+    cursor: default;
+    background: var(--video-item-background);
   }
 }

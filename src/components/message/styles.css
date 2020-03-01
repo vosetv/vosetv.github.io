@@ -1,4 +1,4 @@
-.message {
+.container {
   grid-area: player / span 2;
   font-size: 1.2em;
   padding: 0 12px;

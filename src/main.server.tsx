@@ -70,6 +70,7 @@ app.use(async (req, res) => {
 <title>/r/${subreddit} - vose.tv</title>
 <link rel="preload" href="${script}" as="script">
 <link rel="preconnect" href="https://s.ytimg.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 <link rel="preconnect" href="https://www.youtube.com">`);
   // TODO preload youtube script
   // TODO preload 10-15 images
@@ -100,9 +101,6 @@ app.use(async (req, res) => {
     subreddit,
     sorting,
     timeRange,
-    currentVideo: videos[0],
-    currentVideoIndex: 0,
-    watchedVideos: {},
   };
   const reactStream = renderToNodeStream(
     <Document preloadedState={preloadedState} />,

@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
-import './styles.css';
+import styles from './styles.css';
 
 export default function Message({ error }) {
   return (
-    <div className="message">
-      <div className="message__content">
+    <div className={styles.container}>
+      <div>
         <p>
           <b>We couldn’t find any videos for you...</b>
         </p>

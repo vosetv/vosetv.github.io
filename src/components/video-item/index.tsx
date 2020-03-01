@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import objstr from 'obj-str';
 import Image from '../image';
-import './styles.css';
+import styles from './styles.css';
 
 interface Props {
   id: string;
@@ -10,6 +10,14 @@ interface Props {
   isSelected: boolean;
   isWatched: boolean;
   onClick: (event: MouseEventInit) => void;
+}
+
+export function Preview() {
+  return (
+    <li className={styles.placeholder}>
+      <div className={styles.thumbPlaceholder} />
+    </li>
+  );
 }
 
 export default function VideoItem({
@@ -39,18 +47,18 @@ export default function VideoItem({
   }, [isSelected]);
 
   const classes = objstr({
-    'video-item': true,
-    'video-item--selected': isSelected,
-    'video-item--watched': isWatched,
+    [styles.item]: true,
+    [styles.selected]: isSelected,
+    [styles.watched]: isWatched,
   });
   return (
     <li ref={handleRef} className={classes} onClick={onClick}>
       <Image
-        className="video-item__thumb"
+        className={styles.thumb}
         src={`https://i.ytimg.com/vi/${id}/default.jpg`}
         alt=""
       />
-      <div className="video-item__title">{title}</div>
+      <div className={styles.title}>{title}</div>
     </li>
   );
 }

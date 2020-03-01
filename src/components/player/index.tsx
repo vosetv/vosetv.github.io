@@ -2,69 +2,61 @@ import React from 'react';
 import YouTube from '../youtube';
 import shortNumber from '../short-number';
 import { NormalizedVideoItem } from '../../services/fetch-subreddit';
-import './styles.css';
+import styles from './styles.css';
 
-export default function Player({
-  currentVideo,
-  next,
-}: {
-  currentVideo: NormalizedVideoItem | null;
-  next: () => void;
-}) {
+export default function Player({ video, next }) {
   return (
-    <div className="player">
-      <div className="player-embed" id="player-embed">
-        {currentVideo ? (
+    <div className={styles.player}>
+      <div className={styles.embed} id="player-embed">
+        {video && (
           <YouTube
-            videoId={currentVideo.id}
+            videoId={video.id}
             opts={{
               playerVars: {
                 autoplay: 1,
                 color: 'white',
-                start: currentVideo.timestamp,
+                start: video.timestamp,
               },
             }}
             onEnd={next}
           />
-        ) : null}
+        )}
       </div>
-      {currentVideo ? (
+      {video ? (
         <>
-          <header className="player-header">
-            <h1 data-testid="player-title" className="player-title">
+          <header className={styles.header}>
+            <h1 data-testid="player-title" className={styles.title}>
               <a
-                href={`https://redd.it/${currentVideo.url}`}
+                href={`https://redd.it/${video.url}`}
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                {currentVideo.title}
+                {video.title}
               </a>
             </h1>
-            {currentVideo.flair && (
-              <div className="player-flair">{currentVideo.flair}</div>
-            )}
+            {video.flair && <div className={styles.flair}>{video.flair}</div>}
           </header>
-          <footer className="player-footer">
+          <footer className={styles.footer}>
             <a
-              className="player-comments"
-              href={`https://redd.it/${currentVideo.url}`}
+              className={styles.comments}
+              href={`https://redd.it/${video.url}`}
               rel="noopener noreferrer"
               target="_blank"
             >
-              {shortNumber(currentVideo.comments)} comments
+              {shortNumber(video.comments)} comments
             </a>
-            <div className="player-score">
-              Score: {shortNumber(currentVideo.score)}
+            <div className={styles.score}>
+              Score: {shortNumber(video.score)}
             </div>
           </footer>
         </>
       ) : (
         <>
-          <header className="player-header">
-            <div className="player-title--preview" />
+          <header className={styles.header}>
+            <div className={styles.titlePlaceholder} />
           </header>
-          <footer className="player-footer">
-            <div className="player-comments--preview" />
+          <footer className={styles.footer}>
+            <div className={styles.commentsPlaceholder} />
           </footer>
         </>
       )}

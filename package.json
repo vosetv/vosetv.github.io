@@ -17,11 +17,9 @@
   "author": "Simon Laroche <hi@simon.lc> (https://simon.lc/)",
   "license": "MIT",
   "dependencies": {
+    "@reach/menu-button": "0.8.5",
     "@simonlc/menu-button": "0.1.9",
     "@simonlc/youtube-player": "6.0.0",
-    "@types/node": "13.7.7",
-    "@types/react-dom": "16.9.5",
-    "@types/youtube": "0.0.38",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "global": "4.4.0",
@@ -30,8 +28,7 @@
     "postcss-modules": "1.5.0",
     "react": "16.13.0",
     "react-dom": "16.13.0",
-    "react-intersection-observer": "8.26.1",
-    "typescript": "3.8.3"
+    "react-intersection-observer": "8.26.1"
   },
   "devDependencies": {
     "@babel/core": "7.8.6",
@@ -45,8 +42,11 @@
     "@testing-library/react": "9.4.1",
     "@types/express": "4.17.2",
     "@types/isomorphic-fetch": "0.0.35",
+    "@types/node": "13.7.7",
     "@types/obj-str": "1.0.0",
     "@types/react": "16.9.23",
+    "@types/react-dom": "16.9.5",
+    "@types/youtube": "0.0.38",
     "autoprefixer": "9.7.4",
     "babel-eslint": "10.1.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
@@ -70,6 +70,7 @@
     "react-hot-loader": "4.12.19",
     "regenerator-runtime": "0.13.3",
     "ts-node": "8.6.2",
+    "typescript": "3.8.3",
     "whatwg-fetch": "3.0.0"
   }
 }
