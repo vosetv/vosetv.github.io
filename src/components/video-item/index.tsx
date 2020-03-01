@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import Image from '../image';
 import './styles.css';
@@ -55,11 +54,3 @@ export default function VideoItem({
     </li>
   );
 }
-
-VideoItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  isWatched: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};

@@ -1,5 +1,5 @@
 {
-  "modules": false,
+  "modules": true,
   "plugins": {
     "postcss-nested": true,
     "postcss-normalize": true,

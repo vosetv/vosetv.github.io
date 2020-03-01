@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import VideoItem from '../video-item';
 import { VideoListProps } from '../video-provider';
@@ -49,10 +48,3 @@ export default function VideoList({
     </div>
   );
 }
-
-VideoList.propTypes = {
-  videos: PropTypes.array,
-  watchedVideos: PropTypes.objectOf(PropTypes.bool),
-  currentVideoIndex: PropTypes.number,
-  setVideo: PropTypes.func.isRequired,
-};

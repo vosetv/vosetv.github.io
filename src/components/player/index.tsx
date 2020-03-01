@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import YouTube from '../youtube';
 import shortNumber from '../short-number';
 import { NormalizedVideoItem } from '../../services/fetch-subreddit';
@@ -72,16 +71,3 @@ export default function Player({
     </div>
   );
 }
-
-Player.propTypes = {
-  currentVideo: PropTypes.shape({
-    title: PropTypes.string,
-    flair: PropTypes.string,
-    url: PropTypes.string,
-    id: PropTypes.string,
-    timestamp: PropTypes.number,
-    score: PropTypes.number,
-    comments: PropTypes.number,
-  }),
-  next: PropTypes.func.isRequired,
-};

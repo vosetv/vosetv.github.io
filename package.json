@@ -27,6 +27,7 @@
     "global": "4.4.0",
     "isomorphic-fetch": "2.2.1",
     "obj-str": "1.0.3",
+    "postcss-modules": "1.5.0",
     "react": "16.13.0",
     "react-dom": "16.13.0",
     "react-intersection-observer": "8.26.1",

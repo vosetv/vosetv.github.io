@@ -1,8 +1,7 @@
 import { useReducer, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import subreddits from '../data/subreddits';
-
-import { NormalizedVideoItem, Dictionary } from '../services/fetch-subreddit';
+import type { NormalizedVideoItem, Dictionary } from '../services/fetch-subreddit';
 
 export interface SortProps {
   subreddits: string[];
@@ -58,29 +57,29 @@ const baseUrl =
     ? `http://localhost:${process.env.PORT}`
     : 'https://vose.tv';
 
-// Dropdown options
-const sortOptions = ['hot', 'new', 'controversial', 'top', 'rising'] as const;
 export type SortTuple = typeof sortOptions;
 export type SortingOption = SortTuple[number];
-const timeRangeOptions = [
-  'hour',
-  'day',
-  'week',
-  'month',
-  'year',
-  'all',
-] as const;
 export type TimeRangeTuple = typeof timeRangeOptions;
 type TimeRange = TimeRangeTuple[number];
+// Dropdown options
+const Sorting = {
+  sort: ['hot', 'new', 'controversial', 'top', 'rising'] as const,
+  time: [
+    'hour',
+    'day',
+    'week',
+    'month',
+    'year',
+    'all',
+  ] as const,
+}
 
 function getWatchedVideos() {
-  let watchedVideos;
   try {
-    watchedVideos = JSON.parse(localStorage.getItem('watchedVideos') || '{}');
+    return JSON.parse(localStorage.getItem('watchedVideos') || '{}');
   } catch {
-    watchedVideos = {};
+    return {};
   }
-  return watchedVideos;
 }
 
 function reducer(state: State, action: Action): State {

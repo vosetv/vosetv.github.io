@@ -1,4 +1,4 @@
-@keyframes preview {
+:global @keyframes preview {
   0% {
     background-position: 0% 72%;
   }
@@ -55,7 +55,6 @@
   --footer-background: var(--video-item-background);
 
   --message-color: var(--bright-color);
-
 
   /* test
   --body-bg: white;
@@ -121,7 +120,7 @@ a {
   text-decoration: none;
 }
 
-.app {
+:global .app {
   display: grid;
   grid-template-areas:
     'header header'

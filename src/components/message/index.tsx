@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
-import { Sort } from '../video-provider';
 import './styles.css';
 
-export default function Message({ sort }: Sort) {
+export default function Message({ error }) {
   return (
     <div className="message">
-      <div className="message__icon">
-        <canvas id="static" width="80" height="60" />
-      </div>
       <div className="message__content">
         <p>
           <b>We couldn’t find any videos for you...</b>
@@ -23,9 +18,7 @@ export default function Message({ sort }: Sort) {
             .slice(0, 3)
             .map(subreddit => (
               <li key={subreddit}>
-                <Link to={subreddit} sort={sort}>
-                  {`/r/${subreddit}`}
-                </Link>
+                <Link to={subreddit}>{`/r/${subreddit}`}</Link>
               </li>
             ))}
         </ul>
@@ -33,7 +26,3 @@ export default function Message({ sort }: Sort) {
     </div>
   );
 }
-
-Message.propTypes = {
-  getLinkProps: PropTypes.func,
-};

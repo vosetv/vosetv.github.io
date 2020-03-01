@@ -1,26 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Sort } from './video-provider';
+import React, { useContext } from 'react';
+import SortContext from './sort-context';
 
 export default function Link({
-  sort,
   to,
   children,
-}: Sort & { to: string; children: React.ReactNode }) {
+}: {
+  to: string;
+  children: React.ReactNode;
+}) {
+  const { filters, setFilter } = useContext(SortContext);
   return (
     <a
       onClick={event => {
         event.preventDefault();
-        sort({ subreddit: to });
+        setFilter({ subreddit: to });
       }}
-      href={to}
+      href={`/r/${to}`}
     >
       {children}
     </a>
   );
 }
-
-Link.propTypes = {
-  to: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};

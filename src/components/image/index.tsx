@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PropTypes from 'prop-types';
 
 enum State {
   Empty,

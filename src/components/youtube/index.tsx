@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import youTubePlayer from '@simonlc/youtube-player';
 
 function shouldUpdateVideo(prevProps: YouTubeProps, props: YouTubeProps) {

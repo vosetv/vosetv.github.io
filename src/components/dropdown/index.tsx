@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import objstr from 'obj-str';
 import { Menu, MenuList, MenuButton, MenuItem } from '@simonlc/menu-button';
 import { TimeRangeTuple, SortTuple } from '../video-provider';
-import './styles.css';
+import styles from './styles.css';
 
 type DropdownProps = {
   id: string;
@@ -20,13 +19,13 @@ export default function Dropdown({
 }: DropdownProps) {
   return (
     <Menu>
-      <MenuButton className="button">{currentItem}</MenuButton>
-      <MenuList className="dropdown">
+      <MenuButton className={styles.button}>{currentItem}</MenuButton>
+      <MenuList className={styles.dropdown}>
         {(items as string[])?.map((item: string) => (
           <MenuItem
             key={item}
             className={objstr({
-              dropdown__current: item === currentItem,
+              [styles.current]: item === currentItem,
             })}
             onSelect={() => onChange({ [id]: item })}
           >
@@ -37,10 +36,3 @@ export default function Dropdown({
     </Menu>
   );
 }
-
-Dropdown.propTypes = {
-  id: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.string),
-  onChange: PropTypes.func,
-  currentItem: PropTypes.string,
-};

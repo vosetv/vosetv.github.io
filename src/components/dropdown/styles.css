@@ -1,5 +1,5 @@
 /* Help reach menu button be in the right place */
-[data-reach-menu] {
+:global [data-reach-menu] {
   position: absolute;
 }
 
@@ -31,7 +31,7 @@
       background: var(--dropdown-hover-background);
       outline: 0;
     }
-    &.dropdown__current {
+    &.current {
       color: var(--dropdown-current-color);
       background: var(--dropdown-current-background);
     }

@@ -9,12 +9,12 @@
     "removeComments": true,
     "sourceMap": true,
     "allowJs": true,
-    "strict": true,
     "target": "ES6",
     "baseUrl": "./src",
     "paths": {
       "~*": ["./*"]
-    }
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["src/**/*"]
 }

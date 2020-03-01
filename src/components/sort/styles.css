@@ -1,4 +1,4 @@
-.sort {
+.container {
   display: flex;
   height: 100%;
   align-items: stretch;
@@ -12,7 +12,7 @@
   }
 }
 
-.sort__title {
+.title {
   font-weight: bold;
   font-size: 0.8em;
   margin-top: 0.26em;
