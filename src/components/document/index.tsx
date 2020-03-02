@@ -17,13 +17,13 @@ export default function Document({ preloadedState }) {
           <div>About</div>
         </Header>
       )}
-      app={({ videos, currentVideo, setCurrentVideo }) => (
+      app={({ videos, current, setCurrent, next }) => (
         <>
-          <Player video={videos && videos[currentVideo]} next={() => {}} />
+          <Player video={videos && videos[current]} next={next} />
           <VideoList
             videos={videos}
-            currentVideo={currentVideo}
-            setCurrentVideo={() => {}}
+            current={current}
+            setCurrent={setCurrent}
           />
         </>
       )}

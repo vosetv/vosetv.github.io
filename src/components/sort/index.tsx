@@ -7,14 +7,8 @@ export default function Sort({ filters, setFilter }) {
     filters?.length > 0 && (
       <div className={styles.container}>
         <div className={styles.title}>Sort</div>
-        {filters.map((filter, index) => (
-          <Dropdown
-            key={filter.title}
-            id={filter.title}
-            items={filter.items}
-            currentItem={filter.currentItem}
-            onChange={setFilter}
-          />
+        {filters.map(([filter, onChange]) => (
+          <Dropdown key={filter.id} onChange={onChange} {...filter} />
         ))}
       </div>
     )

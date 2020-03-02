@@ -67,7 +67,7 @@ app.use(async (req, res) => {
 
   res.type('html');
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
-<title>/r/${subreddit} - vose.tv</title>
+<title>r/${subreddit} - vose.tv</title>
 <link rel="preload" href="${script}" as="script">
 <link rel="preconnect" href="https://s.ytimg.com">
 <link rel="preconnect" href="https://i.ytimg.com">

@@ -9,14 +9,19 @@ import styles from './styles.css';
 //  - No filtered videos
 //  - Empty
 //  - Loading
-export default function VideoList({ videos, currentVideo, setCurrentVideo }) {
+export default function VideoList({ videos, current, setCurrent }) {
   // TODO Move down to VideoItem?
-  const [watchedVideos, setWatchedVideos] = useLocalStorage({});
+  const [watchedVideos, setWatchedVideos] = useLocalStorage(
+    'watchedVideos',
+    {},
+  );
 
   // TODO Need useEffect here? Maybe use layoutEffect?
   useEffect(() => {
-    setWatchedVideos({ ...watchedVideos, [videos[currentVideo].id]: true });
-  }, [currentVideo]);
+    if (videos) {
+      setWatchedVideos({ ...watchedVideos, [videos[current].id]: true });
+    }
+  }, [videos, current]);
 
   return (
     <div
@@ -32,9 +37,9 @@ export default function VideoList({ videos, currentVideo, setCurrentVideo }) {
                 key={video.id}
                 id={video.id}
                 title={video.title}
-                isSelected={currentVideo === i}
+                isSelected={current === i}
                 isWatched={watchedVideos ? !!watchedVideos[video.id] : false}
-                onClick={() => setCurrentVideo(i)}
+                onClick={() => setCurrent(i)}
               />
             ))
           : [...Array(32)].map((_, i) => <Preview key={i} />)}

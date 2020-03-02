@@ -9,26 +9,26 @@ type DropdownProps = {
   id: string;
   items: string[];
   onChange: (action: { [key: string]: string }) => void;
-  currentItem: string;
+  current: string;
 };
 
 export default function Dropdown({
   id,
   items,
   onChange,
-  currentItem,
+  current,
 }: DropdownProps) {
   return (
     <Menu>
-      <MenuButton className={styles.button}>{currentItem}</MenuButton>
+      <MenuButton className={styles.button}>{current}</MenuButton>
       <MenuList className={styles.dropdown}>
         {items.map(item => (
           <MenuItem
             key={item}
             className={objstr({
-              [styles.current]: item === currentItem,
+              [styles.current]: item === current,
             })}
-            onSelect={() => onChange({ [id]: item })}
+            onSelect={() => onChange(item)}
           >
             {item}
           </MenuItem>

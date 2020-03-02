@@ -12,6 +12,8 @@ interface Props {
   onClick: (event: MouseEventInit) => void;
 }
 
+// TODO Use enum for isSelected, isWatched, untouched
+
 export function Preview() {
   return (
     <li className={styles.placeholder}>

@@ -9,4 +9,5 @@ export default [
   'youtubehaiku',
   'mealtimevideos',
   'listentothis',
+  'askreddit',
 ];
