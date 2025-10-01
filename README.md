@@ -1,6 +1,6 @@
 # [vosetv.github.io](https://vosetv.github.io)
 
-[vosetv.github.io](https://vvosetv.github.io) is your video playlist for reddit.
+[vosetv.github.io](https://vosetv.github.io) is your video playlist for reddit.
 
 Some of you may remember reddit.tv, a simple website that took videos from any subreddit and turned it into a playlist.
 
