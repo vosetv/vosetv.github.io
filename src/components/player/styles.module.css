@@ -78,9 +78,7 @@
     #464b50
   );
   background-size: 300% 300%;
-  :global {
-    animation: preview 1.2s linear infinite;
-  }
+  animation: preview 1.2s linear infinite;
 }
 
 .flair {
@@ -145,9 +143,7 @@
     #464b50
   );
   background-size: 300% 300%;
-  :global {
-    animation: preview 1.2s linear infinite;
-  }
+  animation: preview 1.2s linear infinite;
 }
 
 .score {

@@ -1,4 +1,4 @@
-@keyframes :global(preview) {
+@keyframes preview {
   0% {
     background-position: 0% 72%;
   }
