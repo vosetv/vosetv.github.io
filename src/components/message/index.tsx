@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from '../link';
 import favorites from '../../data/favorite-subreddits';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 export default function Message({ error }) {
   return (
@@ -16,7 +16,7 @@ export default function Message({ error }) {
           {favorites
             .sort(() => 0.5 - Math.random())
             .slice(0, 3)
-            .map(subreddit => (
+            .map((subreddit) => (
               <li key={subreddit}>
                 <Link to={subreddit}>{`/r/${subreddit}`}</Link>
               </li>

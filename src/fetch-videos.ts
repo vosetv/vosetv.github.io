@@ -1,12 +1,7 @@
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? `http://localhost:${process.env.PORT}`
-    : 'https://vose.tv';
-
 export default async function fetchVideos({ subreddit, sorting, timeRange }) {
-  console.log(`${baseUrl}/api/videos/${subreddit}/${sorting}/${timeRange}`);
+  console.log(`/api/videos/${subreddit}/${sorting}/${timeRange}`);
   const res = await fetch(
-    `${baseUrl}/api/videos/${subreddit}/${sorting}/${timeRange}`,
+    `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&t=${timeRange}&raw_json=1`,
   );
   const videos = await res.json();
   return videos;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from '../dropdown';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 export default function Sort({ filters, setFilter }) {
   return (

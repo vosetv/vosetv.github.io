@@ -1,8 +1,7 @@
 import React from 'react';
-import YouTube from '../youtube';
 import shortNumber from '../short-number';
-import { NormalizedVideoItem } from '../../services/fetch-subreddit';
-import styles from './styles.css';
+import styles from './styles.module.css';
+import YouTube from 'react-youtube';
 
 export default function Player({ video, next }) {
   return (

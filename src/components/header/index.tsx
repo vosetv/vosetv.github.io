@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo';
 import Link from '../Link';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 export default function Header({ children }) {
   return (

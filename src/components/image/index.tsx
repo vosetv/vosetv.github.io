@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import styles from '../video-item/styles.css';
+import styles from '../video-item/styles.module.css';
 
 enum State {
   Empty,

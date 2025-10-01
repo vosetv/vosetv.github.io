@@ -3,7 +3,7 @@ import objstr from 'obj-str';
 import { Menu, MenuList, MenuButton, MenuItem } from '@simonlc/menu-button';
 // import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 import { TimeRangeTuple, SortTuple } from '../video-provider';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 type DropdownProps = {
   id: string;
@@ -22,7 +22,7 @@ export default function Dropdown({
     <Menu>
       <MenuButton className={styles.button}>{current}</MenuButton>
       <MenuList className={styles.dropdown}>
-        {items.map(item => (
+        {items.map((item) => (
           <MenuItem
             key={item}
             className={objstr({

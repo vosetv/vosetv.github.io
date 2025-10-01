@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import SortContext from '../sort-context';
-import fetchVideos from '../../fetch-videos';
+import React, { useEffect, useRef, useState } from 'react';
+import styles from '../../app.module.css';
 import subreddits from '../../data/subreddits';
+import { normalizeVideos } from '../../normalizeVideos';
+import { fetchSubreddit } from '../../services/fetch-subreddit';
+import SortContext from '../sort-context';
 
 type Filter = {
   id: string;
@@ -10,65 +12,63 @@ type Filter = {
 };
 
 export default function Vose({
-  initialState,
   error,
   header,
   app,
 }: {
-  initialState: any;
   error: (props) => React.ReactNode;
   header: (props) => React.ReactNode;
   app: (props) => React.ReactNode;
 }) {
   const sessionRef = useRef(0);
   const [current, setCurrent] = useState(0);
-  const [videos, setVideos] = useState(initialState.videos);
+  const [videos, setVideos] = useState();
   // TODO Remove all the non changine state from here
   const [subreddit, setSubreddit] = useState<Filter>({
     id: 'subreddit',
     items: subreddits,
-    current: initialState.subreddit,
+    current: subreddits[1],
   });
   const [sorting, setSorting] = useState<Filter>({
     id: 'sort',
     items: ['hot', 'new', 'controversial', 'top', 'rising'],
-    current: initialState.sorting,
+    current: 'hot',
   });
   // Conditionally add item to filter array
   const [timeRange, setTimeRange] = useState<Filter>({
     id: 'timeRange',
     items: ['hour', 'day', 'week', 'month', 'year', 'all'],
-    current: initialState.timeRange,
+    current: 'day',
   });
 
   const filters = [
     [
       subreddit,
-      subreddit => {
+      (subreddit) => {
         history.pushState({}, '', `/r/${subreddit}`);
-        setSorting(state => ({ ...state, current: 'hot' }));
-        setTimeRange(state => ({ ...state, current: 'day' }));
-        setSubreddit(state => ({ ...state, current: subreddit }));
+        setSorting((state) => ({ ...state, current: 'hot' }));
+        setTimeRange((state) => ({ ...state, current: 'day' }));
+        setSubreddit((state) => ({ ...state, current: subreddit }));
       },
     ],
     [
       sorting,
-      sorting => {
+      (sorting) => {
         history.pushState({}, '', `/r/${subreddit.current}/${sorting}`);
-        setSorting(state => ({ ...state, current: sorting }));
+        setSorting((state) => ({ ...state, current: sorting }));
       },
     ],
     ...(['top', 'controversial'].includes(sorting.current)
       ? [
           [
             timeRange,
-            timeRange => {
+            (timeRange) => {
               history.pushState(
                 {},
                 '',
                 `/r/${subreddit.current}/${sorting.current}/?t=${timeRange}`,
               );
-              setTimeRange(state => ({ ...state, current: timeRange }));
+              setTimeRange((state) => ({ ...state, current: timeRange }));
             },
           ],
         ]
@@ -79,24 +79,26 @@ export default function Vose({
     // Create session to avoid race condition, this object literal acts as an identifier
     const currentSession = {};
     sessionRef.current = currentSession;
-    const videos = await fetchVideos({
-      subreddit: subreddit.current,
-      sorting: sorting.current,
-      timeRange: timeRange.current,
-    });
-    if (sessionRef.current !== currentSession) return;
-    setVideos(videos);
+    try {
+      const videos = await fetchSubreddit({
+        subreddit: subreddit.current,
+        sorting: sorting.current,
+        timeRange: timeRange.current,
+      });
+      console.log('videos fetch', videos);
+      if (sessionRef.current !== currentSession) return;
+      setVideos(videos);
+    } catch (error) {
+      console.error('error fetching subreddit', error);
+      setVideos([]);
+    }
   };
 
   useEffect(() => {
-    console.log('fetching videos');
+    console.log('fetching videos', subreddit, sorting, timeRange);
     setVideos(undefined);
     setCurrent(0);
-    try {
-      get();
-    } catch {
-      setVideos([]);
-    }
+    get();
   }, [subreddit, sorting, timeRange]);
 
   useEffect(() => {
@@ -163,15 +165,17 @@ export default function Vose({
   }
 
   function next() {
-    setCurrent(current => current + 1);
+    setCurrent((current) => current + 1);
   }
 
   return (
     <SortContext.Provider value={{ filters }}>
-      {header({ filters })}
-      {videos === undefined || videos?.length > 0
-        ? app({ videos, next, current, setCurrent })
-        : error('no videos')}
+      <div className={styles.app}>
+        {header({ filters })}
+        {videos === undefined || videos?.length > 0
+          ? app({ videos, next, current, setCurrent })
+          : error('no videos')}
+      </div>
     </SortContext.Provider>
   );
 }

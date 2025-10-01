@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import objstr from 'obj-str';
 import VideoItem, { Preview } from '../video-item';
 import useLocalStorage from '../../hooks/useLocalStorage.ts';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 // States:
 //  - With videos

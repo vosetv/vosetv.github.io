@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import { normalizeVideos } from '../normalizeVideos';
 
 function getTimestamp(url: string) {
   const match = url.match(/(?:#|&|\?)t=(\d+h)?(\d+m)?(\d+(?:s|$))?/);
@@ -54,41 +54,20 @@ function unique(a: NormalizedVideoItem[]): NormalizedVideoItem[] {
   );
 }
 
-function normalizeVideos(videos: VideoItem[]): NormalizedVideoItem[] {
-  return videos.map((video: VideoItem) => {
-    let id;
-    if (video.data.secure_media.oembed.url) {
-      id = video.data.secure_media.oembed.url.match(
-        /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&\?]*).*/,
-      )![1];
-    } else if (video.data.secure_media.oembed.thumbnail_url) {
-      id = video.data.secure_media.oembed.thumbnail_url.split('/')[4];
-    }
-    const timestamp = getTimestamp(video.data.url);
-    // TODO_TS Might be undefined?
-    return {
-      id: id as string,
-      url: video.data.id,
-      title: video.data.title,
-      // subreddit: video.data.subreddit_name_prefixed,
-      comments: video.data.num_comments,
-      score: video.data.score,
-      ...(video.data.link_flair_text && { flair: video.data.link_flair_text }),
-      ...(timestamp > 0 && { timestamp }),
-    } as NormalizedVideoItem;
-  });
-}
-
 interface RecursiveError extends PromiseRejectionEvent {
   msg: string;
   after: string;
 }
 
-export default function fetchSubreddit(
-  subreddit: string,
-  sorting: string,
-  timeRange?: string,
-): Promise<NormalizedVideoItem[]> {
+export async function fetchSubreddit({
+  subreddit,
+  sorting,
+  timeRange,
+}: {
+  subreddit: string;
+  sorting: string;
+  timeRange?: string;
+}): Promise<NormalizedVideoItem[]> {
   const videoLimit = 50;
   const count = 0;
   let videos: VideoItem[] = [];
@@ -96,36 +75,41 @@ export default function fetchSubreddit(
     ? `t=${timeRange ? timeRange : 'day'}&`
     : '';
 
-  function recursiveGet(
+  async function recursiveGet(
     depth: number,
     after?: string,
   ): Promise<NormalizedVideoItem[]> {
-    const url = after
-      ? `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1&count=${count *
-          100}&after=${after}`
-      : `https://reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}raw_json=1`;
-    return fetch(url)
-      .then(response => response.json())
-      .then(posts => {
-        videos = videos.concat(
-          posts.data.children.filter(
-            (item: VideoItem) =>
-              item.data.secure_media &&
-              item.data.secure_media.type === 'youtube.com',
-          ),
-        ) as VideoItem[];
-        if (videos.length > videoLimit || depth >= 8) {
-          return Promise.resolve(unique(normalizeVideos(videos)));
-        }
-        return Promise.reject({ msg: 'next', after: posts.data.after });
-      })
-      .catch((err: RecursiveError) => {
-        if (err.msg === 'next') {
-          return recursiveGet(depth + 1, err.after);
-        }
-        console.error('Recursive Videos Error', err);
-        return [];
-      });
+    try {
+      const url = after
+        ? `https://www.reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}count=${
+            count * 100
+          }&after=${after}&raw_json=1`
+        : `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&${timeRangeQuery}&raw_json=1`;
+      // `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&t=${timeRange}&raw_json=1`
+      const response = await fetch(url);
+      const posts = await response.json();
+      console.log('step1', url, posts);
+      videos = videos.concat(
+        posts.data.children.filter(
+          (item: VideoItem) =>
+            item.data.secure_media &&
+            item.data.secure_media.type === 'youtube.com',
+        ),
+      );
+      console.log('step2', videos);
+      if (videos.length > videoLimit || depth >= 8) {
+        console.log('step3', normalizeVideos(videos));
+        console.log('step4', unique(normalizeVideos(videos)));
+        return unique(normalizeVideos(videos));
+      }
+      throw { msg: 'next', after: posts.data.after };
+    } catch (err) {
+      if (err.msg === 'next') {
+        return await recursiveGet(depth + 1, err.after);
+      }
+      console.error('Recursive Videos Error', err);
+      return [];
+    }
   }
-  return recursiveGet(count);
+  return await recursiveGet(count);
 }

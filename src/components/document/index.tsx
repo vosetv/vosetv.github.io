@@ -6,15 +6,13 @@ import Player from '../player';
 import Message from '../message';
 import Sort from '../sort';
 
-export default function Document({ preloadedState }) {
+export default function Document() {
   return (
     <Vose
-      initialState={preloadedState}
-      error={error => <Message error={error} />}
-      header={props => (
+      error={(error) => <Message error={error} />}
+      header={(props) => (
         <Header>
           <Sort {...props} />
-          <div>About</div>
         </Header>
       )}
       app={({ videos, current, setCurrent, next }) => (

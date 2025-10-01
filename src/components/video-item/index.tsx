@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import objstr from 'obj-str';
 import Image from '../image';
-import styles from './styles.css';
+import styles from './styles.module.css';
 
 interface Props {
   id: string;
