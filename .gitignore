@@ -2,6 +2,7 @@
 .server/
 .env
 .cache/
+.dist/
 
 # Logs
 logs
