@@ -1,6 +1,6 @@
-# [vose.tv](https://vose.tv)
+# [vosetv.github.io](https://vosetv.github.io)
 
-[vose.tv](https://vose.tv) is your video playlist for reddit.
+[vosetv.github.io](https://vvosetv.github.io) is your video playlist for reddit.
 
 Some of you may remember reddit.tv, a simple website that took videos from any subreddit and turned it into a playlist.
 
@@ -9,5 +9,3 @@ vose.tv attempts to recreate, and build on that concept, and fix many shortcomin
 ## License
 
 MIT © Simon Laroche
-
-Logo and name are trademarked.
