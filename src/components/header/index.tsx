@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../logo';
-import Link from '../Link';
+import Link from '../link';
 import styles from './styles.module.css';
 
 export default function Header({ children }) {
