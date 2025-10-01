@@ -72,7 +72,7 @@ export async function fetchSubreddit({
   const count = 0;
   let videos: VideoItem[] = [];
   const timeRangeQuery = ['top', 'controversial'].includes(sorting)
-    ? `t=${timeRange ? timeRange : 'day'}&`
+    ? `t=${timeRange ? timeRange : 'day'}`
     : '';
 
   async function recursiveGet(
@@ -81,10 +81,10 @@ export async function fetchSubreddit({
   ): Promise<NormalizedVideoItem[]> {
     try {
       const url = after
-        ? `https://www.reddit.com/r/${subreddit}/${sorting}.json?${timeRangeQuery}count=${
+        ? `https://reddit-proxy.simonlc.workers.dev/r/${subreddit}/${sorting}.json?${timeRangeQuery}&count=${
             count * 100
-          }&after=${after}&raw_json=1`
-        : `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&${timeRangeQuery}&raw_json=1`;
+          }&after=${after}`
+        : `https://reddit-proxy.simonlc.workers.dev/r/${subreddit}/${sorting}.json?sort=${sorting}&${timeRangeQuery}`;
       // `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&t=${timeRange}&raw_json=1`
       const response = await fetch(url);
       const posts = await response.json();
