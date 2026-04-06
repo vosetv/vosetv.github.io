@@ -67,7 +67,7 @@ app.use(async (req, res) => {
 
   res.type('html');
   res.write(`<!doctype html><html lang="en"><meta charset="utf-8">
-<title>r/${subreddit} - vose.tv</title>
+<title>r/${subreddit} - vosetv.github.io</title>
 <link rel="preload" href="${script}" as="script">
 <link rel="preconnect" href="https://s.ytimg.com">
 <link rel="preconnect" href="https://i.ytimg.com">
@@ -79,17 +79,17 @@ app.use(async (req, res) => {
   // <link rel="icon" sizes="192x192" href="icon.png">
   res.write(`<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${styles}">
-<meta name="description" content="Watch Reddit's top videos on vose.tv">
+<meta name="description" content="Watch Reddit's top videos on vosetv.github.io">
 <meta id="theme-color" name="theme-color" content="#20262b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@simonmlaroche">
 <meta name="twitter:creator" content="@simonmlaroche">
-<meta property="og:url" content="https://vose.tv">
-<meta property="og:title" content="vose.tv">
-<meta property="og:description" content="Watch Reddit's top videos on vose.tv">
-<meta property="og:image" content="https://vose.tv/vose-card.png">
+<meta property="og:url" content="https://vosetv.github.io">
+<meta property="og:title" content="vosetv.github.io">
+<meta property="og:description" content="Watch Reddit's top videos on vosetv.github.io">
+<meta property="og:image" content="https://vosetv.github.io/vose-card.png">
 <meta property="og:type" content="website">
 <meta property="fb:app_id" content="1725542221039137">
 <body><div id="root" class="app">`);

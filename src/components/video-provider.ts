@@ -1,7 +1,10 @@
 import { useReducer, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import subreddits from '../data/subreddits';
-import type { NormalizedVideoItem, Dictionary } from '../services/fetch-subreddit';
+import type {
+  NormalizedVideoItem,
+  Dictionary,
+} from '../services/fetch-subreddit';
 
 export interface SortProps {
   subreddits: string[];
@@ -55,7 +58,7 @@ interface PropGetters {
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? `http://localhost:${process.env.PORT}`
-    : 'https://vose.tv';
+    : 'https://vosetv.github.io';
 
 export type SortTuple = typeof sortOptions;
 export type SortingOption = SortTuple[number];
@@ -64,15 +67,8 @@ type TimeRange = TimeRangeTuple[number];
 // Dropdown options
 const Sorting = {
   sort: ['hot', 'new', 'controversial', 'top', 'rising'] as const,
-  time: [
-    'hour',
-    'day',
-    'week',
-    'month',
-    'year',
-    'all',
-  ] as const,
-}
+  time: ['hour', 'day', 'week', 'month', 'year', 'all'] as const,
+};
 
 function getWatchedVideos() {
   try {
@@ -344,7 +340,7 @@ export default function VideoProvider({
         getSortProps,
         sort,
       })
-    : children ?? null;
+    : (children ?? null);
 }
 
 VideoProvider.propTypes = {

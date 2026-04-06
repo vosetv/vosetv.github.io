@@ -59,6 +59,8 @@ interface RecursiveError extends PromiseRejectionEvent {
   after: string;
 }
 
+const proxyBaseUrl = 'https://reddit-proxy.simonlc.workers.dev';
+
 export async function fetchSubreddit({
   subreddit,
   sorting,
@@ -71,20 +73,25 @@ export async function fetchSubreddit({
   const videoLimit = 50;
   const count = 0;
   let videos: VideoItem[] = [];
-  const timeRangeQuery = ['top', 'controversial'].includes(sorting)
-    ? `t=${timeRange ? timeRange : 'day'}`
-    : '';
+  const timeRangeValue = ['top', 'controversial'].includes(sorting)
+    ? (timeRange ?? 'day')
+    : null;
 
   async function recursiveGet(
     depth: number,
     after?: string,
   ): Promise<NormalizedVideoItem[]> {
     try {
-      const url = after
-        ? `https://reddit-proxy.simonlc.workers.dev/r/${subreddit}/${sorting}.json?${timeRangeQuery}&count=${
-            count * 100
-          }&after=${after}`
-        : `https://reddit-proxy.simonlc.workers.dev/r/${subreddit}/${sorting}.json?sort=${sorting}&${timeRangeQuery}`;
+      const params = new URLSearchParams();
+      params.set('sort', sorting);
+      if (timeRangeValue) {
+        params.set('t', timeRangeValue);
+      }
+      if (after) {
+        params.set('count', String(count * 100));
+        params.set('after', after);
+      }
+      const url = `${proxyBaseUrl}/r/${subreddit}/${sorting}.json?${params.toString()}`;
       // `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&t=${timeRange}&raw_json=1`
       const response = await fetch(url);
       const posts = await response.json();
