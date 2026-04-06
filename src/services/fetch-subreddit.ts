@@ -1,5 +1,3 @@
-import { normalizeVideos } from '../normalizeVideos';
-
 function getTimestamp(url: string) {
   const match = url.match(/(?:#|&|\?)t=(\d+h)?(\d+m)?(\d+(?:s|$))?/);
 
@@ -12,27 +10,6 @@ function getTimestamp(url: string) {
   return hours + minutes + seconds;
 }
 
-interface Oembed {
-  url: string;
-  thumbnail_url: string;
-}
-interface SecureMedia {
-  oembed: Oembed;
-  type: string;
-}
-interface VideoItemData {
-  secure_media: SecureMedia;
-  id: string;
-  url: string;
-  title: string;
-  num_comments: number;
-  score: number;
-  link_flair_text: number;
-}
-interface VideoItem {
-  data: VideoItemData;
-}
-
 export type NormalizedVideoItem = {
   id: string;
   title: string;
@@ -40,11 +17,64 @@ export type NormalizedVideoItem = {
   comments: number;
   score: number;
   timestamp?: number;
-  flair?: number;
+  flair?: string;
 };
 
 export interface Dictionary<T> {
   [key: string]: T;
+}
+
+interface PullPushSubmission {
+  id: string;
+  title: string;
+  url: string;
+  score: number;
+  num_comments: number;
+  link_flair_text: string | null;
+}
+
+type SortingOption = 'hot' | 'new' | 'controversial' | 'top' | 'rising';
+type TimeRangeOption = 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
+
+function getSortType(sorting: SortingOption) {
+  switch (sorting) {
+    case 'top':
+      return 'score';
+    case 'controversial':
+      return 'num_comments';
+    case 'hot':
+    case 'new':
+    case 'rising':
+    default:
+      return 'created_utc';
+  }
+}
+
+function getAfterValue(timeRange?: string) {
+  const range = (timeRange ?? 'day') as TimeRangeOption;
+  switch (range) {
+    case 'hour':
+      return '1h';
+    case 'day':
+      return '1d';
+    case 'week':
+      return '7d';
+    case 'month':
+      return '30d';
+    case 'year':
+      return '365d';
+    case 'all':
+    default:
+      return null;
+  }
+}
+
+function getYouTubeId(url: string) {
+  const match = url.match(
+    /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|&v(?:i)?=))([^#&?]*).*/,
+  );
+  if (!match || !match[1]) return null;
+  return match[1];
 }
 
 function unique(a: NormalizedVideoItem[]): NormalizedVideoItem[] {
@@ -54,12 +84,7 @@ function unique(a: NormalizedVideoItem[]): NormalizedVideoItem[] {
   );
 }
 
-interface RecursiveError extends PromiseRejectionEvent {
-  msg: string;
-  after: string;
-}
-
-const proxyBaseUrl = 'https://reddit-proxy.simonlc.workers.dev';
+const pullPushUrl = 'https://api.pullpush.io/reddit/search/submission/';
 
 export async function fetchSubreddit({
   subreddit,
@@ -70,53 +95,45 @@ export async function fetchSubreddit({
   sorting: string;
   timeRange?: string;
 }): Promise<NormalizedVideoItem[]> {
-  const videoLimit = 50;
-  const count = 0;
-  let videos: VideoItem[] = [];
-  const timeRangeValue = ['top', 'controversial'].includes(sorting)
-    ? (timeRange ?? 'day')
-    : null;
+  const sortType = getSortType((sorting as SortingOption) ?? 'hot');
+  const params = new URLSearchParams({
+    subreddit,
+    sort: 'desc',
+    sort_type: sortType,
+    size: '100',
+  });
 
-  async function recursiveGet(
-    depth: number,
-    after?: string,
-  ): Promise<NormalizedVideoItem[]> {
-    try {
-      const params = new URLSearchParams();
-      params.set('sort', sorting);
-      if (timeRangeValue) {
-        params.set('t', timeRangeValue);
-      }
-      if (after) {
-        params.set('count', String(count * 100));
-        params.set('after', after);
-      }
-      const url = `${proxyBaseUrl}/r/${subreddit}/${sorting}.json?${params.toString()}`;
-      // `https://www.reddit.com/r/${subreddit}/${sorting}.json?sort=${sorting}&t=${timeRange}&raw_json=1`
-      const response = await fetch(url);
-      const posts = await response.json();
-      console.log('step1', url, posts);
-      videos = videos.concat(
-        posts.data.children.filter(
-          (item: VideoItem) =>
-            item.data.secure_media &&
-            item.data.secure_media.type === 'youtube.com',
-        ),
-      );
-      console.log('step2', videos);
-      if (videos.length > videoLimit || depth >= 8) {
-        console.log('step3', normalizeVideos(videos));
-        console.log('step4', unique(normalizeVideos(videos)));
-        return unique(normalizeVideos(videos));
-      }
-      throw { msg: 'next', after: posts.data.after };
-    } catch (err) {
-      if (err.msg === 'next') {
-        return await recursiveGet(depth + 1, err.after);
-      }
-      console.error('Recursive Videos Error', err);
-      return [];
+  if (['top', 'controversial'].includes(sorting)) {
+    const after = getAfterValue(timeRange);
+    if (after) {
+      params.set('after', after);
     }
   }
-  return await recursiveGet(count);
+
+  const response = await fetch(`${pullPushUrl}?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`PullPush request failed with status ${response.status}`);
+  }
+
+  const posts = (await response.json()) as { data?: PullPushSubmission[] };
+  const videos =
+    posts.data
+      ?.filter((item) => /(?:youtube\.com|youtu\.be)/i.test(item.url))
+      .map((item) => {
+        const id = getYouTubeId(item.url);
+        if (!id) return null;
+        const timestamp = getTimestamp(item.url);
+        return {
+          id,
+          url: item.id,
+          title: item.title,
+          comments: item.num_comments,
+          score: item.score,
+          ...(item.link_flair_text && { flair: item.link_flair_text }),
+          ...(timestamp > 0 && { timestamp }),
+        } as NormalizedVideoItem;
+      })
+      .filter((item): item is NormalizedVideoItem => item !== null) ?? [];
+
+  return unique(videos);
 }
