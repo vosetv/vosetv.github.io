@@ -18,8 +18,11 @@ export default function VideoList({ videos, current, setCurrent }) {
 
   // TODO Need useEffect here? Maybe use layoutEffect?
   useEffect(() => {
-    if (videos) {
-      setWatchedVideos({ ...watchedVideos, [videos[current].id]: true });
+    if (videos?.length > 0 && videos[current]) {
+      setWatchedVideos((previous) => ({
+        ...previous,
+        [videos[current].id]: true,
+      }));
     }
   }, [videos, current]);
 
